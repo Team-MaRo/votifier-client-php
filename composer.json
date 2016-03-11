@@ -1,5 +1,5 @@
 {
-    "name": "orbitrondev/bukkitvotifier",
+    "name": "d3strukt0r/votifier-client",
     "description": "Simple Tool to send vote request to a server which has the Votifier plugin.",
     "type": "library",
     "keywords": [
@@ -7,7 +7,7 @@
         "vote",
         "votifier"
     ],
-    "homepage": "https://github.com/OrbitronDev/BukkitVotifier",
+    "homepage": "https://github.com/D3strukt0r/Votifier-PHP-Client",
     "time": "2015-09-06 21:52:00",
     "license": "MIT",
     "authors": [
@@ -19,8 +19,8 @@
     ],
     "support": {
     	"email": "team-orbitron@hotmail.com",
-    	"source": "https://github.com/OrbitronDev/BukkitVotifier",
-    	"docs": "https://github.com/OrbitronDev/BukkitVotifier"
+    	"source": "https://github.com//D3strukt0r/Votifier-PHP-Client",
+    	"docs": "https://github.com//D3strukt0r/Votifier-PHP-Client/wiki"
     },
     "require": {
         "php": ">=5.3.2"
@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-0": {
-            "BukkitVotifier": "src/"
+            "Votifier\\Client": "src/"
         }
     }
 }

@@ -12,5 +12,10 @@ php:
 before_script:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install
+#  - wget http://getspigot.org/jenkins/job/Spigot/lastSuccessfulBuild/artifact/spigot-1.9.jar
+#  - printf "eula=true" > eula.txt
+#  - mkdir plugins
+#  - wget http://addons-origin.cursecdn.com/files/886/407/votifier-1.9.jar -P plugins/
+#  - java -Xms512M -Xmx1024M -jar spigot-1.9.jar
 
 script: phpunit

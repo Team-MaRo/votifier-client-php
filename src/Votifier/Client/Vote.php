@@ -1,51 +1,51 @@
 <?php
 
-namespace BukkitVotifier;
+namespace Votifier\Client;
 
-class Votifier
+class Vote
 {
-    private $sServerIP = '';
-    private $iVotifierPort = '';
-    private $sPublicKey = '';
-    private $sUsername = '';
-    private $sUserAddress = '';
-    private $iVoteTimeStamp = '';
-    private $sServerlist = '';
+    private $server_ip = '';
+    private $votifier_port = '';
+    private $public_key = '';
+    private $username = '';
+    private $user_ip = '';
+    private $vote_time = '';
+    private $server_list = '';
 
-    public function __construct($sServerIP, $iVotifierPort, $sPublicKey, $sUsername, $sServerlist, $sUserIP)
+    public function __construct($server_ip, $votifier_port, $public_key, $username, $server_list, $user_ip)
     {
-        $this->sServerIP = $sServerIP;
-        $this->iVotifierPort = $iVotifierPort;
-        $this->sPublicKey = $sPublicKey;
-        $this->sPublicKey = wordwrap($this->sPublicKey, 65, "\n", true); // Pharse the public key
-        $this->sPublicKey = <<<EOF
+        $this->server_ip = $server_ip;
+        $this->votifier_port = $votifier_port;
+        $this->public_key = $public_key;
+        $this->public_key = wordwrap($this->public_key, 65, "\n", true); // Pharse the public key
+        $this->public_key = <<<EOF
 -----BEGIN PUBLIC KEY-----
-$this->sPublicKey
+$this->public_key
 -----END PUBLIC KEY-----
 EOF;
-        $this->sUsername = preg_replace('/[^A-Za-z0-9_]+/', '', $sUsername); // Replace username to letters, numbers an "_"
-        $this->sUserAddress = $sUserIP; // Get user IP
-        $this->sServerlist = $sServerlist;
+        $this->username = preg_replace('/[^A-Za-z0-9_]+/', '', $username); // Replace username to letters, numbers an "_"
+        $this->user_ip = $user_ip; // Get user IP
+        $this->server_list = $server_list;
     }
 
     public function send()
     {
         // Set voting time
-        $this->iVoteTimeStamp = time();
+        $this->vote_time = time();
         // Details of the vote
-        $sVoteString = 'VOTE'."\n".$this->sServerlist."\n".$this->sUsername."\n".$this->sUserAddress."\n".$this->iVoteTimeStamp."\n";
-        // Fill blanks to make packet lenght 256
-        $leftover = (256 - strlen($sVoteString)) / 2;
+        $vote_package = 'VOTE'."\n".$this->server_list."\n".$this->username."\n".$this->user_ip."\n".$this->vote_time."\n";
+        // Fill blanks to make packet length 256
+        $leftover = (256 - strlen($vote_package)) / 2;
         while ($leftover > 0) {
-            $sVoteString .= "\x0";
+            $vote_package .= "\x0";
             --$leftover;
         }
         // Encrypt the string
-        openssl_public_encrypt($sVoteString, $sCryptedPublicKey, $this->sPublicKey);
+        openssl_public_encrypt($vote_package, $enc_public_key, $this->public_key);
         // Try connect to server
-        $oSocket = fsockopen($this->sServerIP, $this->iVotifierPort, $errno, $errstr, 3);
-        if ($oSocket) {
-            fwrite($oSocket, $sCryptedPublicKey); // On success send encrypted packet to server
+        $server__socket = fsockopen($this->server_ip, $this->votifier_port, $errno, $errstr, 3);
+        if ($server__socket) {
+            fwrite($server__socket, $enc_public_key); // On success send encrypted packet to server
             return true;
         } else {
             return false;
