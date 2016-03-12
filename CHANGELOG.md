@@ -1,10 +1,5 @@
-CHANGELOG
-=================
+# CHANGELOG
 
-Added feature (+) | Removed feature (-) | Fixed Bug (*)
+## 1.0.0 (12-3-2016)
 
-=================
-
-* 1.0.0 (2015-09-21)
-
-  * + Begin project
+- [ADDED] Begin project

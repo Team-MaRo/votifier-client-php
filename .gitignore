@@ -1,9 +1,6 @@
 # Test Files #
 #test/config/test.sqlite
 
-## JetBrains PhpStorm ##
-/.idea/
-
 ## Composer .gitignore ##
 composer.phar
 /vendor/

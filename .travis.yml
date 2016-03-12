@@ -7,15 +7,39 @@ php:
   - 5.6
   - 7.0
   - hhvm
-  - nightly
+
+sudo: false
+
+#cache:
+#  directories:
+#    - vendor
+#    - $HOME/.composer/cache
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
+  - composer self-update
+  - composer install --no-interaction
 #  - wget http://getspigot.org/jenkins/job/Spigot/lastSuccessfulBuild/artifact/spigot-1.9.jar
 #  - printf "eula=true" > eula.txt
 #  - mkdir plugins
 #  - wget http://addons-origin.cursecdn.com/files/886/407/votifier-1.9.jar -P plugins/
 #  - java -Xms512M -Xmx1024M -jar spigot-1.9.jar
 
-script: phpunit
+script:
+#  - mkdir build
+#  - mkdir build/logs
+#  - mkdir build/cov
+  - phpunit
+
+#after_success:
+#  - php vendor/bin/phpcov.php --help
+#  - php vendor/bin/phpcov.php merge --clover build/logs/clover.xml build/cov
+#  - php vendor/bin/coveralls -v -c .coveralls.yml --root_dir=src/
+#  - travis_retry php vendor/bin/coveralls -v --root_dir=src/
+
+matrix:
+#  fast_finish: true
+  allow_failures:
+    - php: hhvm
+
+notifications:
+  email: false

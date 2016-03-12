@@ -13,11 +13,11 @@ class VoteTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->vote = new Vote('manuele.ddns.net',
+        $this->vote = new Vote('play.orbitrondev.org',
                                '8192',
-                               'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiBUsS/82HP7cHpNT21ztgw8fonUACPiPTqVmw8M7o59H8vsTp0SHbOnmcOMeRmPRlzmBjjsV+WO7GNQeAFd8aW/nenRyuSojFZXeR9N6DFZyD7jz4lHZaJX0e4dkCe41kVt74Cki5rmDY4CtQhfkBeoMaf8eG/HjR/dEugDtizxL01vI4qVE+yriwYoUtw8tZkm1kbn0r4LmkeGVtZmPv1AY3FO8n9b3uxlViBmg5EI6NE89L/vldI9gda91hze4OkGn8UKMvSq5h5HuEMaX3428BMvpnGo6yRXmMjCmc0i0rc8Sr9UxbhMXSc55CX0pauF9e6aws8pUW6FmmlTHcQIDAQAB',
+                               'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg/6Tm/z9+iCWBj3fuIfJbUzDA1lcIgg4yYeNk72vaBGmjZTg6Vlc5UywyylDN+czWAacFGeIEoFxRKdfHy+I8Sl9sXvX68Xzo5FbS0pe8fa2CP6cgRU8bW4pgXQTEjjzBvis/UZqIO/MUQaBkbiyW7VQWYxD2aaaMA8V98/tH3NJsoeH9pfVLj8SE0TvZMolLRbKR1tYkeMN3vCuAYQn94yG4c1rRy7xJj5snpAatTrfRC3p2e3b5XBaq6x0aqli+QbovhbMHDl8FQAaj6zbpgTlDKqcyj2RWs4dNFfeEZGju/vXiOfkNZX1LIz9zlWSBzSSoi2IO/nAs3MRhXUvyQIDAQAB',
                                'D3strukt0r',
-                               'VotifierPHP-Test',
+                               'Votifier-PHP-Client Test',
                                '127.0.0.1');
     }
 
