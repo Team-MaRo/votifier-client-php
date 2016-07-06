@@ -1,7 +1,10 @@
-# Test Files #
-#test/config/test.sqlite
+# =========================
+# Project Files
+# =========================
 
-## Composer .gitignore ##
+
+# Composer .gitignore #
+# =========================
 composer.phar
 /vendor/
 

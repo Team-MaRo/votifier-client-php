@@ -10,12 +10,13 @@ php:
 
 sudo: false
 
-#cache:
-#  directories:
+cache:
+  directories:
 #    - vendor
-#    - $HOME/.composer/cache
+    - $HOME/.composer/cache
 
 before_script:
+  - if [[ $TRAVIS_PHP_VERSION != hhvm ]]; then phpenv config-rm xdebug.ini; fi;
   - composer self-update
   - composer install --no-interaction
 #  - wget http://getspigot.org/jenkins/job/Spigot/lastSuccessfulBuild/artifact/spigot-1.9.jar
@@ -25,19 +26,10 @@ before_script:
 #  - java -Xms512M -Xmx1024M -jar spigot-1.9.jar
 
 script:
-#  - mkdir build
-#  - mkdir build/logs
-#  - mkdir build/cov
   - phpunit
 
-#after_success:
-#  - php vendor/bin/phpcov.php --help
-#  - php vendor/bin/phpcov.php merge --clover build/logs/clover.xml build/cov
-#  - php vendor/bin/coveralls -v -c .coveralls.yml --root_dir=src/
-#  - travis_retry php vendor/bin/coveralls -v --root_dir=src/
-
 matrix:
-#  fast_finish: true
+  fast_finish: true
   allow_failures:
     - php: hhvm
 
