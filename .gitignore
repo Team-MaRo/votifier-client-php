@@ -11,3 +11,5 @@ composer.phar
 #################
 ## Project
 #################
+/build/
+.php_cs.cache

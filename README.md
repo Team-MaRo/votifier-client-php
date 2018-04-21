@@ -14,8 +14,8 @@ This php script allows easy using of the bukkit plugin Votifier
 ## Installation
 
 Add the client using [Composer](http://getcomposer.org/).
-```
-$ composer require d3strukt0r/votifier-client dev-master
+```bash
+composer require d3strukt0r/votifier-client
 ```
 
 ## Usage
@@ -24,17 +24,19 @@ Simply create an object with all informations and then send it.
 ```php
 use Votifier\Client\Vote;
 
-$vote = new \Votifier\Client\Vote(
-                '192.168.0.52',
-                8192,
-                'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvGiuyYu0WU2Jp5pEsZb32b5JnBzFQDh8ihzdoK0gQCQLFZ7SRE9kCq5jOmpUdnXX9Zvdx0S3a8/iVI2N2cldERtD55Um90OTlzhXBrW4gCl0MlBZLkOW4pzXPOJ8a3UwGwSzBtlwwb+0dl4Vmy8xon3YbZeHC3mUKjbxo/x3RPys4S1psxKXldU4jRFx55ifBnhc8zyfykCt3CXUAPMTAK+nNdIXJQ6ZOQFJPQ1tP6mUHb/8AAI+IoMMKsXPTAU1+ZP6wvxy3dQcBHU0vw44NwckcY7AKSsuxqBIcbLaadbjNZfS1Ts1OWmk5bN0RKj/sC2LHmcIVzHXMwVBH5ynbwIDAQAB',
-                $_POST['username'],
-                'My own list'
+$vote = new Vote(
+    '127.0.0.1',
+    8192,
+    'MIIBIjANBgkqhkiG9w0BAQEFAA....',
+    $_POST['username'],
+    'My own list',
+    $_SERVER['REMOTE_ADDR']
 );
 
-if($vote->send()) {
-    // Connection created, and vote sent. Doesn't mean the server handeled it correctly, but the client did.
-} else {
+try {
+    $vote->send();
+    // Connection created, and vote sent. Doesn't mean the server handled it correctly, but the client did.
+} catch (\Exception $exception) {
     // Could not send Vote. Normally this happens when the client can't create a connection.
 }
 ```

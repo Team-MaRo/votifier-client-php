@@ -13,17 +13,22 @@
     "authors": [
         {
             "name": "Manuele Vaccari",
-            "email": "vaccari.m@hotmail.com",
-            "role": "Developer"
+            "email": "manuele.vaccari@gmail.com",
+            "homepage": "https://github.com/D3strukt0r"
         }
     ],
     "support": {
-    	"email": "team-orbitron@hotmail.com",
+    	"email": "manuele.vaccari@gmail.com",
     	"source": "https://github.com/D3strukt0r/Votifier-PHP-Client",
     	"docs": "https://github.com/D3strukt0r/Votifier-PHP-Client/wiki"
     },
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+        "ext-mbstring": "*"
+    },
+    "require-dev": {
+        "php-coveralls/php-coveralls": "^2.0",
+        "phpunit/phpunit": "^7"
     },
     "autoload": {
         "psr-0": {
@@ -44,6 +49,14 @@
             "/docs",
             "/bin",
             "/example.php"
+        ]
+    },
+    "scripts": {
+        "test": "phpunit",
+        "upload-coveralls": "php-coveralls -v",
+        "upload-scrutinizer": [
+            "wget https://scrutinizer-ci.com/ocular.phar",
+            "php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml"
         ]
     }
 }

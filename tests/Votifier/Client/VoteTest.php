@@ -2,10 +2,11 @@
 
 namespace Votifier\Client;
 
-use Votifier\Client\Vote;
+use PHPUnit\Framework\TestCase;
 
-class VoteTest extends \PHPUnit_Framework_TestCase
+class VoteTest extends TestCase
 {
+    /** @var \Votifier\Client\Vote */
     private $vote = null;
 
     /**
@@ -13,12 +14,14 @@ class VoteTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->vote = new Vote('play.orbitrondev.org',
-                               '8192',
-                               'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg/6Tm/z9+iCWBj3fuIfJbUzDA1lcIgg4yYeNk72vaBGmjZTg6Vlc5UywyylDN+czWAacFGeIEoFxRKdfHy+I8Sl9sXvX68Xzo5FbS0pe8fa2CP6cgRU8bW4pgXQTEjjzBvis/UZqIO/MUQaBkbiyW7VQWYxD2aaaMA8V98/tH3NJsoeH9pfVLj8SE0TvZMolLRbKR1tYkeMN3vCuAYQn94yG4c1rRy7xJj5snpAatTrfRC3p2e3b5XBaq6x0aqli+QbovhbMHDl8FQAaj6zbpgTlDKqcyj2RWs4dNFfeEZGju/vXiOfkNZX1LIz9zlWSBzSSoi2IO/nAs3MRhXUvyQIDAQAB',
-                               'D3strukt0r',
-                               'Votifier-PHP-Client Test',
-                               '127.0.0.1');
+        $this->vote = new Vote(
+            getenv('VOTIFIER_HOST') ?: '89.163.242.97',
+            getenv('VOTIFIER_PORT') ?: 35670,
+            getenv('VOTIFIER_KEY') ?: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhQGwChJARqa2/e3v6MLi6QXj+Z0vf8aRuruczNeCF5vXqmZWl2m31fH2bh5yOXodseEonRoV7xIbQEMUqh2fWA1PkglAqOIKawOHxjoDtGWpdi1gaAOrCGDJJxcNH/y5E3oQboQfhbR8FB2w1E0JGlwRho9KWpLSifKXhZwivuymjGaOi65hjifbC+Uw4ESzcUdL9e6xR+pn49/99vX5+duDRhTSAwei6fM/uTW4342iL2S7oJh+Jo1ceLgmmXTBvosQ3J93u1SqFCPYQS9Io8fq7MdyIx27HIqidsEk1N3v0Okn3YLkNp8d+YHJ6tCAcQvtfS7B2TWXCNV9fGwVNwIDAQAB',
+            'D3strukt0r',
+            'Votifier-PHP-Client Test',
+            '127.0.0.1'
+        );
     }
 
     /**
@@ -46,6 +49,6 @@ class VoteTest extends \PHPUnit_Framework_TestCase
      */
     public function testValidResult()
     {
-        $this->assertEquals(true, $this->vote->send());
+        $this->assertTrue($this->vote->send());
     }
 }

@@ -1,37 +1,66 @@
 language: php
 
-php: 
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - hhvm
-
 sudo: false
+dist: trusty
 
 cache:
   directories:
-#    - vendor
-    - $HOME/.composer/cache
-
-before_script:
-  - if [[ $TRAVIS_PHP_VERSION != hhvm ]]; then phpenv config-rm xdebug.ini; fi;
-  - composer self-update
-  - composer install --no-interaction
-#  - wget http://getspigot.org/jenkins/job/Spigot/lastSuccessfulBuild/artifact/spigot-1.9.jar
-#  - printf "eula=true" > eula.txt
-#  - mkdir plugins
-#  - wget http://addons-origin.cursecdn.com/files/886/407/votifier-1.9.jar -P plugins/
-#  - java -Xms512M -Xmx1024M -jar spigot-1.9.jar
-
-script:
-  - phpunit
+    - $HOME/.composer/cache/files
+#    - $HOME/mc-server
 
 matrix:
   fast_finish: true
-  allow_failures:
+  include:
+    - php: 5.3
+      dist: precise
+    - php: 5.4
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+    - php: 7.2
+    - php: nightly
     - php: hhvm
+  allow_failures:
+    - php: nightly
+    - php: hhvm
+
+#addons:
+#  apt:
+#    packages:
+#      - oracle-java8-set-default
+
+install:
+  - if [[ $TRAVIS_PHP_VERSION == hhvm ]]; then composer require --dev "phpunit/phpunit:^5"; fi
+  - if [[ $TRAVIS_PHP_VERSION == 7.0 ]]; then composer require --dev "phpunit/phpunit:^6"; fi
+  - if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then composer require --dev "phpunit/phpunit:^5"; fi
+  - if [[ $TRAVIS_PHP_VERSION == 5.5 ]]; then composer require --dev "phpunit/phpunit:^4"; fi
+  - if [[ $TRAVIS_PHP_VERSION == 5.4 ]]; then composer require --dev "phpunit/phpunit:^4" "php-coveralls/php-coveralls:^1"; fi
+  - if [[ $TRAVIS_PHP_VERSION == 5.3 ]]; then composer require --dev "phpunit/phpunit:^4" "php-coveralls/php-coveralls:^1"; fi
+  - composer install
+#  - |
+#    if [ ! -f "$HOME/mc-server/spigot-1.12.2.jar" ]; then
+#      mkdir -p $HOME/mc-server
+#      wget https://cdn.getbukkit.org/spigot/spigot-1.12.2.jar -P $HOME/mc-server/
+#    fi
+#  - printf "eula=true" > $HOME/mc-server/eula.txt
+#  - |
+#    if [ ! -f "$HOME/mc-server/plugins/votifier-1.9.jar" ]; then
+#      mkdir -p $HOME/mc-server/plugins
+#      wget http://addons-origin.cursecdn.com/files/886/407/votifier-1.9.jar -P $HOME/mc-server/plugins/
+#    fi
+#  - java -Xms512M -Xmx1024M -jar $HOME/mc-server/spigot-1.12.2.jar
+
+script:
+#  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); composer run test
+  - composer run test
+
+after_script:
+  - |
+    if [ -f "build/logs/clover.xml" ]; then
+      composer run upload-coveralls
+      composer run upload-scrutinizer
+    fi
 
 notifications:
   email: false
