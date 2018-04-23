@@ -20,19 +20,43 @@ composer require d3strukt0r/votifier-client
 
 ## Usage
 
-Simply create an object with all informations and then send it.
+Simply create an object with all informations
+
+(For server with the classic Votifier plugins)
 ```php
-use Votifier\Client\Vote;
+use D3strukt0r\VotifierClient\ServerType\ClassicVotifier;
+use D3strukt0r\VotifierClient\Vote;
+use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 
-$vote = new Vote(
-    '127.0.0.1',
-    8192,
-    'MIIBIjANBgkqhkiG9w0BAQEFAA....',
-    $_POST['username'],
-    'My own list',
-    $_SERVER['REMOTE_ADDR']
-);
+$serverType = new ClassicVotifier('127.0.0.1', null, 'MIIBIjANBgkq...');
+$voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
+$vote = new Vote($voteType, $serverType);
+```
 
+(For server which use the NuVotifier plugin (v1 protocol) (HINT: It's EXATCLY the same like method 1))
+```php
+use D3strukt0r\VotifierClient\ServerType\NuVotifier;
+use D3strukt0r\VotifierClient\Vote;
+use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+
+$serverType = new NuVotifier('127.0.0.1', null, 'MIIBIjANBgkq...');
+$voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
+$vote = new Vote($voteType, $serverType);
+```
+
+(For server which use the NuVotifier plugin with v2 protocol)
+```php
+use D3strukt0r\VotifierClient\ServerType\NuVotifier;
+use D3strukt0r\VotifierClient\Vote;
+use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+
+$serverType = new NuVotifier('127.0.0.1', null, 'MIIBIjANBgkq...', true, '7j302r4n...');
+$voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
+$vote = new Vote($voteType, $serverType);
+```
+
+and then send it.
+```php
 try {
     $vote->send();
     // Connection created, and vote sent. Doesn't mean the server handled it correctly, but the client did.
@@ -40,9 +64,3 @@ try {
     // Could not send Vote. Normally this happens when the client can't create a connection.
 }
 ```
-
-## API
-
-You can use these function:
-  * **__contruct($server_ip, $votifier_port, $public_key, $username, $server_list, $user_ip)**, initialized the object with the required informations
-  * **send()**, creates socket to the server and sends the vote package

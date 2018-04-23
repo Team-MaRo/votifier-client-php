@@ -13,3 +13,4 @@ composer.phar
 #################
 /build/
 .php_cs.cache
+*.phar

@@ -3,10 +3,14 @@ language: php
 sudo: false
 dist: trusty
 
+notifications:
+  email: false
+
 cache:
   directories:
     - $HOME/.composer/cache/files
 #    - $HOME/mc-server
+    - $HOME/bin
 
 matrix:
   fast_finish: true
@@ -23,7 +27,6 @@ matrix:
     - php: hhvm
   allow_failures:
     - php: nightly
-    - php: hhvm
 
 #addons:
 #  apt:
@@ -31,13 +34,59 @@ matrix:
 #      - oracle-java8-set-default
 
 install:
-  - if [[ $TRAVIS_PHP_VERSION == hhvm ]]; then composer require --dev "phpunit/phpunit:^5"; fi
-  - if [[ $TRAVIS_PHP_VERSION == 7.0 ]]; then composer require --dev "phpunit/phpunit:^6"; fi
-  - if [[ $TRAVIS_PHP_VERSION == 5.6 ]]; then composer require --dev "phpunit/phpunit:^5"; fi
-  - if [[ $TRAVIS_PHP_VERSION == 5.5 ]]; then composer require --dev "phpunit/phpunit:^4"; fi
-  - if [[ $TRAVIS_PHP_VERSION == 5.4 ]]; then composer require --dev "phpunit/phpunit:^4" "php-coveralls/php-coveralls:^1"; fi
-  - if [[ $TRAVIS_PHP_VERSION == 5.3 ]]; then composer require --dev "phpunit/phpunit:^4" "php-coveralls/php-coveralls:^1"; fi
   - composer install
+  - |
+    if [ ! -f "$HOME/bin/phpunit-7" ]; then
+      wget -O $HOME/bin/phpunit-7 https://phar.phpunit.de/phpunit-7.phar
+      chmod +x $HOME/bin/phpunit-7
+    fi
+  - |
+    if [ ! -f "$HOME/bin/phpunit-6" ]; then
+      wget -O $HOME/bin/phpunit-6 https://phar.phpunit.de/phpunit-6.phar
+      chmod +x $HOME/bin/phpunit-6
+    fi
+  - |
+    if [ ! -f "$HOME/bin/phpunit-5" ]; then
+      wget -O $HOME/bin/phpunit-5 https://phar.phpunit.de/phpunit-5.phar
+      chmod +x $HOME/bin/phpunit-5
+    fi
+  - |
+    if [ ! -f "$HOME/bin/phpunit-4" ]; then
+      wget -O $HOME/bin/phpunit-4 https://phar.phpunit.de/phpunit-4.phar
+      chmod +x $HOME/bin/phpunit-4
+    fi
+  - |
+    if [[ $TRAVIS_PHP_VERSION == 5.3 ]] || [[ $TRAVIS_PHP_VERSION == 5.4 ]] || [[ $TRAVIS_PHP_VERSION == 5.5 ]]; then
+      ln -s $HOME/bin/phpunit-4 phpunit
+    elif [[ $TRAVIS_PHP_VERSION == 5.6 ]] || [[ $TRAVIS_PHP_VERSION == hhvm ]]; then
+      ln -s $HOME/bin/phpunit-5 phpunit
+    elif [[ $TRAVIS_PHP_VERSION == 7.0 ]]; then
+      ln -s $HOME/bin/phpunit-6 phpunit
+    else
+      ln -s $HOME/bin/phpunit-7 phpunit
+    fi
+  - |
+    if [ ! -f "$HOME/bin/coveralls-2" ]; then
+      wget -O $HOME/bin/coveralls-2 https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar
+      chmod +x $HOME/bin/coveralls-2
+    fi
+  - |
+    if [ ! -f "$HOME/bin/coveralls-1" ]; then
+      wget -O $HOME/bin/coveralls-1 https://github.com/php-coveralls/php-coveralls/releases/download/v1.1.0/coveralls.phar
+      chmod +x $HOME/bin/coveralls-1
+    fi
+  - |
+    if [[ $TRAVIS_PHP_VERSION == 5.3 ]] || [[ $TRAVIS_PHP_VERSION == 5.4 ]]; then
+      ln -s $HOME/bin/coveralls-1 coveralls
+    else
+      ln -s $HOME/bin/coveralls-2 coveralls
+    fi
+  - |
+    if [ ! -f "$HOME/bin/ocular" ]; then
+      wget -O $HOME/bin/ocular https://scrutinizer-ci.com/ocular.phar
+      chmod +x $HOME/bin/ocular
+    fi
+  - ln -s $HOME/bin/ocular ocular
 #  - |
 #    if [ ! -f "$HOME/mc-server/spigot-1.12.2.jar" ]; then
 #      mkdir -p $HOME/mc-server
@@ -52,15 +101,12 @@ install:
 #  - java -Xms512M -Xmx1024M -jar $HOME/mc-server/spigot-1.12.2.jar
 
 script:
-#  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); composer run test
-  - composer run test
+#  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); ./phpunit
+  - ./phpunit
 
 after_script:
   - |
     if [ -f "build/logs/clover.xml" ]; then
-      composer run upload-coveralls
-      composer run upload-scrutinizer
+      ./coveralls -v
+      ./ocular code-coverage:upload --format=php-clover build/logs/clover.xml
     fi
-
-notifications:
-  email: false
