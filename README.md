@@ -64,3 +64,7 @@ try {
     // Could not send Vote. Normally this happens when the client can't create a connection.
 }
 ```
+
+## API
+
+Can be found on https://d3strukt0r.github.io/Votifier-PHP-Client/
