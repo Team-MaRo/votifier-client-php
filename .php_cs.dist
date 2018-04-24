@@ -1,15 +1,26 @@
 <?php
 
+$year = \date('Y');
+$header = <<<EOF
+Votifier PHP Client
+
+@package   VotifierClient
+@author    Manuele Vaccari <manuele.vaccari@gmail.com>
+@copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+@license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
+@link      https://github.com/D3strukt0r/Votifier-PHP-Client
+EOF;
+
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
 ;
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
-    ->setRules([
+    ->setRules(array(
         '@Symfony' => true,
         '@Symfony:risky' => true,
-        'array_syntax' => ['syntax' => 'long'],
+        'array_syntax' => array('syntax' => 'long'),
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,
         'no_php4_constructor' => true,
@@ -22,7 +33,11 @@ return PhpCsFixer\Config::create()
         'semicolon_after_instruction' => true,
         'strict_comparison' => true,
         'strict_param' => true,
-    ])
+        'header_comment' => array(
+            'commentType' => 'PHPDoc',
+            'header' => $header,
+        ),
+    ))
     ->setFinder($finder)
     ->setCacheFile(__DIR__.'/.php_cs.cache')
 ;

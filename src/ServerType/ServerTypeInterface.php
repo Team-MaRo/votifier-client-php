@@ -1,10 +1,25 @@
 <?php
 
+/**
+ * Votifier PHP Client
+ *
+ * @package   VotifierClient
+ *
+ * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
+ *
+ * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ */
+
 namespace D3strukt0r\VotifierClient\ServerType;
 
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 
+/**
+ * The interface ServerTypeInterface is used to define a PluginType on the server.
+ */
 interface ServerTypeInterface
 {
     /**
@@ -31,7 +46,7 @@ interface ServerTypeInterface
     /**
      * Verifies that the connection is correct.
      *
-     * @param string $header
+     * @param string $header (Required) The header that the plugin usually sends
      *
      * @return bool
      */
@@ -40,8 +55,8 @@ interface ServerTypeInterface
     /**
      * Sends the vote package to the server.
      *
-     * @param \D3strukt0r\VotifierClient\ServerConnection       $connection
-     * @param \D3strukt0r\VotifierClient\VoteType\VoteInterface $vote
+     * @param ServerConnection $connection (Required) The connection type to the plugin
+     * @param VoteInterface    $vote       (Required) The vote type package
      *
      * @throws \Exception
      */

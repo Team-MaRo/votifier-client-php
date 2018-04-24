@@ -1,7 +1,22 @@
 <?php
 
+/**
+ * Votifier PHP Client
+ *
+ * @package   VotifierClient
+ *
+ * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
+ *
+ * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ */
+
 namespace D3strukt0r\VotifierClient;
 
+/**
+ * Internal use for translations.
+ */
 class Messages
 {
     const NOT_VOTIFIER = 1;
@@ -11,8 +26,10 @@ class Messages
     const NUVOTIFIER_SERVER_ERROR = 100;
 
     /**
-     * @param int    $messageCode
-     * @param string $language
+     * Translate and format a translation.
+     *
+     * @param int    $messageCode (Required) The message code to identify the required resource
+     * @param string $language    (Optional) The language code (e. g. en, de, es)
      *
      * @return string
      */

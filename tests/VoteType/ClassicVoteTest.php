@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Votifier PHP Client
+ *
+ * @package   VotifierClient
+ *
+ * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
+ *
+ * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ */
+
 namespace D3strukt0r\VotifierClient\VoteType;
 
 use PHPUnit\Framework\TestCase;

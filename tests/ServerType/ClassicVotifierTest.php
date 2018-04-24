@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Votifier PHP Client
+ *
+ * @package   VotifierClient
+ *
+ * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
+ *
+ * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ */
+
 namespace D3strukt0r\VotifierClient\ServerType;
 
 use D3strukt0r\VotifierClient\VoteType\ClassicVote;
@@ -10,9 +22,11 @@ class ClassicVotifierTest extends TestCase
     /** @var \D3strukt0r\VotifierClient\ServerType\ClassicVotifier */
     private $obj = null;
 
+    private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJv689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSGfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
+
     public function setUp()
     {
-        $this->obj = new ClassicVotifier('mock_host', 'mock_port', 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJv689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSGfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB');
+        $this->obj = new ClassicVotifier('mock_host', 'mock_port', $this->key);
     }
 
     public function tearDown()
@@ -29,7 +43,7 @@ class ClassicVotifierTest extends TestCase
     {
         $this->assertSame('mock_host', $this->obj->getHost());
         $this->assertSame('mock_port', $this->obj->getPort());
-        $key = wordwrap('MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJv689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSGfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB', 65, "\n", true);
+        $key = wordwrap($this->key, 65, "\n", true);
         $key = <<<EOF
 -----BEGIN PUBLIC KEY-----
 $key
