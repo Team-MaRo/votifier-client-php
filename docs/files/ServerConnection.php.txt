@@ -22,7 +22,7 @@ use D3strukt0r\VotifierClient\ServerType\ServerTypeInterface;
 class ServerConnection
 {
     /**
-     * @var \D3strukt0r\VotifierClient\ServerType\ServerTypeInterface The server type information package
+     * @var ServerTypeInterface The server type information package
      */
     private $serverType;
 

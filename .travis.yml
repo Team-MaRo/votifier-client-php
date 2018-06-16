@@ -59,7 +59,6 @@ script:
     else
       ./vendor/bin/phpunit
     fi
-  -
 
 after_script:
   - |

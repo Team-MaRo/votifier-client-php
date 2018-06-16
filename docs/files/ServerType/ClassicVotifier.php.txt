@@ -89,7 +89,7 @@ EOF;
     /**
      * {@inheritdoc}
      *
-     * @param string $header (Required) The header that the plugin usually sends
+     * @param bool|string $header (Required) The header that the plugin usually sends
      *
      * @return bool
      */
