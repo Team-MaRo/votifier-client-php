@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="PHP_CodeSniffer"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+    <description>A library in PHP to connect to a Minecraft server's Votifier plugin.</description>
+
+    <file>src/</file>
+    <file>tests/</file>
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg name="parallel" value="75"/>
+
+    <!-- Include the whole PSR1 and PSR2 standards -->
+    <rule ref="PSR1" />
+    <rule ref="PSR2" />
+</ruleset>

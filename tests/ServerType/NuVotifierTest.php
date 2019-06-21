@@ -22,7 +22,10 @@ class NuVotifierTest extends TestCase
     /** @var \D3strukt0r\VotifierClient\ServerType\NuVotifier */
     private $obj2 = null;
 
-    private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJv689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSGfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
+    private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJ'.
+    'v689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu'.
+    '9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSG'.
+    'fUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
 
     public function setUp(): void
     {
@@ -65,8 +68,12 @@ EOF;
 
     public function testPackagePreparationV2(): void
     {
-        $string = $this->obj->preparePackageV2(new ClassicVote('mock_user', 'mock_service', 'mock_address'), 'mock_challenge');
+        $testVote = new ClassicVote('mock_user', 'mock_service', 'mock_address');
+        $string = $this->obj->preparePackageV2($testVote, 'mock_challenge');
         $this->assertStringStartsWith('s:', $string);
-        $this->assertStringEndsWith('{"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=","payload":"{\"username\":\"mock_user\",\"serviceName\":\"mock_service\",\"timestamp\":null,\"address\":\"mock_address\",\"challenge\":\"mock_challenge\"}"}', $string);
+        $testResultV2 = '{"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=","payload":"{\"username\":\"mock_'.
+                        'user\",\"serviceName\":\"mock_service\",\"timestamp\":null,\"address\":\"mock_address\",\"cha'.
+                        'llenge\":\"mock_challenge\"}"}';
+        $this->assertStringEndsWith($testResultV2, $string);
     }
 }

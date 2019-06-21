@@ -48,7 +48,7 @@ interface ServerTypeInterface
      *
      * @return bool
      */
-    public function verifyConnection($header): bool;
+    public function verifyConnection(?string $header): bool;
 
     /**
      * Sends the vote package to the server.

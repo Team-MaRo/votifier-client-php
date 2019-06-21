@@ -7,6 +7,7 @@
 
 [![Travis](https://img.shields.io/travis/D3strukt0r/Votifier-PHP-Client.svg)](https://travis-ci.org/D3strukt0r/Votifier-PHP-Client)
 [![Coveralls](https://img.shields.io/coveralls/D3strukt0r/Votifier-PHP-Client.svg)](https://coveralls.io/github/D3strukt0r/Votifier-PHP-Client)
+[![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/Votifier-PHP-Client.svg)](https://scrutinizer-ci.com/g/D3strukt0r/Votifier-PHP-Client/)
 [![SensioLabs Insight](https://img.shields.io/sensiolabs/i/6a04543f-6719-4a46-b7a2-625713314753.svg)](https://insight.sensiolabs.com/projects/6a04543f-6719-4a46-b7a2-625713314753)
 
 This php script allows easy using of the Bukkit plugin Votifier
@@ -23,6 +24,8 @@ What things you need to install the software and how to install them
 PHP Project (PHP 7.1+)
 Minecraft server with the Votifier plugin
 ```
+
+**Starting from version 3.0.0, only PHP version 7.1 and up is supported.**
 
 ### Installing
 
@@ -102,8 +105,16 @@ php php-cs-fixer fix
 
 Download PHP_CodeSniffer from [here](https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar) and [here](https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar).
 
+To see what mistakes exist in the code run:
+
 ```bash
-Will be added later
+php phpcs
+```
+
+And to fix it:
+
+```bash
+php phpcbf
 ```
 
 ### Code documentation
@@ -124,7 +135,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Manuele Vaccari** - *Initial work* - [D3strukt0r](https://github.com/D3strukt0r)
+*   **Manuele Vaccari** - *Initial work* - [D3strukt0r](https://github.com/D3strukt0r)
 
 See also the list of [contributors](https://github.com/D3strukt0r/Votifier-PHP-Client/contributors) who participated in this project.
 
@@ -134,4 +145,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used (Especially Stackoverflow)
+*   Hat tip to anyone who's code was used (Especially Stackoverflow)

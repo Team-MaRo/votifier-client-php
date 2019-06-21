@@ -28,6 +28,7 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
+        "ext-mbstring": "*",
         "ext-openssl": "*",
         "ext-pcre": "*"
     },
@@ -55,6 +56,7 @@
             ".editorconfig",
             ".gitignore",
             ".php_cs.dist",
+            ".phpcs.xml",
             ".scrutinizer.yml",
             ".travis.yml",
             "CONTRIBUTING.md",
