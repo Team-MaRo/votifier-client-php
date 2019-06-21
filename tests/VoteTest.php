@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -23,20 +21,20 @@ class VoteTest extends TestCase
     /** @var \D3strukt0r\VotifierClient\Vote */
     private $obj = null;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->obj = new Vote(
             new ClassicVote('mock_user', 'mock_service', 'mock_address'),
-            new ClassicVotifier('mock_host', 'mock_port', 'mock_key')
+            new ClassicVotifier('mock_host', 00000, 'mock_key')
         );
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->obj = null;
     }
 
-    public function testInstanceOf()
+    public function testInstanceOf(): void
     {
         $this->assertInstanceOf('D3strukt0r\VotifierClient\Vote', $this->obj);
     }

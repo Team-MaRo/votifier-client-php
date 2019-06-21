@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -49,7 +47,7 @@ class Vote
      *
      * @throws \Exception
      */
-    public function send()
+    public function send(): void
     {
         $con = new ServerConnection($this->server);
 

@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -27,21 +25,21 @@ interface ServerTypeInterface
      *
      * @return string
      */
-    public function getHost();
+    public function getHost(): string;
 
     /**
      * Returns the port.
      *
      * @return int
      */
-    public function getPort();
+    public function getPort(): int;
 
     /**
      * Returns the public key.
      *
      * @return string
      */
-    public function getPublicKey();
+    public function getPublicKey(): string;
 
     /**
      * Verifies that the connection is correct.
@@ -50,7 +48,7 @@ interface ServerTypeInterface
      *
      * @return bool
      */
-    public function verifyConnection($header);
+    public function verifyConnection($header): bool;
 
     /**
      * Sends the vote package to the server.
@@ -60,5 +58,5 @@ interface ServerTypeInterface
      *
      * @throws \Exception
      */
-    public function send(ServerConnection $connection, VoteInterface $vote);
+    public function send(ServerConnection $connection, VoteInterface $vote): void;
 }

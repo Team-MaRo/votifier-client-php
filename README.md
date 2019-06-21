@@ -1,5 +1,5 @@
-Votifier PHP Client
-=================
+# Votifier PHP Client
+
 [![Packagist](https://img.shields.io/packagist/v/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client)
 [![Packagist Pre Release](https://img.shields.io/packagist/vpre/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client)
 [![Packagist](https://img.shields.io/packagist/dt/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client)
@@ -7,18 +7,31 @@ Votifier PHP Client
 
 [![Travis](https://img.shields.io/travis/D3strukt0r/Votifier-PHP-Client.svg)](https://travis-ci.org/D3strukt0r/Votifier-PHP-Client)
 [![Coveralls](https://img.shields.io/coveralls/D3strukt0r/Votifier-PHP-Client.svg)](https://coveralls.io/github/D3strukt0r/Votifier-PHP-Client)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/7cce6f21-d05b-4b97-9191-080bc88d704d.svg)](https://insight.sensiolabs.com/projects/7cce6f21-d05b-4b97-9191-080bc88d704d)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/6a04543f-6719-4a46-b7a2-625713314753.svg)](https://insight.sensiolabs.com/projects/6a04543f-6719-4a46-b7a2-625713314753)
 
-This php script allows easy using of the bukkit plugin Votifier
+This php script allows easy using of the Bukkit plugin Votifier
 
-## Installation
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+What things you need to install the software and how to install them
+
+```
+PHP Project (PHP 7.1+)
+Minecraft server with the Votifier plugin
+```
+
+### Installing
 
 Add the client using [Composer](http://getcomposer.org/).
 ```bash
 composer require d3strukt0r/votifier-client
 ```
 
-## Usage
+### Usage
 
 Simply create an object with all informations
 
@@ -65,6 +78,60 @@ try {
 }
 ```
 
-## API
+The full API documentation can be found on [https://d3strukt0r.github.io/Votifier-PHP-Client/api]()
 
-Can be found on https://d3strukt0r.github.io/Votifier-PHP-Client/
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Break down into end to end tests
+
+Run test scripts
+
+```bash
+./vendor/bin/phpunit
+```
+
+### Coding style tests and fixes
+
+Download PHP CS Fixer from [here](https://cs.symfony.com/download/php-cs-fixer-v2.phar) and rename to `php-cs-fixer`.
+
+```bash
+php php-cs-fixer fix
+```
+
+Download PHP_CodeSniffer from [here](https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar) and [here](https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar).
+
+```bash
+Will be added later
+```
+
+### Code documentation
+
+Download `phpDocumentor.phar` from [here](http://phpdoc.org/phpDocumentor.phar) and rename to `phpdoc`.
+
+```bash
+php phpdoc -d ./src -t ./docs/api
+```
+
+## Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/D3strukt0r/Votifier-PHP-Client/tags).
+
+## Authors
+
+* **Manuele Vaccari** - *Initial work* - [D3strukt0r](https://github.com/D3strukt0r)
+
+See also the list of [contributors](https://github.com/D3strukt0r/Votifier-PHP-Client/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone who's code was used (Especially Stackoverflow)

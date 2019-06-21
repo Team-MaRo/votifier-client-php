@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -21,7 +19,7 @@ class MessagesTest extends TestCase
     /** @var \D3strukt0r\VotifierClient\Vote */
     private $obj = null;
 
-    public function testValidTranslation()
+    public function testValidTranslation(): void
     {
         $this->assertSame('The connection does not belong to Votifier', Messages::get(Messages::NOT_VOTIFIER));
         $this->assertSame('Couldn\'t write to remote host', Messages::get(Messages::NOT_SENT_PACKAGE));
@@ -29,15 +27,15 @@ class MessagesTest extends TestCase
         $this->assertSame('Votifier server error: {0}: {1}', Messages::get(Messages::NUVOTIFIER_SERVER_ERROR));
     }
 
-    public function testArgs()
+    public function testArgs(): void
     {
         $this->assertSame(
             'Votifier server error: cause: error',
-            Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, null, array(0 => 'cause', 1 => 'error'))
+            Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, 'en', array(0 => 'cause', 1 => 'error'))
         );
         $this->assertSame(
             'Votifier server error: cause: error',
-            Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, null, 'cause', 'error')
+            Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, 'en', 'cause', 'error')
         );
     }
 }

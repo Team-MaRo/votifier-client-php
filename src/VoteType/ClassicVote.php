@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -47,7 +45,7 @@ class ClassicVote implements VoteInterface
      * @param string         $address     (Required) The IP Address of the user
      * @param \DateTime|null $timestamp   (Optional) The time when the vote will be sent
      */
-    public function __construct($username, $serviceName, $address, \DateTime $timestamp = null)
+    public function __construct(string $username, string $serviceName, string $address, \DateTime $timestamp = null)
     {
         // Replace username to letters, numbers and "_"
         $this->username = preg_replace('/[^A-Za-z0-9_]+/', '', $username);
@@ -59,7 +57,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return $this->serviceName;
     }
@@ -67,7 +65,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -75,7 +73,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
@@ -83,7 +81,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getTimestamp()
+    public function getTimestamp(): ?int
     {
         if (null !== $this->timestamp) {
             return $this->timestamp->getTimestamp();
@@ -94,12 +92,8 @@ class ClassicVote implements VoteInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @param \DateTime|null $timestamp (Optional) Either give a wanted timestamp or it will use the current time
-     *
-     * @return $this
      */
-    public function setTimestamp(\DateTime $timestamp = null)
+    public function setTimestamp(\DateTime $timestamp = null): self
     {
         $this->timestamp = $timestamp ?: new \DateTime();
 

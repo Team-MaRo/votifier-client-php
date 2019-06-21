@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -33,7 +31,7 @@ class Messages
      *
      * @return string
      */
-    public static function get($messageCode, $language = 'en')
+    public static function get(int $messageCode, string $language = 'en'): string
     {
         $messages = array(
             'en' => array(
@@ -46,11 +44,11 @@ class Messages
 
         $requestedMessage = $messages[$language ?: 'en'][$messageCode];
 
-        $argsCount = func_num_args();
+        $argsCount = \func_num_args();
 
         if ($argsCount > 2) {
             $firstArg = func_get_arg(2);
-            if (is_array($firstArg)) {
+            if (\is_array($firstArg)) {
                 foreach ($firstArg as $key => $value) {
                     $requestedMessage = str_replace('{'.$key.'}', $value, $requestedMessage);
                 }

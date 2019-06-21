@@ -4,11 +4,9 @@
  * Votifier PHP Client
  *
  * @package   VotifierClient
- *
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2018 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
  * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- *
  * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
  */
 
@@ -65,7 +63,7 @@ class ServerConnection
      *
      * @return bool
      */
-    public function send($string)
+    public function send(string $string): bool
     {
         if (!$this->s) {
             return false;
@@ -87,7 +85,7 @@ class ServerConnection
      *
      * @return bool|string
      */
-    public function receive($length = 64)
+    public function receive(int $length = 64)
     {
         if (!$this->s) {
             return false;

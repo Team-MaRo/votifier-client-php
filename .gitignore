@@ -12,5 +12,7 @@ composer.phar
 ## Project
 #################
 /build/
+.php_cs
 .php_cs.cache
+.phpunit.result.cache
 *.phar
