@@ -15,6 +15,7 @@ namespace D3strukt0r\VotifierClient\ServerType;
 use D3strukt0r\VotifierClient\Messages;
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use Exception;
 
 /**
  * The Class to access a server which uses the plugin "NuVotifier".
@@ -53,7 +54,7 @@ class NuVotifier extends ClassicVotifier
             if ($protocolV2) {
                 $publicKey = 'empty';
             } else {
-                throw new \Exception('When not using v2 for the protocol, the public key is required!');
+                throw new Exception('When not using v2 for the protocol, the public key is required!');
             }
         }
         parent::__construct($host, $port, $publicKey);
@@ -82,7 +83,7 @@ class NuVotifier extends ClassicVotifier
     public function verifyConnection(?string $header): bool
     {
         $header_parts = explode(' ', $header);
-        if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== \count($header_parts)) {
+        if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== count($header_parts)) {
             return false;
         }
 
@@ -109,9 +110,7 @@ class NuVotifier extends ClassicVotifier
         $signature = base64_encode(hash_hmac('sha256', $payloadJson, $this->token, true));
         $messageJson = json_encode(array('signature' => $signature, 'payload' => $payloadJson));
 
-        $payload = pack('nn', 0x733a, mb_strlen($messageJson)).$messageJson;
-
-        return $payload;
+        return pack('nn', 0x733a, mb_strlen($messageJson)).$messageJson;
     }
 
     /**
@@ -131,23 +130,23 @@ class NuVotifier extends ClassicVotifier
         }
 
         if (!$this->verifyConnection($header = $connection->receive(64))) {
-            throw new \Exception(Messages::get(Messages::NOT_VOTIFIER));
+            throw new Exception(Messages::get(Messages::NOT_VOTIFIER));
         }
         $header_parts = explode(' ', $header);
         $challenge = mb_substr($header_parts[2], 0, -1);
         $payload = $this->preparePackageV2($vote, $challenge);
 
         if (false === $connection->send($payload)) {
-            throw new \Exception(Messages::get(Messages::NOT_SENT_PACKAGE));
+            throw new Exception(Messages::get(Messages::NOT_SENT_PACKAGE));
         }
 
         if (!$response = $connection->receive(256)) {
-            throw new \Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE));
+            throw new Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE));
         }
 
         $result = json_decode($response);
         if ('ok' !== $result->status) {
-            throw new \Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE, null, $result->cause, $result->error));
+            throw new Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE, null, $result->cause, $result->error));
         }
     }
 }

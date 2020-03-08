@@ -13,6 +13,7 @@
 namespace D3strukt0r\VotifierClient;
 
 use D3strukt0r\VotifierClient\ServerType\ServerTypeInterface;
+use Exception;
 
 /**
  * The class ServerConnection is used to create a connection to a server.
@@ -41,7 +42,7 @@ class ServerConnection
         $this->serverType = $serverType;
         $s = fsockopen($serverType->getHost(), $serverType->getPort(), $errno, $errstr, 3);
         if (false === $s) {
-            throw new \Exception($errstr, $errno);
+            throw new Exception($errstr, $errno);
         }
         $this->s = $s;
     }

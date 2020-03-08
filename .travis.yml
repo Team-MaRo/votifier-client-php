@@ -1,7 +1,11 @@
+os: linux
+dist: bionic
 language: php
-
-sudo: false
-dist: trusty
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
 
 notifications:
   email: false
@@ -10,16 +14,6 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 #    - $HOME/mc-server
-
-matrix:
-  fast_finish: true
-  include:
-    - php: "7.1"
-    - php: "7.2"
-    - php: "7.3"
-    - php: nightly
-  allow_failures:
-    - php: nightly
 
 #addons:
 #  apt:
@@ -42,7 +36,7 @@ install:
 #  - java -Xms512M -Xmx1024M -jar $HOME/mc-server/spigot-1.12.2.jar
 
 script:
-#  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); ./phpunit
+  #  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); ./phpunit
   - ./vendor/bin/phpunit
 
 after_script:

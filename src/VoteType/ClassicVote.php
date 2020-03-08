@@ -12,6 +12,8 @@
 
 namespace D3strukt0r\VotifierClient\VoteType;
 
+use DateTime;
+
 /**
  * The classic vote package can be used by most plugins.
  */
@@ -45,7 +47,7 @@ class ClassicVote implements VoteInterface
      * @param string         $address     (Required) The IP Address of the user
      * @param \DateTime|null $timestamp   (Optional) The time when the vote will be sent
      */
-    public function __construct(string $username, string $serviceName, string $address, \DateTime $timestamp = null)
+    public function __construct(string $username, string $serviceName, string $address, DateTime $timestamp = null)
     {
         // Replace username to letters, numbers and "_"
         $this->username = preg_replace('/[^A-Za-z0-9_]+/', '', $username);
@@ -93,9 +95,9 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function setTimestamp(\DateTime $timestamp = null): self
+    public function setTimestamp(DateTime $timestamp = null): self
     {
-        $this->timestamp = $timestamp ?: new \DateTime();
+        $this->timestamp = $timestamp ?: new DateTime();
 
         return $this;
     }

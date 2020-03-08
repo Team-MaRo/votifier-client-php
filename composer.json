@@ -7,9 +7,8 @@
         "vote",
         "votifier"
     ],
-    "homepage": "https://d3strukt0r.github.io/Votifier-PHP-Client/",
-    "time": "2015-09-06 21:52:00",
-    "license": "MIT",
+    "homepage": "https://github.com/D3strukt0r/votifier-client-php",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Manuele Vaccari",
@@ -20,20 +19,22 @@
     ],
     "support": {
     	"email": "manuele.vaccari@gmail.com",
-        "issues": "https://github.com/D3strukt0r/Votifier-PHP-Client/issues",
-        "wiki": "https://github.com/D3strukt0r/Votifier-PHP-Client/wiki",
-    	"source": "https://github.com/D3strukt0r/Votifier-PHP-Client",
-    	"docs": "https://d3strukt0r.github.io/Votifier-PHP-Client/"
+        "issues": "https://github.com/D3strukt0r/votifier-client-php/issues",
+        "wiki": "https://github.com/D3strukt0r/votifier-client-php/wiki",
+    	"source": "https://github.com/D3strukt0r/votifier-client-php",
+    	"docs": "https://d3strukt0r.github.io/votifier-client-php/api/"
     },
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
         "ext-mbstring": "*",
         "ext-openssl": "*",
-        "ext-pcre": "*"
+        "ext-pcre": "*",
+        "ext-hash": "*",
+        "ext-date": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8 || ^7",
+        "phpunit/phpunit": "^9 || ^8 || ^7",
         "php-coveralls/php-coveralls": "^2",
         "scrutinizer/ocular": "^1",
         "squizlabs/php_codesniffer": "^3.4"
@@ -50,6 +51,7 @@
     },
     "archive": {
         "exclude": [
+            "/.idea",
             "/build",
             "/docs",
             "/tests",

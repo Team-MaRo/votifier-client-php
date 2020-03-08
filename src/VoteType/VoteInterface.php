@@ -12,6 +12,8 @@
 
 namespace D3strukt0r\VotifierClient\VoteType;
 
+use DateTime;
+
 /**
  * The interface VoteInterface will be used for different kinds of vote packages.
  */
@@ -52,5 +54,5 @@ interface VoteInterface
      *
      * @return self
      */
-    public function setTimestamp(\DateTime $timestamp = null);
+    public function setTimestamp(DateTime $timestamp = null);
 }
