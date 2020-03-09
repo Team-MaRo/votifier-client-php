@@ -1,8 +1,22 @@
-# Votifier PHP Client
+# Votifier Client (for PHP)
 
-License | Versions | Downloads | Travis (master) | Travis (develop) | Coveralls | Scrutinizer | SensioLabs
---- | --- | --- | --- | --- | --- | --- | ---
-[![Packagist](https://img.shields.io/packagist/l/d3strukt0r/votifier-client.svg)](https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE) | Release<br />[![Packagist](https://img.shields.io/packagist/v/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client)<br />Pre-Release<br />[![Packagist Pre Release](https://img.shields.io/packagist/vpre/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client) | [![Packagist](https://img.shields.io/packagist/dt/d3strukt0r/votifier-client.svg)](https://packagist.org/packages/d3strukt0r/votifier-client) | [![Travis](https://img.shields.io/travis/D3strukt0r/votifier-client-php.svg)](https://travis-ci.org/D3strukt0r/votifier-client-php) | ... | ![Coveralls github](https://img.shields.io/coveralls/github/D3strukt0r/Votifier-PHP-Client) | [![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php.svg)](https://scrutinizer-ci.com/g/D3strukt0r/Votifier-PHP-Client/) | [![SymfonyInsight](https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/mini.svg)](https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f)
+**Project**
+
+[License](https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt) | Versions ([Packagist](https://packagist.org/packages/d3strukt0r/votifier-client)) | Downloads ([Packagist](https://packagist.org/packages/d3strukt0r/votifier-client)) | Required PHP Version
+--- | --- | --- | ---
+![Packagist](https://img.shields.io/packagist/l/d3strukt0r/votifier-client) | Release: ![Packagist Version](https://img.shields.io/packagist/v/d3strukt0r/votifier-client)<br />Pre-Release: ![Packagist Version (including pre-releases)](https://img.shields.io/packagist/v/d3strukt0r/votifier-client?include_prereleases) | ![Packagist](https://img.shields.io/packagist/dt/d3strukt0r/votifier-client) | ![PHP from Packagist](https://img.shields.io/packagist/php-v/d3strukt0r/votifier-client)
+
+**master**-branch (alias stable, latest)
+
+[Travis](https://travis-ci.com/D3strukt0r/votifier-client-php) | [Coveralls](https://coveralls.io/github/D3strukt0r/Votifier-PHP-Client) | [Scrutinizer](https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/) | [SensioLabs](https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f) | [Read the Docs](https://readthedocs.org/projects/votifier-client-php/)
+--- | --- | --- | --- | ---
+![Travis (.com) branch](https://img.shields.io/travis/com/D3strukt0r/votifier-client-php/master) | ![Coveralls github branch](https://img.shields.io/coveralls/github/D3strukt0r/Votifier-PHP-Client/master) | ![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master) | ![SymfonyInsight](https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/mini.svg) | ![Read the Docs (version)](https://img.shields.io/readthedocs/votifier-client-php/stable)
+
+**develop**-branch (alias nightly)
+
+[Travis](https://travis-ci.com/D3strukt0r/votifier-client-php) | [Coveralls](https://coveralls.io/github/D3strukt0r/Votifier-PHP-Client) | [Scrutinizer](https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/)
+--- | --- | ---
+![Travis (.com) branch](https://img.shields.io/travis/com/D3strukt0r/votifier-client-php/develop) | ![Coveralls github branch](https://img.shields.io/coveralls/github/D3strukt0r/Votifier-PHP-Client/develop) | ![Scrutinizer code quality (GitHub/Bitbucket)](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop)
 
 This php script allows easy using of the Bukkit plugin Votifier
 
