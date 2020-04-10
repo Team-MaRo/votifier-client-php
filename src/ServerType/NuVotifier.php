@@ -137,7 +137,7 @@ class NuVotifier extends ClassicVotifier
 
         $result = json_decode($response);
         if ('ok' !== $result->status) {
-            throw new Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE, null, $result->cause, $result->error));
+            throw new Exception(Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, null, $result->cause, $result->error));
         }
     }
 }

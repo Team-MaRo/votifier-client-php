@@ -17,7 +17,7 @@ Messages
 
     .. php:const:: NUVOTIFIER_SERVER_ERROR
 
-    .. php:staticmethod:: public get($messageCode[, $language = 'en']) -> string
+    .. php:staticmethod:: public get($messageCode[, $language = null]) -> string
 
         Translate and format a translation.
 
