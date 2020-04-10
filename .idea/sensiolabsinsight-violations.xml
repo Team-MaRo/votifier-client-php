@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysis>
+  <link href="https://insight.sensiolabs.com/api/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1" rel="self" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/api/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1/status" rel="status" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/api/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f" rel="project" type="application/vnd.com.sensiolabs.insight+xml"/>
+  <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1" rel="self" type="text/html"/>
+  <status><![CDATA[finished]]></status>
+  <violations>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>5</line>
+      <resource><![CDATA[docs/api/.htaccess]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="1" end-line="5"><![CDATA[# Fixes a vulnerability in CentOS: http://stackoverflow.com/questions/20533279/prevent-php-from-parsing-non-php-files-such-as-somefile-php-txt
+<FilesMatch \.php\.txt$>
+    RemoveHandler .php
+    ForceType text/plain
+</FilesMatch>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625037" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="minor" category="deadcode" ignored="false">
+      <line>25</line>
+      <resource><![CDATA[src/ServerConnection.php]]></resource>
+      <title>Unused method, property, variable or parameter</title>
+      <message><![CDATA[This serverType attribute is declared but never used. You should remove it.]]></message>
+      <context start-line="20" end-line="30"><![CDATA[class ServerConnection
+{
+    /**
+     * @var ServerTypeInterface The server type information package
+     */
+    private $serverType;
+
+    /**
+     * @var resource The connection to the server
+     */
+    private $s;]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625036" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="performance" ignored="false">
+      <line>0</line>
+      <resource><![CDATA[docs/api/.htaccess]]></resource>
+      <title>.htaccess should be avoided</title>
+      <message><![CDATA[A .htaccess file has been spotted. You should consider moving it to the server configuration to improve global performances.]]></message>
+      <context/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625038" rel="self" type="text/html"/>
+    </violation>
+  </violations>
+  <grades>
+    <entry><![CDATA[none]]></entry>
+    <entry><![CDATA[bronze]]></entry>
+    <entry><![CDATA[silver]]></entry>
+    <entry><![CDATA[gold]]></entry>
+    <entry><![CDATA[platinum]]></entry>
+  </grades>
+  <failed>false</failed>
+  <grade><![CDATA[silver]]></grade>
+  <next-grade><![CDATA[gold]]></next-grade>
+  <begin-at><![CDATA[2020-03-08T21:10:24+0100]]></begin-at>
+  <end-at><![CDATA[2020-03-08T21:11:15+0100]]></end-at>
+  <duration>2</duration>
+  <number>1</number>
+  <altered>false</altered>
+  <remediation-cost>1.5</remediation-cost>
+  <nb-violations>3</nb-violations>
+  <reference><![CDATA[80f949b9f5a7fc207bbab16a699577cde9d5e876]]></reference>
+  <launched-by><![CDATA[xlpixel]]></launched-by>
+  <configuration>
+    <ignored-branches>
+      <branch><![CDATA[gh-pages]]></branch>
+    </ignored-branches>
+    <pre-composer-script/>
+    <post-composer-script/>
+    <working-directory/>
+    <php-version/>
+    <php-ini/>
+    <commit-failure-conditions>
+      <branch><![CDATA[project.severity.critical > 0]]></branch>
+      <branch><![CDATA[project.severity.major > 0]]></branch>
+    </commit-failure-conditions>
+    <global-excluded-dirs>
+      <dir><![CDATA[vendor]]></dir>
+      <dir><![CDATA[vendors]]></dir>
+      <dir><![CDATA[test]]></dir>
+      <dir><![CDATA[tests]]></dir>
+      <dir><![CDATA[Tests]]></dir>
+      <dir><![CDATA[spec]]></dir>
+      <dir><![CDATA[features]]></dir>
+      <dir><![CDATA[Fixtures]]></dir>
+      <dir><![CDATA[DataFixtures]]></dir>
+      <dir><![CDATA[var]]></dir>
+    </global-excluded-dirs>
+    <excluded-patterns>
+      <pattern><![CDATA[app/check.php]]></pattern>
+      <pattern><![CDATA[app/SymfonyRequirements.php]]></pattern>
+      <pattern><![CDATA[public/index.php]]></pattern>
+      <pattern><![CDATA[web/config.php]]></pattern>
+      <pattern><![CDATA[web/app_*.php]]></pattern>
+      <pattern><![CDATA[config/bootstrap.php]]></pattern>
+    </excluded-patterns>
+    <patterns>
+      <file>
+        <pattern><![CDATA[*.php]]></pattern>
+        <pattern><![CDATA[*.twig]]></pattern>
+        <pattern><![CDATA[*.xml]]></pattern>
+        <pattern><![CDATA[*.yml]]></pattern>
+        <pattern><![CDATA[*.yaml]]></pattern>
+        <pattern><![CDATA[*.ini]]></pattern>
+        <pattern><![CDATA[*.dist]]></pattern>
+        <pattern><![CDATA[*.sql]]></pattern>
+        <pattern><![CDATA[*.md]]></pattern>
+        <pattern><![CDATA[*.rst]]></pattern>
+        <pattern><![CDATA[composer.*]]></pattern>
+        <pattern><![CDATA[.gitignore]]></pattern>
+        <pattern><![CDATA[LICENSE]]></pattern>
+        <pattern><![CDATA[README]]></pattern>
+        <pattern><![CDATA[Makefile]]></pattern>
+        <pattern><![CDATA[.htaccess]]></pattern>
+      </file>
+      <php>
+        <pattern><![CDATA[*.php]]></pattern>
+      </php>
+      <twig>
+        <pattern><![CDATA[*.twig]]></pattern>
+      </twig>
+    </patterns>
+    <rules>
+      <rule name="symfony.use_dir_file_constant" enabled="false"/>
+    </rules>
+    <parameters>
+      <parameter name="project_type">1</parameter>
+    </parameters>
+    <env/>
+    <notifications/>
+  </configuration>
+  <previous-analyses-references>
+    <analysis-reference number="1">80f949b9f5a7fc207bbab16a699577cde9d5e876</analysis-reference>
+  </previous-analyses-references>
+  <nb-violations-new>3</nb-violations-new>
+  <nb-violations-existing>0</nb-violations-existing>
+  <nb-violations-fixed>0</nb-violations-fixed>
+  <nb-violations-ignored>0</nb-violations-ignored>
+</analysis>

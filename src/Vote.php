@@ -5,9 +5,9 @@
  *
  * @package   VotifierClient
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
+ * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
 namespace D3strukt0r\VotifierClient;
@@ -21,12 +21,12 @@ use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 class Vote
 {
     /**
-     * @var \D3strukt0r\VotifierClient\VoteType\VoteInterface The vote package
+     * @var \D3strukt0r\VotifierClient\VoteType\VoteInterface the vote package
      */
     private $vote;
 
     /**
-     * @var \D3strukt0r\VotifierClient\ServerType\ServerTypeInterface The server type information package
+     * @var \D3strukt0r\VotifierClient\ServerType\ServerTypeInterface the server type information package
      */
     private $server;
 
@@ -34,7 +34,7 @@ class Vote
      * Created a Vote object.
      *
      * @param VoteInterface       $vote       (Required) The vote package
-     * @param ServerTypeInterface $serverType (Required) The server type information package
+     * @param serverTypeInterface $serverType (Required) The server type information package
      */
     public function __construct(VoteInterface $vote, ServerTypeInterface $serverType)
     {

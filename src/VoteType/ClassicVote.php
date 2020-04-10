@@ -5,9 +5,9 @@
  *
  * @package   VotifierClient
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
+ * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
 namespace D3strukt0r\VotifierClient\VoteType;
@@ -20,22 +20,22 @@ use DateTime;
 class ClassicVote implements VoteInterface
 {
     /**
-     * @var string The name of the list/service
+     * @var string the name of the list/service
      */
     private $serviceName;
 
     /**
-     * @var string The username who wants to receive the rewards
+     * @var string the username who wants to receive the rewards
      */
     private $username;
 
     /**
-     * @var string The IP Address of the user
+     * @var string the IP Address of the user
      */
     private $address;
 
     /**
-     * @var \DateTime|null The time when the vote will be sent
+     * @var \DateTime|null the time when the vote will be sent
      */
     private $timestamp;
 

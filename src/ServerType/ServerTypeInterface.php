@@ -5,9 +5,9 @@
  *
  * @package   VotifierClient
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
+ * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
 namespace D3strukt0r\VotifierClient\ServerType;
@@ -23,37 +23,37 @@ interface ServerTypeInterface
     /**
      * Returns the host.
      *
-     * @return string
+     * @return string returns the host
      */
     public function getHost(): string;
 
     /**
      * Returns the port.
      *
-     * @return int
+     * @return int returns the port
      */
     public function getPort(): int;
 
     /**
      * Returns the public key.
      *
-     * @return string
+     * @return string returns the public key
      */
     public function getPublicKey(): string;
 
     /**
      * Verifies that the connection is correct.
      *
-     * @param string $header (Required) The header that the plugin usually sends
+     * @param string|null $header (Required) The header that the plugin usually sends
      *
-     * @return bool
+     * @return bool returns true if connections is available, otherwise false
      */
     public function verifyConnection(?string $header): bool;
 
     /**
      * Sends the vote package to the server.
      *
-     * @param ServerConnection $connection (Required) The connection type to the plugin
+     * @param serverConnection $connection (Required) The connection type to the plugin
      * @param VoteInterface    $vote       (Required) The vote type package
      *
      * @throws \Exception

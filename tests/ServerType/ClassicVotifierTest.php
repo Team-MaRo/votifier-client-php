@@ -5,9 +5,9 @@
  *
  * @package   VotifierClient
  * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2019 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
- * @link      https://github.com/D3strukt0r/Votifier-PHP-Client
+ * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
+ * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
+ * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
 namespace D3strukt0r\VotifierClient\ServerType;
@@ -15,49 +15,53 @@ namespace D3strukt0r\VotifierClient\ServerType;
 use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
-class ClassicVotifierTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class ClassicVotifierTest extends TestCase
 {
     /** @var \D3strukt0r\VotifierClient\ServerType\ClassicVotifier */
-    private $obj = null;
+    private $obj;
 
     private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJ'.
     '.v689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEP'.
     'u9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrS'.
     'GfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->obj = new ClassicVotifier('mock_host', 00000, $this->key);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         $this->obj = null;
     }
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\VotifierClient\ServerType\ClassicVotifier', $this->obj);
+        static::assertInstanceOf('D3strukt0r\VotifierClient\ServerType\ClassicVotifier', $this->obj);
     }
 
     public function testValues(): void
     {
-        $this->assertSame('mock_host', $this->obj->getHost());
-        $this->assertSame(00000, $this->obj->getPort());
+        static::assertSame('mock_host', $this->obj->getHost());
+        static::assertSame(00000, $this->obj->getPort());
         $key = wordwrap($this->key, 65, "\n", true);
         $key = <<<EOF
 -----BEGIN PUBLIC KEY-----
-$key
+{$key}
 -----END PUBLIC KEY-----
 EOF;
-        $this->assertSame($key, $this->obj->getPublicKey());
+        static::assertSame($key, $this->obj->getPublicKey());
     }
 
     public function testHeaderVerification(): void
     {
-        $this->assertFalse($this->obj->verifyConnection(false));
-        $this->assertFalse($this->obj->verifyConnection('VOTFI'));
-        $this->assertTrue($this->obj->verifyConnection('VOTIFIER'));
+        static::assertFalse($this->obj->verifyConnection(false));
+        static::assertFalse($this->obj->verifyConnection('VOTFI'));
+        static::assertTrue($this->obj->verifyConnection('VOTIFIER'));
     }
 
     /*public function testPackagePreparation()

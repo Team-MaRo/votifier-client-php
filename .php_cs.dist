@@ -7,8 +7,8 @@ Votifier PHP Client
 @package   VotifierClient
 @author    Manuele Vaccari <manuele.vaccari@gmail.com>
 @copyright Copyright (c) 2017-$year Manuele Vaccari <manuele.vaccari@gmail.com>
-@license   https://github.com/D3strukt0r/Votifier-PHP-Client/blob/master/LICENSE.md MIT License
-@link      https://github.com/D3strukt0r/Votifier-PHP-Client
+@license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
+@link      https://github.com/D3strukt0r/votifier-client-php
 EOF;
 
 $finder = PhpCsFixer\Finder::create()
@@ -17,27 +17,21 @@ $finder = PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
-    ->setRules(array(
+    ->setRules([
+        '@PSR1' => true,
+        '@PSR2' => true,
+        '@PhpCsFixer' => true,
+        '@PhpCsFixer:risky' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
-        'array_syntax' => array('syntax' => 'long'),
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,
         'no_php4_constructor' => true,
-        'no_unreachable_default_argument_value' => true,
-        'no_useless_else' => true,
-        'no_useless_return' => true,
-        'ordered_imports' => true,
-        'php_unit_strict' => true,
-        'phpdoc_order' => true,
-        'semicolon_after_instruction' => true,
-        'strict_comparison' => true,
-        'strict_param' => true,
-        'header_comment' => array(
-            'commentType' => 'PHPDoc',
+        'header_comment' => [
+            'comment_type' => 'PHPDoc',
             'header' => $header,
-        ),
-    ))
+        ],
+    ])
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'/.php_cs.cache')
+    ->setCacheFile(__DIR__.'/.php_coding_standard_cache.json')
 ;

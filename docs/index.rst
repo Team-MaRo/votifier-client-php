@@ -1,20 +1,44 @@
-.. votifier-client-php documentation master file, created by
-   sphinx-quickstart on Mon Mar  9 17:18:20 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: First Steps
 
-Welcome to votifier-client-php's documentation!
-===============================================
+   pages/first-steps/prerequisities
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   :caption: Getting Started
 
+   pages/getting-started/votifier
+   pages/getting-started/nuvotifier
 
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: API
+
+   pages/api/index
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: About votifier-client-php
+
+   pages/about/story
+   pages/about/faq
+   pages/about/changelog
+   pages/about/contributing
+   pages/about/channels
+   pages/about/code-of-conduct
+   pages/about/sponsors
+
+===============================================
+Welcome to votifier-client-php's documentation!
+===============================================
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

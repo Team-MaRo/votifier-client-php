@@ -37,7 +37,8 @@ install:
 
 script:
   #  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); ./phpunit
-  - ./vendor/bin/phpunit
+  - composer run-script check
+  - composer run-script test
 
 after_script:
   - |
