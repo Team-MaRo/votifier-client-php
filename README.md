@@ -49,8 +49,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 The full documentation can be found on https://votifier-client-php-docs.manuele-vaccari.ch/
 
-The full API documentation can be found on https://d3strukt0r.github.io/votifier-client-php/api/
-
 ### Prerequisites
 
 What things you need to install the software and how to install them
