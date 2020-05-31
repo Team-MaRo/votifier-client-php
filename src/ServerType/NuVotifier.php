@@ -12,6 +12,7 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
+use function count;
 use D3strukt0r\VotifierClient\Messages;
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
@@ -41,7 +42,7 @@ class NuVotifier extends ClassicVotifier
      * @param bool        $protocolV2 (Optional) Use version 2 of the protocol (Recommended)
      * @param string|null $token      (Optional) To use version 2 protocol the token is needed from the config.yml.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(
         string $host,
@@ -79,7 +80,7 @@ class NuVotifier extends ClassicVotifier
     public function verifyConnection(?string $header): bool
     {
         $header_parts = explode(' ', $header);
-        if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== \count($header_parts)) {
+        if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== count($header_parts)) {
             return false;
         }
 
@@ -96,13 +97,15 @@ class NuVotifier extends ClassicVotifier
      */
     public function preparePackageV2(VoteInterface $vote, string $challenge): string
     {
-        $payloadJson = json_encode([
-            'username' => $vote->getUsername(),
-            'serviceName' => $vote->getServiceName(),
-            'timestamp' => $vote->getTimestamp(),
-            'address' => $vote->getAddress(),
-            'challenge' => $challenge,
-        ]);
+        $payloadJson = json_encode(
+            [
+                'username' => $vote->getUsername(),
+                'serviceName' => $vote->getServiceName(),
+                'timestamp' => $vote->getTimestamp(),
+                'address' => $vote->getAddress(),
+                'challenge' => $challenge,
+            ]
+        );
         $signature = base64_encode(hash_hmac('sha256', $payloadJson, $this->token, true));
         $messageJson = json_encode(['signature' => $signature, 'payload' => $payloadJson]);
 

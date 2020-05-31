@@ -15,12 +15,15 @@ namespace D3strukt0r\VotifierClient;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class MessagesTest.
+ *
+ * @covers \D3strukt0r\VotifierClient\Messages
+ *
  * @internal
- * @coversNothing
  */
 final class MessagesTest extends TestCase
 {
-    /** @var \D3strukt0r\VotifierClient\Vote */
+    /** @var Vote */
     private $obj;
 
     public function testValidTranslation(): void

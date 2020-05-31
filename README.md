@@ -4,26 +4,26 @@ This php script allows easy using of the Bukkit plugin Votifier
 
 **Project**
 
-[License][license] | Versions ([Packagist][packagist]) | Downloads ([Packagist][packagist]) | Required PHP Version
---- | --- | --- | ---
-![License][license-icon] | Release: ![Version][release-icon]<br />Pre-Release: ![Version (including pre-releases)][pre-release-icon] | ![Downloads on Packagist][downloads-icon] | ![Required PHP version][php-icon]
+| [License][license]       | Versions ([Packagist][packagist])                                                                       | Downloads ([Packagist][packagist])        | Required PHP Version              |
+|--------------------------|---------------------------------------------------------------------------------------------------------|-------------------------------------------|-----------------------------------|
+| ![License][license-icon] | Release: ![Version][release-icon]<br>Pre-Release: ![Version (including pre-releases)][pre-release-icon] | ![Downloads on Packagist][downloads-icon] | ![Required PHP version][php-icon] |
 
 **master**-branch (alias stable, latest)
 
-[Travis][travis] | [Coveralls][coveralls] | [Scrutinizer][scrutinizer] | [SensioLabs][sensiolabs] | [Read the Docs][rtfd]
---- | --- | --- | --- | ---
-![Build status][travis-master-icon] | ![Coveralls][coveralls-master-icon] | ![Scrutinizer code quality][scrutinizer-master-icon] | ![SymfonyInsight][insight-icon] | ![Docs build status][rtfd-master-icon]
+| [Travis CI][travis]                        | [Coveralls][coveralls]              | [Scrutinizer CI][scrutinizer]                                                                                   | [SensioLabs][sensiolabs]        | [Read the Docs][rtfd]                  |
+|--------------------------------------------|-------------------------------------|-----------------------------------------------------------------------------------------------------------------|---------------------------------|----------------------------------------|
+| ![Travis build status][travis-master-icon] | ![Coveralls][coveralls-master-icon] | ![Scrutinizer build status][scrutinizer-master-icon]<br>![Scrutinizer code quality][scrutinizer-cc-master-icon] | ![SymfonyInsight][insight-icon] | ![Docs build status][rtfd-master-icon] |
 
 **develop**-branch (alias nightly)
 
-[Travis][travis] | [Coveralls][coveralls] | [Scrutinizer][scrutinizer] | [Read the Docs][rtfd]
---- | --- | --- | ---
-![Build status][travis-develop-icon] | ![Coveralls][coveralls-develop-icon] | ![Scrutinizer code quality][scrutinizer-develop-icon] | ![Docs build status][rtfd-develop-icon]
+| [Travis CI][travis]                         | [Coveralls][coveralls]               | [Scrutinizer CI][scrutinizer]                                                                                     | [Read the Docs][rtfd]                   |
+|---------------------------------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| ![Travis build status][travis-develop-icon] | ![Coveralls][coveralls-develop-icon] | ![Scrutinizer build status][scrutinizer-develop-icon]<br>![Scrutinizer code quality][scrutinizer-cc-develop-icon] | ![Docs build status][rtfd-develop-icon] |
 
 [license]: https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt
 [packagist]: https://packagist.org/packages/d3strukt0r/votifier-client
 [travis]: https://travis-ci.com/D3strukt0r/votifier-client-php
-[coveralls]: https://coveralls.io/github/D3strukt0r/Votifier-PHP-Client
+[coveralls]: https://coveralls.io/github/D3strukt0r/votifier-client-php
 [scrutinizer]: https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/
 [sensiolabs]: https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f
 [rtfd]: https://readthedocs.org/projects/votifier-client-php/
@@ -35,10 +35,12 @@ This php script allows easy using of the Bukkit plugin Votifier
 [php-icon]: https://img.shields.io/packagist/php-v/d3strukt0r/votifier-client
 [travis-master-icon]: https://img.shields.io/travis/com/D3strukt0r/votifier-client-php/master
 [travis-develop-icon]: https://img.shields.io/travis/com/D3strukt0r/votifier-client-php/develop
-[coveralls-master-icon]: https://img.shields.io/coveralls/github/D3strukt0r/Votifier-PHP-Client/master
-[coveralls-develop-icon]: https://img.shields.io/coveralls/github/D3strukt0r/Votifier-PHP-Client/develop
-[scrutinizer-master-icon]: https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master
-[scrutinizer-develop-icon]: https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop
+[coveralls-master-icon]: https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/master
+[coveralls-develop-icon]: https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/develop
+[scrutinizer-master-icon]: https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/master
+[scrutinizer-develop-icon]: https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/develop
+[scrutinizer-cc-master-icon]: https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master
+[scrutinizer-cc-develop-icon]: https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop
 [insight-icon]: https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/mini.svg
 [rtfd-master-icon]: https://img.shields.io/readthedocs/votifier-client-php/stable
 [rtfd-develop-icon]: https://img.shields.io/readthedocs/votifier-client-php/latest
@@ -65,9 +67,9 @@ composer require d3strukt0r/votifier-client
 
 ### Usage
 
-Simply create an object with all informations
+Simply create an object with all information
 
-(For server with the classic Votifier plugins)
+(For the servers with the classic Votifier plugins)
 ```php
 <?php
 
@@ -80,7 +82,7 @@ $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOT
 $vote = new Vote($voteType, $serverType);
 ```
 
-(For server which use the NuVotifier plugin (v1 protocol) (HINT: It's EXATCLY the same like method 1))
+(For the servers which use the NuVotifier plugin (v1 protocol) (HINT: It's EXACTLY the same as method 1))
 ```php
 <?php
 
@@ -93,7 +95,7 @@ $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOT
 $vote = new Vote($voteType, $serverType);
 ```
 
-(For server which use the NuVotifier plugin with v2 protocol)
+(For the servers which use the NuVotifier plugin with v2 protocol)
 ```php
 <?php
 
@@ -106,14 +108,14 @@ $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOT
 $vote = new Vote($voteType, $serverType);
 ```
 
-and then send it.
+Finally, just send it.
 ```php
 <?php
 
 try {
     $vote->send();
     // Connection created, and vote sent. Doesn't mean the server handled it correctly, but the client did.
-} catch (\Exception $exception) {
+} catch (Exception $exception) {
     // Could not send Vote. Normally this happens when the client can't create a connection.
 }
 ```
@@ -122,7 +124,7 @@ try {
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
+### Break down into end-to-end tests
 
 Run test scripts
 

@@ -35,17 +35,17 @@ class ClassicVote implements VoteInterface
     private $address;
 
     /**
-     * @var \DateTime|null the time when the vote will be sent
+     * @var DateTime|null the time when the vote will be sent
      */
     private $timestamp;
 
     /**
      * Creates the ClassicVote object.
      *
-     * @param string         $username    (Required) The username who wants to receive the rewards
-     * @param string         $serviceName (Required) The name of the list/service
-     * @param string         $address     (Required) The IP Address of the user
-     * @param \DateTime|null $timestamp   (Optional) The time when the vote will be sent
+     * @param string        $username    (Required) The username who wants to receive the rewards
+     * @param string        $serviceName (Required) The name of the list/service
+     * @param string        $address     (Required) The IP Address of the user
+     * @param DateTime|null $timestamp   (Optional) The time when the vote will be sent
      */
     public function __construct(string $username, string $serviceName, string $address, DateTime $timestamp = null)
     {

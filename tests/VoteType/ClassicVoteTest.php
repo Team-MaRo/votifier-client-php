@@ -15,12 +15,15 @@ namespace D3strukt0r\VotifierClient\VoteType;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class ClassicVoteTest.
+ *
+ * @covers \D3strukt0r\VotifierClient\VoteType\ClassicVote
+ *
  * @internal
- * @coversNothing
  */
 final class ClassicVoteTest extends TestCase
 {
-    /** @var \D3strukt0r\VotifierClient\VoteType\ClassicVote */
+    /** @var ClassicVote */
     private $obj;
 
     protected function setUp(): void

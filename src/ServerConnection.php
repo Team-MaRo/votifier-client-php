@@ -35,14 +35,14 @@ class ServerConnection
      *
      * @param ServerTypeInterface $serverType (Required) The server type information package to connect to
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct(ServerTypeInterface $serverType)
     {
         $this->serverType = $serverType;
-        $s = fsockopen($serverType->getHost(), $serverType->getPort(), $errno, $errstr, 3);
+        $s = fsockopen($serverType->getHost(), $serverType->getPort(), $errorNumber, $errorString, 3);
         if (false === $s) {
-            throw new Exception($errstr, $errno);
+            throw new Exception($errorString, $errorNumber);
         }
         $this->s = $s;
     }

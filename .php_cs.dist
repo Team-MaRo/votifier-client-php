@@ -24,13 +24,15 @@ return PhpCsFixer\Config::create()
         '@PhpCsFixer:risky' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
-        'linebreak_after_opening_tag' => true,
-        'mb_str_functions' => true,
-        'no_php4_constructor' => true,
         'header_comment' => [
             'comment_type' => 'PHPDoc',
             'header' => $header,
         ],
+        'linebreak_after_opening_tag' => true,
+        'mb_str_functions' => true,
+        'no_php4_constructor' => true,
+        'native_function_invocation' => false,
+        'no_superfluous_elseif' => false,
     ])
     ->setFinder($finder)
     ->setCacheFile(__DIR__.'/.php_coding_standard_cache.json')

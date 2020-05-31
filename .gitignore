@@ -1,5 +1,5 @@
-# Created by https://www.gitignore.io/api/macos,phpunit,windows,composer,phpstorm,phpcodesniffer
-# Edit at https://www.gitignore.io/?templates=macos,phpunit,windows,composer,phpstorm,phpcodesniffer
+# Created by https://www.gitignore.io/api/linux,macos,phpunit,windows,composer,phpstorm,phpcodesniffer
+# Edit at https://www.gitignore.io/?templates=linux,macos,phpunit,windows,composer,phpstorm,phpcodesniffer
 
 ### Composer ###
 composer.phar
@@ -8,6 +8,21 @@ composer.phar
 # Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 composer.lock
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
 
 ### macOS ###
 # General
@@ -171,7 +186,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/macos,phpunit,windows,composer,phpstorm,phpcodesniffer
+# End of https://www.gitignore.io/api/linux,macos,phpunit,windows,composer,phpstorm,phpcodesniffer
 
 # Sphinx documentation
 docs/_build/

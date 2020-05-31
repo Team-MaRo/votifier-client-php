@@ -50,7 +50,7 @@ interface VoteInterface
     /**
      * Set the time when the vote will be sent.
      *
-     * @param \DateTime|null $timestamp (Optional) Either give a wanted timestamp or it will use the current time
+     * @param DateTime|null $timestamp (Optional) Either give a wanted timestamp or it will use the current time
      *
      * @return self returns the class itself, for doing multiple things at once
      */

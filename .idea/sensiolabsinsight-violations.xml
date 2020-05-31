@@ -6,43 +6,198 @@
   <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1" rel="self" type="text/html"/>
   <status><![CDATA[finished]]></status>
   <violations>
+    <violation severity="minor" category="codestyle" ignored="false">
+      <line>29</line>
+      <resource><![CDATA[.gitignore]]></resource>
+      <title>User specific files should not appear in .gitignore</title>
+      <message><![CDATA[.DS_Store is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
+      <context start-line="24" end-line="34"><![CDATA[# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290437" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="minor" category="codestyle" ignored="false">
+      <line>34</line>
+      <resource><![CDATA[.gitignore]]></resource>
+      <title>User specific files should not appear in .gitignore</title>
+      <message><![CDATA[Icon is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
+      <context start-line="29" end-line="39"><![CDATA[.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290440" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="minor" category="codestyle" ignored="false">
+      <line>165</line>
+      <resource><![CDATA[.gitignore]]></resource>
+      <title>User specific files should not appear in .gitignore</title>
+      <message><![CDATA[Thumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
+      <context start-line="160" end-line="170"><![CDATA[# Build data
+/build/
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290445" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="minor" category="codestyle" ignored="false">
+      <line>167</line>
+      <resource><![CDATA[.gitignore]]></resource>
+      <title>User specific files should not appear in .gitignore</title>
+      <message><![CDATA[ehthumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
+      <context start-line="162" end-line="172"><![CDATA[
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290444" rel="self" type="text/html"/>
+    </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>5</line>
-      <resource><![CDATA[docs/api/.htaccess]]></resource>
+      <resource><![CDATA[.idea/codeStyles/codeStyleConfig.xml]]></resource>
       <title>Text files should end with a valid new line character.</title>
       <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
-      <context start-line="1" end-line="5"><![CDATA[# Fixes a vulnerability in CentOS: http://stackoverflow.com/questions/20533279/prevent-php-from-parsing-non-php-files-such-as-somefile-php-txt
-<FilesMatch \.php\.txt$>
-    RemoveHandler .php
-    ForceType text/plain
-</FilesMatch>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625037" rel="self" type="text/html"/>
+      <context start-line="1" end-line="5"><![CDATA[<component name="ProjectCodeStyleConfiguration">
+  <state>
+    <option name="USE_PER_PROJECT_SETTINGS" value="true" />
+  </state>
+</component>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290447" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>17</line>
+      <resource><![CDATA[.idea/inspectionProfiles/Project_Default.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="12" end-line="17"><![CDATA[    <inspection_tool class="PhpNewClassMissingParameterListInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpSeparateElseIfInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpTraitsUseListInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpVarUsageInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+  </profile>
+</component>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290438" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>6</line>
+      <resource><![CDATA[.idea/misc.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="1" end-line="6"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290448" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>8</line>
+      <resource><![CDATA[.idea/modules.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="3" end-line="8"><![CDATA[  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/votifier-client-php.iml" filepath="$PROJECT_DIR$/.idea/votifier-client-php.iml" />
+    </modules>
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290443" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>218</line>
+      <resource><![CDATA[.idea/php.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="213" end-line="218"><![CDATA[  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" use_configuration_file="true" />
+    </phpunit_settings>
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290449" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>7</line>
+      <resource><![CDATA[.idea/sensiolabsinsight-settings.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="2" end-line="7"><![CDATA[<project version="4">
+  <component name="SensioLabsInsightSettings">
+    <option name="projectUuid" value="6056fd3d-1c44-4fa9-981d-c99ba2192c0f" />
+    <option name="projectName" value="votifier-client-php" />
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290442" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>6</line>
+      <resource><![CDATA[.idea/symfony2.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="1" end-line="6"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Symfony2PluginSettings">
+    <option name="dismissEnableNotification" value="true" />
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290446" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>6</line>
+      <resource><![CDATA[.idea/vcs.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="1" end-line="6"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290441" rel="self" type="text/html"/>
     </violation>
     <violation severity="minor" category="deadcode" ignored="false">
-      <line>25</line>
+      <line>26</line>
       <resource><![CDATA[src/ServerConnection.php]]></resource>
       <title>Unused method, property, variable or parameter</title>
       <message><![CDATA[This serverType attribute is declared but never used. You should remove it.]]></message>
-      <context start-line="20" end-line="30"><![CDATA[class ServerConnection
+      <context start-line="21" end-line="31"><![CDATA[class ServerConnection
 {
     /**
-     * @var ServerTypeInterface The server type information package
+     * @var ServerTypeInterface the server type information package
      */
     private $serverType;
 
     /**
-     * @var resource The connection to the server
+     * @var resource the connection to the server
      */
     private $s;]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625036" rel="self" type="text/html"/>
-    </violation>
-    <violation severity="info" category="performance" ignored="false">
-      <line>0</line>
-      <resource><![CDATA[docs/api/.htaccess]]></resource>
-      <title>.htaccess should be avoided</title>
-      <message><![CDATA[A .htaccess file has been spotted. You should consider moving it to the server configuration to improve global performances.]]></message>
-      <context/>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#841625038" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290439" rel="self" type="text/html"/>
     </violation>
   </violations>
   <grades>
@@ -55,15 +210,14 @@
   <failed>false</failed>
   <grade><![CDATA[silver]]></grade>
   <next-grade><![CDATA[gold]]></next-grade>
-  <begin-at><![CDATA[2020-03-08T21:10:24+0100]]></begin-at>
-  <end-at><![CDATA[2020-03-08T21:11:15+0100]]></end-at>
-  <duration>2</duration>
+  <begin-at><![CDATA[2020-05-31T10:55:27+0000]]></begin-at>
+  <end-at><![CDATA[2020-05-31T10:56:53+0000]]></end-at>
+  <duration>12</duration>
   <number>1</number>
   <altered>false</altered>
-  <remediation-cost>1.5</remediation-cost>
-  <nb-violations>3</nb-violations>
-  <reference><![CDATA[80f949b9f5a7fc207bbab16a699577cde9d5e876]]></reference>
-  <launched-by><![CDATA[xlpixel]]></launched-by>
+  <remediation-cost>3.25</remediation-cost>
+  <nb-violations>13</nb-violations>
+  <reference><![CDATA[2e44c7aa39741cc4bbc9cb69244877048c110f13]]></reference>
   <configuration>
     <ignored-branches>
       <branch><![CDATA[gh-pages]]></branch>
@@ -133,9 +287,9 @@
     <notifications/>
   </configuration>
   <previous-analyses-references>
-    <analysis-reference number="1">80f949b9f5a7fc207bbab16a699577cde9d5e876</analysis-reference>
+    <analysis-reference number="1">2e44c7aa39741cc4bbc9cb69244877048c110f13</analysis-reference>
   </previous-analyses-references>
-  <nb-violations-new>3</nb-violations-new>
+  <nb-violations-new>13</nb-violations-new>
   <nb-violations-existing>0</nb-violations-existing>
   <nb-violations-fixed>0</nb-violations-fixed>
   <nb-violations-ignored>0</nb-violations-ignored>

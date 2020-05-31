@@ -14,6 +14,7 @@ namespace D3strukt0r\VotifierClient;
 
 use D3strukt0r\VotifierClient\ServerType\ServerTypeInterface;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use Exception;
 
 /**
  * This class is used for easy access to all classes and to send the votes.
@@ -21,12 +22,12 @@ use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 class Vote
 {
     /**
-     * @var \D3strukt0r\VotifierClient\VoteType\VoteInterface the vote package
+     * @var VoteInterface the vote package
      */
     private $vote;
 
     /**
-     * @var \D3strukt0r\VotifierClient\ServerType\ServerTypeInterface the server type information package
+     * @var ServerTypeInterface the server type information package
      */
     private $server;
 
@@ -45,7 +46,7 @@ class Vote
     /**
      * Sends the vote package to the server.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function send(): void
     {

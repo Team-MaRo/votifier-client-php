@@ -16,14 +16,17 @@ use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class NuVotifierTest.
+ *
+ * @covers \D3strukt0r\VotifierClient\ServerType\NuVotifier
+ *
  * @internal
- * @coversNothing
  */
 final class NuVotifierTest extends TestCase
 {
-    /** @var \D3strukt0r\VotifierClient\ServerType\NuVotifier */
+    /** @var NuVotifier */
     private $obj;
-    /** @var \D3strukt0r\VotifierClient\ServerType\NuVotifier */
+    /** @var NuVotifier */
     private $obj2;
 
     private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJ'.
@@ -76,8 +79,8 @@ EOF;
         $string = $this->obj->preparePackageV2($testVote, 'mock_challenge');
         static::assertStringStartsWith('s:', $string);
         $testResultV2 = '{"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=","payload":"{\"username\":\"mock_'.
-                        'user\",\"serviceName\":\"mock_service\",\"timestamp\":null,\"address\":\"mock_address\",\"cha'.
-                        'llenge\":\"mock_challenge\"}"}';
+            'user\",\"serviceName\":\"mock_service\",\"timestamp\":null,\"address\":\"mock_address\",\"cha'.
+            'llenge\":\"mock_challenge\"}"}';
         static::assertStringEndsWith($testResultV2, $string);
     }
 }

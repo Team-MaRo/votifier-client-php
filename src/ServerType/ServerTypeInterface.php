@@ -14,6 +14,7 @@ namespace D3strukt0r\VotifierClient\ServerType;
 
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use Exception;
 
 /**
  * The interface ServerTypeInterface is used to define a PluginType on the server.
@@ -56,7 +57,7 @@ interface ServerTypeInterface
      * @param serverConnection $connection (Required) The connection type to the plugin
      * @param VoteInterface    $vote       (Required) The vote type package
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function send(ServerConnection $connection, VoteInterface $vote): void;
 }

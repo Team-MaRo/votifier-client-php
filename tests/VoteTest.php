@@ -17,12 +17,15 @@ use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
 /**
+ * Class VoteTest.
+ *
+ * @covers \D3strukt0r\VotifierClient\Vote
+ *
  * @internal
- * @coversNothing
  */
 final class VoteTest extends TestCase
 {
-    /** @var \D3strukt0r\VotifierClient\Vote */
+    /** @var Vote */
     private $obj;
 
     protected function setUp(): void

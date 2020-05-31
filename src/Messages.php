@@ -12,16 +12,19 @@
 
 namespace D3strukt0r\VotifierClient;
 
+use function func_num_args;
+use function is_array;
+
 /**
  * Internal use for translations.
  */
 class Messages
 {
-    const NOT_VOTIFIER = 1;
-    const NOT_SENT_PACKAGE = 2;
-    const NOT_RECEIVED_PACKAGE = 3;
+    public const NOT_VOTIFIER = 1;
+    public const NOT_SENT_PACKAGE = 2;
+    public const NOT_RECEIVED_PACKAGE = 3;
 
-    const NUVOTIFIER_SERVER_ERROR = 100;
+    public const NUVOTIFIER_SERVER_ERROR = 100;
 
     /**
      * Translate and format a translation.
@@ -44,11 +47,11 @@ class Messages
 
         $requestedMessage = $messages[$language ?: 'en'][$messageCode];
 
-        $argsCount = \func_num_args();
+        $argsCount = func_num_args();
 
         if ($argsCount > 2) {
             $firstArg = func_get_arg(2);
-            if (\is_array($firstArg)) {
+            if (is_array($firstArg)) {
                 foreach ($firstArg as $key => $value) {
                     $requestedMessage = str_replace('{'.$key.'}', $value, $requestedMessage);
                 }

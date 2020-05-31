@@ -21,6 +21,10 @@ cache:
 #      - oracle-java8-set-default
 
 install:
+  # https://github.com/php-coveralls/php-coveralls
+  - wget https://github.com/php-coveralls/php-coveralls/releases/latest/download/php-coveralls.phar
+  # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
+  - wget https://scrutinizer-ci.com/ocular.phar
   - composer install
 #  - |
 #    if [ ! -f "$HOME/mc-server/spigot-1.12.2.jar" ]; then
@@ -37,12 +41,14 @@ install:
 
 script:
   #  - VOTIFIER_KEY=$(cat $HOME/mc-server/plugins/Votifier/rsa/public.key); ./phpunit
-  - composer run-script check
-  - composer run-script test
+  - ./vendor/bin/phpunit
+  - ./vendor/bin/phpcs
+  # this checks that the source code follows the Symfony Code Syntax rules
+  - ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
 
 after_script:
   - |
-    if [ -f "build/logs/clover.xml" ]; then
-      ./vendor/bin/php-coveralls -v
-      ./vendor/bin/ocular code-coverage:upload --format=php-clover build/logs/clover.xml
+    if [[ "$TRAVIS_PHP_VERSION" == "7.4" && -f "build/logs/clover.xml" ]]; then
+      php php-coveralls.phar -v
+      php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
     fi
