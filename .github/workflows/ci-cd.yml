@@ -1,0 +1,101 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+
+  # Run tests for any PRs.
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php:
+          - 7.1
+          - 7.2
+          - 7.3
+          - 7.4
+
+    name: Test on PHP v${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+          coverage: xdebug
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Setup Composer
+        run: composer self-update
+
+      - name: Check versions
+        run: |
+          php -v
+          composer -v
+
+      # https://github.com/actions/cache/blob/main/examples.md#php---composer
+      - name: Get Composer Cache Directory
+        id: composer-cache-dir-path
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v2
+        id: composer-cache # use this to check for `cache-hit` (`steps.composer-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.composer-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Test with phpUnit
+        run: ./vendor/bin/phpunit
+
+      - name: Test with phpcs
+        run: ./vendor/bin/phpcs
+
+      - name: Test whether code follows Symfony Code Syntax rules
+        run: ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
+
+      - name: Check if clover report exists
+        if: github.event_name == 'push' && matrix.php == '7.4'
+        id: check-if-clover-exists
+        continue-on-error: true
+        run: test -f build/logs/clover.xml
+
+      # https://github.com/php-coveralls/php-coveralls
+      - name: Setup Coveralls
+        if: github.event_name == 'push' && steps.check-if-clover-exists.outcome == 'success' && matrix.php == '7.4'
+        run: wget https://github.com/php-coveralls/php-coveralls/releases/latest/download/php-coveralls.phar
+
+      - name: Upload coverage report to Coveralls
+        if: github.event_name == 'push' && steps.check-if-clover-exists.outcome == 'success' && matrix.php == '7.4'
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: php php-coveralls.phar -v
+
+      # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
+      # https://github.com/scrutinizer-ci/ocular
+      - name: Setup Ocular (Scrutinizer)
+        if: github.event_name == 'push' && steps.check-if-clover-exists.outcome == 'success' && matrix.php == '7.4'
+        run: wget https://scrutinizer-ci.com/ocular.phar
+
+      - name: Upload coverage report to Scrutinizer
+        if: github.event_name == 'push' && steps.check-if-clover-exists.outcome == 'success' && matrix.php == '7.4'
+        # run: php ocular.phar code-coverage:upload --repository=g/D3strukt0r/votifier-client-php --revision=$(git rev-parse HEAD) --format=php-clover build/logs/clover.xml
+        run: php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
