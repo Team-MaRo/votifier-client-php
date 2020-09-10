@@ -34,7 +34,9 @@
         "ext-pcre": "*"
     },
     "require-dev": {
+        "dealerdirect/phpcodesniffer-composer-installer": "0.6.0",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "phpcompatibility/php-compatibility": "*",
         "phpunit/phpunit": "^9 || ^8 || ^7",
         "squizlabs/php_codesniffer": "^3.4"
     },

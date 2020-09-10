@@ -15,6 +15,8 @@ namespace D3strukt0r\VotifierClient\ServerType;
 use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
+use function file_get_contents;
+
 /**
  * Class NuVotifierTest.
  *
@@ -29,13 +31,16 @@ final class NuVotifierTest extends TestCase
     /** @var NuVotifier */
     private $obj2;
 
-    private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJ'.
-    'v689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEPu'.
-    '9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrSG'.
-    'fUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
+    /**
+     * An example public key.
+     *
+     * @var string
+     */
+    private $key;
 
     protected function setUp(): void
     {
+        $this->key = file_get_contents('tests/ServerType/votifier_public.key');
         $this->obj = new NuVotifier('mock_host', 00000, $this->key);
         $this->obj2 = new NuVotifier('mock_host', 00000, null, true, 'mock_token');
     }
@@ -78,9 +83,16 @@ EOF;
         $testVote = new ClassicVote('mock_user', 'mock_service', 'mock_address');
         $string = $this->obj->preparePackageV2($testVote, 'mock_challenge');
         static::assertStringStartsWith('s:', $string);
-        $testResultV2 = '{"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=","payload":"{\"username\":\"mock_'.
-            'user\",\"serviceName\":\"mock_service\",\"timestamp\":null,\"address\":\"mock_address\",\"cha'.
-            'llenge\":\"mock_challenge\"}"}';
+        $testResultV2 = '{' .
+            '"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=",' .
+            '"payload":"{' .
+                '\"username\":\"mock_user\",' .
+                '\"serviceName\":\"mock_service\",' .
+                '\"timestamp\":null,' .
+                '\"address\":\"mock_address\",' .
+                '\"challenge\":\"mock_challenge\"' .
+            '}"' .
+        '}';
         static::assertStringEndsWith($testResultV2, $string);
     }
 }

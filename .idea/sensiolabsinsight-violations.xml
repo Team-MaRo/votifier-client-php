@@ -22,7 +22,7 @@
 
 # Icon must end with two \r
 Icon]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290437" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289700" rel="self" type="text/html"/>
     </violation>
     <violation severity="minor" category="codestyle" ignored="false">
       <line>34</line>
@@ -40,14 +40,14 @@ Icon
 ._*
 
 # Files that might appear in the root of a volume]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290440" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289703" rel="self" type="text/html"/>
     </violation>
     <violation severity="minor" category="codestyle" ignored="false">
-      <line>165</line>
+      <line>180</line>
       <resource><![CDATA[.gitignore]]></resource>
       <title>User specific files should not appear in .gitignore</title>
       <message><![CDATA[Thumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
-      <context start-line="160" end-line="170"><![CDATA[# Build data
+      <context start-line="175" end-line="185"><![CDATA[# Build data
 /build/
 
 ### Windows ###
@@ -58,14 +58,14 @@ ehthumbs.db
 ehthumbs_vista.db
 
 # Dump file]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290445" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289708" rel="self" type="text/html"/>
     </violation>
     <violation severity="minor" category="codestyle" ignored="false">
-      <line>167</line>
+      <line>182</line>
       <resource><![CDATA[.gitignore]]></resource>
       <title>User specific files should not appear in .gitignore</title>
       <message><![CDATA[ehthumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
-      <context start-line="162" end-line="172"><![CDATA[
+      <context start-line="177" end-line="187"><![CDATA[
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -76,7 +76,7 @@ ehthumbs_vista.db
 # Dump file
 *.stackdump
 ]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290444" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289707" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>5</line>
@@ -88,20 +88,20 @@ ehthumbs_vista.db
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />
   </state>
 </component>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290447" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289711" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
-      <line>17</line>
+      <line>23</line>
       <resource><![CDATA[.idea/inspectionProfiles/Project_Default.xml]]></resource>
       <title>Text files should end with a valid new line character.</title>
       <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
-      <context start-line="12" end-line="17"><![CDATA[    <inspection_tool class="PhpNewClassMissingParameterListInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+      <context start-line="18" end-line="23"><![CDATA[    <inspection_tool class="PhpNewClassMissingParameterListInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpSeparateElseIfInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpTraitsUseListInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
     <inspection_tool class="PhpVarUsageInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
   </profile>
 </component>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290438" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289701" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>6</line>
@@ -114,7 +114,7 @@ ehthumbs_vista.db
     <option name="languageLevel" value="ES6" />
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290448" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289712" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>8</line>
@@ -127,20 +127,33 @@ ehthumbs_vista.db
     </modules>
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290443" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289706" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
-      <line>218</line>
+      <line>210</line>
       <resource><![CDATA[.idea/php.xml]]></resource>
       <title>Text files should end with a valid new line character.</title>
       <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
-      <context start-line="213" end-line="218"><![CDATA[  <component name="PhpUnit">
+      <context start-line="205" end-line="210"><![CDATA[  <component name="PhpUnit">
     <phpunit_settings>
       <PhpUnitSettings configuration_file_path="$PROJECT_DIR$/phpunit.xml.dist" custom_loader_path="$PROJECT_DIR$/vendor/autoload.php" use_configuration_file="true" />
     </phpunit_settings>
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290449" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289713" rel="self" type="text/html"/>
+    </violation>
+    <violation severity="info" category="codestyle" ignored="false">
+      <line>10</line>
+      <resource><![CDATA[.idea/sensiolabsinsight-analysis-storage.xml]]></resource>
+      <title>Text files should end with a valid new line character.</title>
+      <message><![CDATA[This file ends with no newline character, or with a different newline character than other files in your project. It won't render properly on a terminal, and it's considered a bad practice.]]></message>
+      <context start-line="5" end-line="10"><![CDATA[      <list>
+        <InsightAnalysis duration="12" href="https://insight.sensiolabs.com/api/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1" nbViolations="13" nextGrade="GOLD" number="1" reference="2e44c7aa39741cc4bbc9cb69244877048c110f13" remediationCostForNextGrade="-1" status="finished" />
+      </list>
+    </option>
+  </component>
+</project>]]></context>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289710" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>7</line>
@@ -153,7 +166,7 @@ ehthumbs_vista.db
     <option name="projectName" value="votifier-client-php" />
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290442" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289705" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>6</line>
@@ -166,7 +179,7 @@ ehthumbs_vista.db
     <option name="dismissEnableNotification" value="true" />
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290446" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289709" rel="self" type="text/html"/>
     </violation>
     <violation severity="info" category="codestyle" ignored="false">
       <line>6</line>
@@ -179,7 +192,7 @@ ehthumbs_vista.db
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290441" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289704" rel="self" type="text/html"/>
     </violation>
     <violation severity="minor" category="deadcode" ignored="false">
       <line>26</line>
@@ -197,7 +210,7 @@ ehthumbs_vista.db
      * @var resource the connection to the server
      */
     private $s;]]></context>
-      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#866290439" rel="self" type="text/html"/>
+      <link href="https://insight.sensiolabs.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/analyses/1?status=new#889289702" rel="self" type="text/html"/>
     </violation>
   </violations>
   <grades>
@@ -210,14 +223,14 @@ ehthumbs_vista.db
   <failed>false</failed>
   <grade><![CDATA[silver]]></grade>
   <next-grade><![CDATA[gold]]></next-grade>
-  <begin-at><![CDATA[2020-05-31T10:55:27+0000]]></begin-at>
-  <end-at><![CDATA[2020-05-31T10:56:53+0000]]></end-at>
+  <begin-at><![CDATA[2020-08-30T23:23:49+0000]]></begin-at>
+  <end-at><![CDATA[2020-08-30T23:24:48+0000]]></end-at>
   <duration>12</duration>
   <number>1</number>
   <altered>false</altered>
-  <remediation-cost>3.25</remediation-cost>
-  <nb-violations>13</nb-violations>
-  <reference><![CDATA[2e44c7aa39741cc4bbc9cb69244877048c110f13]]></reference>
+  <remediation-cost>3.5</remediation-cost>
+  <nb-violations>14</nb-violations>
+  <reference><![CDATA[673b344fc506adc43ed6994d217f0eec88d383d0]]></reference>
   <configuration>
     <ignored-branches>
       <branch><![CDATA[gh-pages]]></branch>
@@ -287,9 +300,9 @@ ehthumbs_vista.db
     <notifications/>
   </configuration>
   <previous-analyses-references>
-    <analysis-reference number="1">2e44c7aa39741cc4bbc9cb69244877048c110f13</analysis-reference>
+    <analysis-reference number="1">673b344fc506adc43ed6994d217f0eec88d383d0</analysis-reference>
   </previous-analyses-references>
-  <nb-violations-new>13</nb-violations-new>
+  <nb-violations-new>14</nb-violations-new>
   <nb-violations-existing>0</nb-violations-existing>
   <nb-violations-fixed>0</nb-violations-fixed>
   <nb-violations-ignored>0</nb-violations-ignored>

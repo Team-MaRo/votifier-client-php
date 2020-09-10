@@ -14,6 +14,8 @@ namespace D3strukt0r\VotifierClient\ServerType;
 
 use PHPUnit\Framework\TestCase;
 
+use function file_get_contents;
+
 /**
  * Class ClassicVotifierTest.
  *
@@ -26,13 +28,16 @@ final class ClassicVotifierTest extends TestCase
     /** @var ClassicVotifier */
     private $obj;
 
-    private $key = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuyi7TXsufptucSYoVgZLonqFxtYvK0uJoxpExE+hcXRz3tR9jbXxtJ'.
-    '.v689/T+CHmvxJmli7g0CL0NucFDAdltat7bYu6AQMtWa7CYgvEtddwR5/ZMkZ1c3swK61fVeIsGE3oaA8Gdz1iBoG5njNmHtPzZm1CRWEYhUMMEP'.
-    'u9mBmqTRSYGrDr7NDJ5TL0frpLpPL/4rSTIOCJl0lBzzIT7supRmzppgeuWoh2M2lNUna329xtD5bhRPzmcIh4O2wC3jNQ+yh286mTcLG4AFBQgrS'.
-    'GfUHAZa6/l5rmF09Mg5CCvxqj05EBXafYGEH7bojtzDFC3J6NliAkMghk0jmrxQIDAQAB';
+    /**
+     * An example public key.
+     *
+     * @var string
+     */
+    private $key;
 
     protected function setUp(): void
     {
+        $this->key = file_get_contents('tests/ServerType/votifier_public.key');
         $this->obj = new ClassicVotifier('mock_host', 00000, $this->key);
     }
 
