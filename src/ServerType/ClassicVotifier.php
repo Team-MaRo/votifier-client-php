@@ -12,10 +12,10 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
-use D3strukt0r\VotifierClient\Messages;
+use D3strukt0r\VotifierClient\Exception\NotVotifierException;
+use D3strukt0r\VotifierClient\Exception\PackageNotSentException;
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
-use Exception;
 
 /**
  * The Class to access a server which uses the classic "Votifier" plugin.
@@ -125,11 +125,11 @@ EOF;
     public function send(ServerConnection $connection, VoteInterface $vote): void
     {
         if (!$this->verifyConnection($connection->receive(64))) {
-            throw new Exception(Messages::get(Messages::NOT_VOTIFIER));
+            throw new NotVotifierException();
         }
 
         if (!$connection->send($this->preparePackage($vote))) {
-            throw new Exception(Messages::get(Messages::NOT_SENT_PACKAGE));
+            throw new PackageNotSentException();
         }
     }
 }

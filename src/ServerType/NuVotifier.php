@@ -12,7 +12,10 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
-use D3strukt0r\VotifierClient\Messages;
+use D3strukt0r\VotifierClient\Exception\NotVotifierException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierServerErrorException;
+use D3strukt0r\VotifierClient\Exception\PackageNotReceivedException;
+use D3strukt0r\VotifierClient\Exception\PackageNotSentException;
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 use Exception;
@@ -115,6 +118,11 @@ class NuVotifier extends ClassicVotifier
 
     /**
      * {@inheritdoc}
+     *
+     * @throws NotVotifierException
+     * @throws PackageNotSentException
+     * @throws PackageNotReceivedException
+     * @throws NuVotifierServerErrorException
      */
     public function send(ServerConnection $connection, VoteInterface $vote): void
     {
@@ -125,23 +133,32 @@ class NuVotifier extends ClassicVotifier
         }
 
         if (!$this->verifyConnection($header = $connection->receive(64))) {
-            throw new Exception(Messages::get(Messages::NOT_VOTIFIER));
+            throw new NotVotifierException();
         }
         $header_parts = explode(' ', $header);
         $challenge = mb_substr($header_parts[2], 0, -1);
         $payload = $this->preparePackageV2($vote, $challenge);
 
         if (false === $connection->send($payload)) {
-            throw new Exception(Messages::get(Messages::NOT_SENT_PACKAGE));
+            throw new PackageNotSentException();
         }
 
         if (!$response = $connection->receive(256)) {
-            throw new Exception(Messages::get(Messages::NOT_RECEIVED_PACKAGE));
+            throw new PackageNotReceivedException();
         }
 
+        /*
+         * https://github.com/NuVotifier/NuVotifier/blob/master/common/src/main/java/com/vexsoftware/votifier/net/protocol/VotifierProtocol2Decoder.java
+         * Examples:
+         * {"status":"ok"}
+         * {"status":"error","cause":"CorruptedFrameException","error":"Challenge is not valid"}
+         * {"status":"error","cause":"CorruptedFrameException","error":"Unknown service xxx"}
+         * {"status":"error","cause":"CorruptedFrameException","error":"Signature is not valid (invalid token?)"}
+         * {"status":"error","cause":"CorruptedFrameException","error":"Username too long"} (over 16 characters)
+         */
         $result = json_decode($response);
         if ('ok' !== $result->status) {
-            throw new Exception(Messages::get(Messages::NUVOTIFIER_SERVER_ERROR, null, $result->cause, $result->error));
+            throw new NuVotifierServerErrorException($result->error);
         }
     }
 }
