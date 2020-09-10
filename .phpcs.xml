@@ -7,13 +7,10 @@
     <file>src/</file>
     <file>tests/</file>
 
-    <arg name="basepath" value="."/>
     <arg name="cache" value=".php_codesniffer_cache.json"/>
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
     <arg name="parallel" value="75"/>
 
-    <!-- Include the whole PSR1 and PSR2 standards -->
-    <rule ref="PSR1" />
-    <rule ref="PSR2" />
+    <rule ref="PSR12" />
 </ruleset>

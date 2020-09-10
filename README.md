@@ -2,7 +2,7 @@
 
 This php script allows easy using of the Bukkit plugin Votifier
 
-**Project**
+Project
 
 [![License](https://img.shields.io/packagist/l/d3strukt0r/votifier-client)][license]
 [![Version](https://img.shields.io/packagist/v/d3strukt0r/votifier-client?label=latest%20release)][packagist]
@@ -10,39 +10,30 @@ This php script allows easy using of the Bukkit plugin Votifier
 [![Downloads on Packagist](https://img.shields.io/packagist/dt/d3strukt0r/votifier-client)][packagist]
 [![Required PHP version](https://img.shields.io/packagist/php-v/d3strukt0r/votifier-client)][packagist]
 
-**master**-branch (alias stable, latest)
+master-branch (alias stable, latest)
 
 [![GH Action CI/CD](https://github.com/D3strukt0r/votifier-client-php/workflows/CI/CD/badge.svg?branch=master)][gh-action]
 [![Coveralls](https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/master)][coveralls]
 [![Scrutinizer build status](https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/master?label=scrutinizer%20build)][scrutinizer]
-[![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master)][scrutinizer]
+[![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master?label=scrutinizer%20code%20quality)][scrutinizer]
+[![Codacy grade](https://img.shields.io/codacy/grade/d97c7e16f5d24924b39f9776eeb02259/master?label=codacy%20code%20quality)][codacy]
 [![SymfonyInsight](https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f/mini.svg)][sensiolabs]
 [![Docs build status](https://img.shields.io/readthedocs/votifier-client-php/stable)][rtfd]
 
-**develop**-branch (alias nightly)
+develop-branch (alias nightly)
 
 [![GH Action CI/CD](https://github.com/D3strukt0r/votifier-client-php/workflows/CI/CD/badge.svg?branch=develop)][gh-action]
 [![Coveralls](https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/develop)][coveralls]
 [![Scrutinizer build status](https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/develop?label=scrutinizer%20build)][scrutinizer]
-[![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop)][scrutinizer]
+[![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop?label=scrutinizer%20code%20quality)][scrutinizer]
+[![Codacy grade](https://img.shields.io/codacy/grade/d97c7e16f5d24924b39f9776eeb02259/develop?label=codacy%20code%20quality)][codacy]
 [![Docs build status](https://img.shields.io/readthedocs/votifier-client-php/latest)][rtfd]
-
-[license]: https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt
-[packagist]: https://packagist.org/packages/d3strukt0r/votifier-client
-[gh-action]: https://github.com/D3strukt0r/votifier-client-php/actions
-[coveralls]: https://coveralls.io/github/D3strukt0r/votifier-client-php
-[scrutinizer]: https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/
-[sensiolabs]: https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f
-[rtfd]: https://readthedocs.org/projects/votifier-client-php/
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your
-local machine for development and testing purposes. See deployment for notes on
-how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-The full documentation can be found on
-https://votifier-client-php-docs.manuele-vaccari.ch/
+The full documentation can be found on [here](https://votifier-client-php-docs.manuele-vaccari.ch)
 
 ### Prerequisites
 
@@ -55,7 +46,7 @@ What things you need to install the software and how to install them
 
 Add the client using [Composer](http://getcomposer.org/).
 
-```bash
+```shell
 composer require d3strukt0r/votifier-client
 ```
 
@@ -219,3 +210,12 @@ This project is licensed under the GNU General Public License v3.0 - see the [LI
 -   Hat tip to anyone whose code was used
 -   Inspiration
 -   etc
+
+[license]: https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt
+[packagist]: https://packagist.org/packages/d3strukt0r/votifier-client
+[gh-action]: https://github.com/D3strukt0r/votifier-client-php/actions
+[coveralls]: https://coveralls.io/github/D3strukt0r/votifier-client-php
+[scrutinizer]: https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/
+[sensiolabs]: https://insight.symfony.com/projects/6056fd3d-1c44-4fa9-981d-c99ba2192c0f
+[codacy]: https://www.codacy.com/manual/D3strukt0r/votifier-client-php
+[rtfd]: https://readthedocs.org/projects/votifier-client-php/

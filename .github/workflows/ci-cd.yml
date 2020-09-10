@@ -5,8 +5,16 @@ on:
     branches:
       - master
       - develop
+    paths:
+      - .github/workflows/ci-cd.yml
+      - 'src/**'
+      - 'tests/**'
+      - '.php_cs.dist'
+      - '.phpcs.xml'
+      - '.scrutinizer.yml'
+      - 'composer.json'
+      - 'phpunit.xml.dist'
 
-  # Run tests for any PRs.
   pull_request:
 
   workflow_dispatch:

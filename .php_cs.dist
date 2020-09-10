@@ -28,6 +28,19 @@ return PhpCsFixer\Config::create()
             'comment_type' => 'PHPDoc',
             'header' => $header,
         ],
+        'concat_space' => [
+            'spacing' => 'one',
+        ],
+        'ordered_imports' => [
+            'imports_order' => [
+                'class',
+                'const',
+                'function',
+            ],
+        ],
+        'no_extra_blank_lines' => [
+            'tokens' => ['default'],
+        ],
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,
         'no_php4_constructor' => true,

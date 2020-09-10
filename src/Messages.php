@@ -53,12 +53,12 @@ class Messages
             $firstArg = func_get_arg(2);
             if (is_array($firstArg)) {
                 foreach ($firstArg as $key => $value) {
-                    $requestedMessage = str_replace('{'.$key.'}', $value, $requestedMessage);
+                    $requestedMessage = str_replace('{' . $key . '}', $value, $requestedMessage);
                 }
             } else {
                 for ($i = 2; $i < $argsCount; ++$i) {
                     $arg = func_get_arg($i);
-                    $requestedMessage = str_replace('{'.($i - 2).'}', $arg, $requestedMessage);
+                    $requestedMessage = str_replace('{' . ($i - 2) . '}', $arg, $requestedMessage);
                 }
             }
         }

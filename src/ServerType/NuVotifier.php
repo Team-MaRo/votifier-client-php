@@ -12,11 +12,12 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
-use function count;
 use D3strukt0r\VotifierClient\Messages;
 use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 use Exception;
+
+use function count;
 
 /**
  * The Class to access a server which uses the plugin "NuVotifier".
@@ -109,7 +110,7 @@ class NuVotifier extends ClassicVotifier
         $signature = base64_encode(hash_hmac('sha256', $payloadJson, $this->token, true));
         $messageJson = json_encode(['signature' => $signature, 'payload' => $payloadJson]);
 
-        return pack('nn', 0x733a, mb_strlen($messageJson)).$messageJson;
+        return pack('nn', 0x733a, mb_strlen($messageJson)) . $messageJson;
     }
 
     /**

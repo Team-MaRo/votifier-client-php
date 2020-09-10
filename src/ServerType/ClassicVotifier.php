@@ -107,11 +107,11 @@ EOF;
     public function preparePackage(VoteInterface $vote): string
     {
         // Details of the vote
-        $votePackage = 'VOTE'."\n".
-            $vote->getServiceName()."\n".
-            $vote->getUsername()."\n".
-            $vote->getAddress()."\n".
-            $vote->getTimestamp()."\n";
+        $votePackage = 'VOTE' . "\n" .
+            $vote->getServiceName() . "\n" .
+            $vote->getUsername() . "\n" .
+            $vote->getAddress() . "\n" .
+            $vote->getTimestamp() . "\n";
 
         // Encrypt the string
         openssl_public_encrypt($votePackage, $encryptedVotePackage, $this->getPublicKey());
