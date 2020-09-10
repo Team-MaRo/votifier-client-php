@@ -28,7 +28,7 @@ class ServerConnection
     /**
      * @var resource the connection to the server
      */
-    private $s;
+    private $socket;
 
     /**
      * Creates the ServerConnection object.
@@ -40,11 +40,11 @@ class ServerConnection
     public function __construct(ServerTypeInterface $serverType)
     {
         $this->serverType = $serverType;
-        $s = fsockopen($serverType->getHost(), $serverType->getPort(), $errorNumber, $errorString, 3);
-        if (false === $s) {
+        $socket = fsockopen($serverType->getHost(), $serverType->getPort(), $errorNumber, $errorString, 3);
+        if (false === $socket) {
             throw new Exception($errorString, $errorNumber);
         }
-        $this->s = $s;
+        $this->socket = $socket;
     }
 
     /**
@@ -52,8 +52,8 @@ class ServerConnection
      */
     public function __destruct()
     {
-        if ($this->s) {
-            fclose($this->s);
+        if ($this->socket) {
+            fclose($this->socket);
         }
     }
 
@@ -66,11 +66,11 @@ class ServerConnection
      */
     public function send(string $string): bool
     {
-        if (!$this->s) {
+        if (!$this->socket) {
             return false;
         }
 
-        if (false === fwrite($this->s, $string)) {
+        if (false === fwrite($this->socket, $string)) {
             $this->__destruct();
 
             return false;
@@ -88,14 +88,14 @@ class ServerConnection
      */
     public function receive(int $length = 64): ?string
     {
-        if (!$this->s) {
+        if (!$this->socket) {
             return null;
         }
 
-        if (!$s = fread($this->s, $length)) {
+        if (!$socket = fread($this->socket, $length)) {
             return null;
         }
 
-        return $s;
+        return $socket;
     }
 }

@@ -4,15 +4,17 @@
          xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
     <description>A library in PHP to connect to a Minecraft server's Votifier plugin.</description>
 
+    <config name="installed_paths" value="vendor/phpcompatibility/php-compatibility" />
+
     <file>src/</file>
     <file>tests/</file>
 
-    <arg name="cache" value=".php_codesniffer_cache.json"/>
-    <arg name="colors"/>
-    <arg name="extensions" value="php"/>
-    <arg name="parallel" value="75"/>
+    <arg name="cache" value=".php_codesniffer_cache.json" />
+    <arg name="colors" />
+    <arg name="extensions" value="php" />
+    <arg name="parallel" value="75" />
 
     <rule ref="PSR12" />
-    <rule ref="PHPCompatibility"/>
-    <config name="testVersion" value="7.1-"/>
+    <rule ref="PHPCompatibility" />
+    <config name="testVersion" value="7.1-" />
 </ruleset>
