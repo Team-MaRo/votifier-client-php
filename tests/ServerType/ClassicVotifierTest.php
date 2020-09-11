@@ -12,6 +12,10 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
+use D3strukt0r\VotifierClient\Exception\NotVotifierException;
+use D3strukt0r\VotifierClient\Exception\PackageNotSentException;
+use D3strukt0r\VotifierClient\ServerConnection;
+use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
 use function file_get_contents;
@@ -25,55 +29,77 @@ use function file_get_contents;
  */
 final class ClassicVotifierTest extends TestCase
 {
-    /** @var ClassicVotifier */
-    private $obj;
-
     /**
-     * An example public key.
-     *
-     * @var string
+     * @var ClassicVotifier The main class
      */
-    private $key;
+    private $object;
 
     protected function setUp(): void
     {
-        $this->key = file_get_contents('tests/ServerType/votifier_public.key');
-        $this->obj = new ClassicVotifier('mock_host', 00000, $this->key);
+        $key = file_get_contents('tests/ServerType/votifier_public.key');
+        $this->object = (new ClassicVotifier())
+            ->setHost('mock_host')
+            ->setPort(0)
+            ->setPublicKey($key)
+        ;
     }
 
     protected function tearDown(): void
     {
-        $this->obj = null;
+        $this->object = null;
     }
 
     public function testInstanceOf(): void
     {
-        static::assertInstanceOf('D3strukt0r\VotifierClient\ServerType\ClassicVotifier', $this->obj);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\ServerType\ClassicVotifier', $this->object);
     }
 
-    public function testValues(): void
+    public function testNotVotifierException(): void
     {
-        static::assertSame('mock_host', $this->obj->getHost());
-        static::assertSame(00000, $this->obj->getPort());
-        $key = wordwrap($this->key, 65, "\n", true);
-        $key = <<<EOF
------BEGIN PUBLIC KEY-----
-{$key}
------END PUBLIC KEY-----
-EOF;
-        static::assertSame($key, $this->obj->getPublicKey());
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('SOMETHING_WEIRD')
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NotVotifierException::class);
+        $this->object->send($stubServerConnection, $stubVote);
     }
 
-    public function testHeaderVerification(): void
+    public function testPackageNotSentException(): void
     {
-        static::assertFalse($this->obj->verifyConnection(false));
-        static::assertFalse($this->obj->verifyConnection('VOTFI'));
-        static::assertTrue($this->obj->verifyConnection('VOTIFIER'));
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER')
+        ;
+        $stubServerConnection
+            ->method('send')
+            ->willReturn(false)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(PackageNotSentException::class);
+        $this->object->send($stubServerConnection, $stubVote);
     }
 
-    /*public function testPackagePreparation()
+    public function testSend(): void
     {
-        $string = $this->obj->preparePackage(new ClassicVote('mock_user', 'mock_service', 'mock_address'));
-        // Cannot test openssl_encrypt
-    }*/
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER')
+        ;
+        $stubServerConnection
+            ->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->assertNull($this->object->send($stubServerConnection, $stubVote));
+    }
 }

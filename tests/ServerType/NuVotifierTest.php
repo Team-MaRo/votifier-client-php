@@ -12,6 +12,15 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
+use D3strukt0r\VotifierClient\Exception\NotVotifierException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierChallengeInvalidException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierSignatureInvalidException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
+use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
+use D3strukt0r\VotifierClient\Exception\PackageNotReceivedException;
+use D3strukt0r\VotifierClient\Exception\PackageNotSentException;
+use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\ClassicVote;
 use PHPUnit\Framework\TestCase;
 
@@ -26,73 +35,264 @@ use function file_get_contents;
  */
 final class NuVotifierTest extends TestCase
 {
-    /** @var NuVotifier */
-    private $obj;
-    /** @var NuVotifier */
-    private $obj2;
+    /**
+     * @var NuVotifier The main class
+     */
+    private $object;
 
     /**
-     * An example public key.
-     *
-     * @var string
+     * @var NuVotifier The main class using V2
      */
-    private $key;
+    private $objectV2;
 
     protected function setUp(): void
     {
-        $this->key = file_get_contents('tests/ServerType/votifier_public.key');
-        $this->obj = new NuVotifier('mock_host', 00000, $this->key);
-        $this->obj2 = new NuVotifier('mock_host', 00000, null, true, 'mock_token');
+        $key = file_get_contents('tests/ServerType/votifier_public.key');
+        $this->object = (new NuVotifier())
+            ->setHost('mock_host')
+            ->setPort(0)
+            ->setPublicKey($key)
+        ;
+
+        $this->objectV2 = (new NuVotifier())
+            ->setHost('mock_host')
+            ->setPort(0)
+            ->setProtocolV2(true)
+            ->setToken('mock_token')
+        ;
     }
 
     protected function tearDown(): void
     {
-        $this->obj = null;
-        $this->obj2 = null;
+        $this->object = null;
+        $this->objectV2 = null;
     }
 
     public function testInstanceOf(): void
     {
-        static::assertInstanceOf('D3strukt0r\VotifierClient\ServerType\NuVotifier', $this->obj);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\ServerType\NuVotifier', $this->object);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\ServerType\NuVotifier', $this->objectV2);
     }
 
-    public function testValues(): void
+    public function testProtocolV2(): void
     {
-        static::assertSame('mock_host', $this->obj->getHost());
-        static::assertSame(00000, $this->obj->getPort());
-        $key = wordwrap($this->key, 65, "\n", true);
-        $key = <<<EOF
------BEGIN PUBLIC KEY-----
-{$key}
------END PUBLIC KEY-----
-EOF;
-        static::assertSame($key, $this->obj->getPublicKey());
-
-        static::assertTrue($this->obj2->isProtocolV2());
+        $this->object->setProtocolV2(true);
+        $this->assertTrue($this->object->isProtocolV2());
     }
 
-    public function testHeaderVerification(): void
+    public function testToken(): void
     {
-        static::assertFalse($this->obj->verifyConnection(false));
-        static::assertFalse($this->obj->verifyConnection('VOTIF'));
-        static::assertTrue($this->obj->verifyConnection('VOTIFIER 2.3.7 SOMETHING'));
+        $this->object->setToken('mock_token');
+        $this->assertSame('mock_token', $this->object->getToken());
     }
 
-    public function testPackagePreparationV2(): void
+    public function testSendV1(): void
     {
-        $testVote = new ClassicVote('mock_user', 'mock_service', 'mock_address');
-        $string = $this->obj->preparePackageV2($testVote, 'mock_challenge');
-        static::assertStringStartsWith('s:', $string);
-        $testResultV2 = '{' .
-            '"signature":"LTsZweI\/1UwR+PHV9OKK0ULJRw2Ilavh17A8b6C0LBw=",' .
-            '"payload":"{' .
-                '\"username\":\"mock_user\",' .
-                '\"serviceName\":\"mock_service\",' .
-                '\"timestamp\":null,' .
-                '\"address\":\"mock_address\",' .
-                '\"challenge\":\"mock_challenge\"' .
-            '}"' .
-        '}';
-        static::assertStringEndsWith($testResultV2, $string);
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER')
+        ;
+        $stubServerConnection
+            ->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->assertNull($this->object->send($stubServerConnection, $stubVote));
+    }
+
+    public function testNotVotifierException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('SOMETHING_WEIRD')
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NotVotifierException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNotVotifierException2(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER')
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NotVotifierException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNotVotifierException3(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER 2')
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NotVotifierException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testPackageNotSentException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->willReturn('VOTIFIER 2 mock_challenge')
+        ;
+        $stubServerConnection
+            ->method('send')
+            ->willReturn(false)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(PackageNotSentException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testPackageNotReceivedException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls('VOTIFIER 2 mock_challenge', null))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(PackageNotReceivedException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNuVotifierChallengeInvalidException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls(
+                'VOTIFIER 2 mock_challenge',
+                '{"status":"error","cause":"CorruptedFrameException","error":"Challenge is not valid"}'
+            ))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NuVotifierChallengeInvalidException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNuVotifierUnknownServiceException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls(
+                'VOTIFIER 2 mock_challenge',
+                '{"status":"error","cause":"CorruptedFrameException","error":"Unknown service \'xxx\'"}'
+            ))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NuVotifierUnknownServiceException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNuVotifierSignatureInvalidException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls(
+                'VOTIFIER 2 mock_challenge',
+                '{"status":"error","cause":"CorruptedFrameException","error":"Signature is not valid (invalid token?)"}'
+            ))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NuVotifierSignatureInvalidException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNuVotifierUsernameTooLongException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls(
+                'VOTIFIER 2 mock_challenge',
+                '{"status":"error","cause":"CorruptedFrameException","error":"Username too long"}'
+            ))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NuVotifierUsernameTooLongException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testNuVotifierException(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls(
+                'VOTIFIER 2 mock_challenge',
+                '{"status":"error","cause":"CorruptedFrameException","error":"Some unknown error"}'
+            ))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->expectException(NuVotifierException::class);
+        $this->objectV2->send($stubServerConnection, $stubVote);
+    }
+
+    public function testSend(): void
+    {
+        $stubServerConnection = $this->createStub(ServerConnection::class);
+        $stubServerConnection
+            ->method('receive')
+            ->will($this->onConsecutiveCalls('VOTIFIER 2 mock_challenge', '{"status":"ok"}'))
+        ;
+        $stubServerConnection->method('send')
+            ->willReturn(true)
+        ;
+
+        $stubVote = $this->createStub(ClassicVote::class);
+
+        $this->assertNull($this->objectV2->send($stubServerConnection, $stubVote));
     }
 }

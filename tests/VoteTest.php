@@ -26,11 +26,11 @@ use PHPUnit\Framework\TestCase;
 final class VoteTest extends TestCase
 {
     /** @var Vote */
-    private $obj;
+    private $object;
 
     protected function setUp(): void
     {
-        $this->obj = new Vote(
+        $this->object = new Vote(
             new ClassicVote('mock_user', 'mock_service', 'mock_address'),
             new ClassicVotifier('mock_host', 00000, 'mock_key')
         );
@@ -38,12 +38,12 @@ final class VoteTest extends TestCase
 
     protected function tearDown(): void
     {
-        $this->obj = null;
+        $this->object = null;
     }
 
     public function testInstanceOf(): void
     {
-        static::assertInstanceOf('D3strukt0r\VotifierClient\Vote', $this->obj);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\Vote', $this->object);
     }
 
     /*public function testValidResult()

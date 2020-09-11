@@ -12,6 +12,7 @@
 
 namespace D3strukt0r\VotifierClient\VoteType;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,36 +24,48 @@ use PHPUnit\Framework\TestCase;
  */
 final class ClassicVoteTest extends TestCase
 {
-    /** @var ClassicVote */
-    private $obj;
+    /**
+     * @var ClassicVote The main object
+     */
+    private $object;
 
     protected function setUp(): void
     {
-        $this->obj = new ClassicVote('mock_user', 'mock_service', 'mock_address');
+        $this->object = new ClassicVote();
     }
 
     protected function tearDown(): void
     {
-        $this->obj = null;
+        $this->object = null;
     }
 
     public function testInstanceOf(): void
     {
-        static::assertInstanceOf('D3strukt0r\VotifierClient\VoteType\ClassicVote', $this->obj);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\VoteType\ClassicVote', $this->object);
     }
 
-    public function testValues(): void
+    public function testUsername(): void
     {
-        static::assertSame('mock_user', $this->obj->getUsername());
-        static::assertSame('mock_service', $this->obj->getServiceName());
-        static::assertSame('mock_address', $this->obj->getAddress());
-        static::assertNull($this->obj->getTimestamp());
+        $this->object->setUsername('mock_user');
+        $this->assertSame('mock_user', $this->object->getUsername());
     }
 
-    public function testSetTimestamp(): void
+    public function testServiceName(): void
     {
-        $time = new \DateTime();
-        $this->obj->setTimestamp($time);
-        static::assertSame($time->getTimestamp(), $this->obj->getTimestamp());
+        $this->object->setServiceName('mock_service');
+        $this->assertSame('mock_service', $this->object->getServiceName());
+    }
+
+    public function testAddress(): void
+    {
+        $this->object->setAddress('mock_address');
+        $this->assertSame('mock_address', $this->object->getAddress());
+    }
+
+    public function testTimestamp(): void
+    {
+        $time = new DateTime();
+        $this->object->setTimestamp($time);
+        $this->assertSame($time->getTimestamp(), $this->object->getTimestamp());
     }
 }

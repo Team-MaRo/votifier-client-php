@@ -20,39 +20,66 @@ use DateTime;
 interface VoteInterface
 {
     /**
-     * The name of the list/service.
+     * Gets the name of the list/service.
      *
      * @return string returns the name of the list/service
      */
     public function getServiceName(): string;
 
     /**
-     * The username who wants to receive the rewards.
+     * Sets the name of the list/service.
+     *
+     * @param string $serviceName The name of the list/service
+     *
+     * @return $this returns the class itself, for doing multiple things at once
+     */
+    public function setServiceName(string $serviceName);
+
+    /**
+     * Gets the username of the user who wants to receive the rewards.
      *
      * @return string returns the username who wants to receive the rewards
      */
     public function getUsername(): string;
 
     /**
-     * The IP Address of the user.
+     * Sets the username of the user who wants to receive the rewards.
+     *
+     * @param string $username The username of the user who wants to receive the rewards
+     *
+     * @return $this returns the class itself, for doing multiple things at once
+     */
+    public function setUsername(string $username);
+
+    /**
+     * Gets the IP Address of the user.
      *
      * @return string returns the IP Address of the user
      */
     public function getAddress(): string;
 
     /**
-     * Get the time when the vote was sent.
+     * Sets the IP Address of the user.
      *
-     * @return int|null returns the time when the vote was sent
+     * @param string $address The IP address the user is sending a request from
+     *
+     * @return $this returns the class itself, for doing multiple things at once
+     */
+    public function setAddress(string $address);
+
+    /**
+     * Gets the time when the vote was sent.
+     *
+     * @return int|null returns the time when the vote was sent, null otherwise
      */
     public function getTimestamp(): ?int;
 
     /**
-     * Set the time when the vote will be sent.
+     * Sets the time when the vote will be sent.
      *
-     * @param DateTime|null $timestamp (Optional) Either give a wanted timestamp or it will use the current time
+     * @param DateTime|null $timestamp [optional] Either give a wanted timestamp or it will use the current time
      *
-     * @return self returns the class itself, for doing multiple things at once
+     * @return $this returns the class itself, for doing multiple things at once
      */
     public function setTimestamp(DateTime $timestamp = null);
 }

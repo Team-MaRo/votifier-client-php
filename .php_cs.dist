@@ -12,6 +12,7 @@ Votifier PHP Client
 EOF;
 
 $finder = PhpCsFixer\Finder::create()
+    ->notPath('tests/ServerType/GenericServerTypeTest.php')
     ->in(__DIR__)
 ;
 
@@ -40,6 +41,9 @@ return PhpCsFixer\Config::create()
         ],
         'no_extra_blank_lines' => [
             'tokens' => ['default'],
+        ],
+        'php_unit_test_case_static_method_calls' => [
+            'call_type' => 'this',
         ],
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,

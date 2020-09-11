@@ -22,34 +22,52 @@ use Exception;
 interface ServerTypeInterface
 {
     /**
-     * Returns the host.
+     * Gets the host.
      *
      * @return string returns the host
      */
     public function getHost(): string;
 
     /**
-     * Returns the port.
+     * Sets the host.
+     *
+     * @param string $host The host
+     *
+     * @return $this returns the class itself, for doing multiple things at once
+     */
+    public function setHost(string $host);
+
+    /**
+     * Gets the port.
      *
      * @return int returns the port
      */
     public function getPort(): int;
 
     /**
-     * Returns the public key.
+     * Sets the port.
+     *
+     * @param int $port The port
+     *
+     * @return $this returns the class itself, for doing multiple things at once
+     */
+    public function setPort(int $port);
+
+    /**
+     * Gets the public key.
      *
      * @return string returns the public key
      */
     public function getPublicKey(): string;
 
     /**
-     * Verifies that the connection is correct.
+     * Sets the public key.
      *
-     * @param string|null $header (Required) The header that the plugin usually sends
+     * @param string $publicKey The public key
      *
-     * @return bool returns true if connections is available, otherwise false
+     * @return $this returns the class itself, for doing multiple things at once
      */
-    public function verifyConnection(?string $header): bool;
+    public function setPublicKey(string $publicKey);
 
     /**
      * Sends the vote package to the server.

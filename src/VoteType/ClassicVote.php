@@ -35,25 +35,15 @@ class ClassicVote implements VoteInterface
     private $address;
 
     /**
-     * @var DateTime|null the time when the vote will be sent
+     * @var DateTime the time when the vote will be sent
      */
     private $timestamp;
 
     /**
      * Creates the ClassicVote object.
-     *
-     * @param string        $username    (Required) The username who wants to receive the rewards
-     * @param string        $serviceName (Required) The name of the list/service
-     * @param string        $address     (Required) The IP Address of the user
-     * @param DateTime|null $timestamp   (Optional) The time when the vote will be sent
      */
-    public function __construct(string $username, string $serviceName, string $address, DateTime $timestamp = null)
+    public function __construct()
     {
-        // Replace username to letters, numbers and "_"
-        $this->username = preg_replace('/[^A-Za-z0-9_]+/', '', $username);
-        $this->serviceName = $serviceName;
-        $this->address = $address;
-        $this->timestamp = $timestamp;
     }
 
     /**
@@ -67,9 +57,30 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
+    public function setServiceName(string $serviceName): self
+    {
+        $this->serviceName = $serviceName;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getUsername(): string
     {
         return $this->username;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUsername(string $username)
+    {
+        // Replace username to letters, numbers and "_"
+        $this->username = preg_replace('/[^A-Za-z0-9_]+/', '', $username);
+
+        return $this;
     }
 
     /**
@@ -83,13 +94,19 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
+    public function setAddress(string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getTimestamp(): ?int
     {
-        if (null !== $this->timestamp) {
-            return $this->timestamp->getTimestamp();
-        }
-
-        return null;
+        return $this->timestamp->getTimestamp();
     }
 
     /**
