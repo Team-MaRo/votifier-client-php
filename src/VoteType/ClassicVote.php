@@ -40,13 +40,6 @@ class ClassicVote implements VoteInterface
     private $timestamp;
 
     /**
-     * Creates the ClassicVote object.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function getServiceName(): string

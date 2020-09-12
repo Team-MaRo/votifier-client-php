@@ -26,6 +26,8 @@ use PHPUnit\Framework\TestCase;
 
 use function file_get_contents;
 
+use const DIRECTORY_SEPARATOR;
+
 /**
  * Class NuVotifierTest.
  *
@@ -47,7 +49,7 @@ final class NuVotifierTest extends TestCase
 
     protected function setUp(): void
     {
-        $key = file_get_contents('tests/ServerType/votifier_public.key');
+        $key = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'votifier_public.key');
         $this->object = (new NuVotifier())
             ->setHost('mock_host')
             ->setPort(0)
@@ -86,8 +88,16 @@ final class NuVotifierTest extends TestCase
         $this->assertSame('mock_token', $this->object->getToken());
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testSendV1(): void
     {
+        $stub = $this->createStub(NuVotifier::class);
+        $stub->method('read')->willReturn('VOTIFIER');
+        $stub->method('write')->willReturn(null);
+
+
         $stubServerConnection = $this->createStub(ServerConnection::class);
         $stubServerConnection
             ->method('receive')
@@ -100,9 +110,12 @@ final class NuVotifierTest extends TestCase
 
         $stubVote = $this->createStub(ClassicVote::class);
 
-        $this->assertNull($this->object->send($stubServerConnection, $stubVote));
+        $this->assertNull($this->object->sendVote($stubServerConnection, $stubVote));
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNotVotifierException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -114,9 +127,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NotVotifierException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNotVotifierException2(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -128,9 +144,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NotVotifierException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNotVotifierException3(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -142,9 +161,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NotVotifierException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testPackageNotSentException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -160,9 +182,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(PackageNotSentException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testPackageNotReceivedException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -177,9 +202,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(PackageNotReceivedException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNuVotifierChallengeInvalidException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -197,9 +225,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NuVotifierChallengeInvalidException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNuVotifierUnknownServiceException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -217,9 +248,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NuVotifierUnknownServiceException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNuVotifierSignatureInvalidException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -237,9 +271,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NuVotifierSignatureInvalidException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNuVotifierUsernameTooLongException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -257,9 +294,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NuVotifierUsernameTooLongException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testNuVotifierException(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -277,9 +317,12 @@ final class NuVotifierTest extends TestCase
         $stubVote = $this->createStub(ClassicVote::class);
 
         $this->expectException(NuVotifierException::class);
-        $this->objectV2->send($stubServerConnection, $stubVote);
+        $this->objectV2->sendVote($stubServerConnection, $stubVote);
     }
 
+    /**
+     * @requires PHPUnit >= 8
+     */
     public function testSend(): void
     {
         $stubServerConnection = $this->createStub(ServerConnection::class);
@@ -293,6 +336,6 @@ final class NuVotifierTest extends TestCase
 
         $stubVote = $this->createStub(ClassicVote::class);
 
-        $this->assertNull($this->objectV2->send($stubServerConnection, $stubVote));
+        $this->assertNull($this->objectV2->sendVote($stubServerConnection, $stubVote));
     }
 }

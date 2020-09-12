@@ -18,10 +18,8 @@ use D3strukt0r\VotifierClient\Exception\NuVotifierException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierSignatureInvalidException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
-use D3strukt0r\VotifierClient\Exception\PackageNotReceivedException;
-use D3strukt0r\VotifierClient\Exception\PackageNotSentException;
-use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use DateTime;
 
 use function count;
 
@@ -91,65 +89,78 @@ class NuVotifier extends ClassicVotifier
     /**
      * {@inheritdoc}
      *
-     * @throws NotVotifierException
-     * @throws PackageNotSentException
-     * @throws PackageNotReceivedException
-     * @throws NuVotifierServerErrorException
+     * @throws NuVotifierChallengeInvalidException NuVotifier says the challenge was invalid
+     * @throws NuVotifierException                 General NuVotifier Exception (an unknown exception)
+     * @throws NuVotifierSignatureInvalidException NuVotifier says the signature was invalid
+     * @throws NuVotifierUnknownServiceException   NuVotifier says that the service is unknown (the token doesn't belong
+     *                                             to the service name)
+     * @throws NuVotifierUsernameTooLongException  NuVotifier says the username is too long
      */
-    public function send(ServerConnection $connection, VoteInterface $vote): void
+    public function sendVote(VoteInterface ...$votes): void
     {
         if (!$this->isProtocolV2()) {
-            parent::send($connection, $vote);
+            call_user_func_array([$this, 'parent::sendVote'], func_get_args());
 
             return;
         }
 
-        if (!$this->verifyConnection($header = $connection->receive(64))) {
-            throw new NotVotifierException();
-        }
-        $header_parts = explode(' ', $header);
-        $challenge = mb_substr($header_parts[2], 0, -1);
+        foreach ($votes as $vote) {
+            // Connect to the server
+            $socket = $this->getSocket();
+            $socket->open($this->getHost(), $this->getPort());
 
-        if (false === $connection->send($this->preparePackageV2($vote, $challenge))) {
-            throw new PackageNotSentException();
-        }
-
-        if (!$response = $connection->receive(256)) {
-            throw new PackageNotReceivedException();
-        }
-
-        /*
-         * https://github.com/NuVotifier/NuVotifier/blob/master/common/src/main/java/com/vexsoftware/votifier/net/protocol/VotifierProtocol2Decoder.java
-         * Examples:
-         * {"status":"ok"}
-         * {"status":"error","cause":"CorruptedFrameException","error":"Challenge is not valid"}
-         * {"status":"error","cause":"CorruptedFrameException","error":"Unknown service 'xxx'"}
-         * {"status":"error","cause":"CorruptedFrameException","error":"Signature is not valid (invalid token?)"}
-         * {"status":"error","cause":"CorruptedFrameException","error":"Username too long"} (over 16 characters)
-         */
-        $result = json_decode($response);
-        if ('ok' !== $result->status) {
-            if ('Challenge is not valid' === $result->error) {
-                throw new NuVotifierChallengeInvalidException();
-            } elseif (preg_match('/Unknown service \'(.*)\'/', $result->error, $matches)) {
-                throw new NuVotifierUnknownServiceException();
-            } elseif ('Signature is not valid (invalid token?)' === $result->error) {
-                throw new NuVotifierSignatureInvalidException();
-            } elseif ('Username too long' === $result->error) {
-                throw new NuVotifierUsernameTooLongException();
+            // Check whether the connection really belongs to a NuVotifier plugin
+            if (!$this->verifyConnection($header = $socket->read(64))) {
+                throw new NotVotifierException();
             }
-            throw new NuVotifierException('Unknown NuVotifier Exception');
+
+            // Extract the challenge
+            $headerParts = explode(' ', $header);
+            $challenge = mb_substr($headerParts[2], 0, -1);
+
+            // Update the timestamp of the vote being sent
+            $vote->setTimestamp(new DateTime());
+
+            // Send the vote
+            $socket->write($package = $this->preparePackageV2($vote, $challenge));
+
+            // Check is the vote was successful
+            /*
+             * https://github.com/NuVotifier/NuVotifier/blob/master/common/src/main/java/com/vexsoftware/votifier/net/protocol/VotifierProtocol2Decoder.java
+             * Examples:
+             * {"status":"ok"}
+             * {"status":"error","cause":"CorruptedFrameException","error":"Challenge is not valid"}
+             * {"status":"error","cause":"CorruptedFrameException","error":"Unknown service 'xxx'"}
+             * {"status":"error","cause":"CorruptedFrameException","error":"Signature is not valid (invalid token?)"}
+             * {"status":"error","cause":"CorruptedFrameException","error":"Username too long"} (over 16 characters)
+             */
+            $result = json_decode($socket->read(256));
+            if ('ok' !== $result->status) {
+                if ('Challenge is not valid' === $result->error) {
+                    throw new NuVotifierChallengeInvalidException();
+                } elseif (preg_match('/Unknown service \'(.*)\'/', $result->error, $matches)) {
+                    throw new NuVotifierUnknownServiceException();
+                } elseif ('Signature is not valid (invalid token?)' === $result->error) {
+                    throw new NuVotifierSignatureInvalidException();
+                } elseif ('Username too long' === $result->error) {
+                    throw new NuVotifierUsernameTooLongException();
+                }
+                throw new NuVotifierException('Unknown NuVotifier Exception');
+            }
+
+            // Make sure to close the connection after package was sent
+            $socket->__destruct();
         }
     }
 
     /**
      * Verifies that the connection is correct.
      *
-     * @param string|null $header (Required) The header that the plugin usually sends
+     * @param string|null $header The header that the plugin usually sends
      *
      * @return bool returns true if connections is available, otherwise false
      */
-    private function verifyConnection(?string $header): bool
+    protected function verifyConnection(?string $header): bool
     {
         $header_parts = explode(' ', $header);
         if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== count($header_parts)) {
@@ -162,12 +173,12 @@ class NuVotifier extends ClassicVotifier
     /**
      * Prepares the vote package to be sent as version 2 protocol package.
      *
-     * @param VoteInterface $vote      (Required) The vote package with information
-     * @param string        $challenge (Required) The challenge sent by the server
+     * @param VoteInterface $vote      The vote package with information
+     * @param string        $challenge The challenge sent by the server
      *
      * @return string returns the string to be sent to the server
      */
-    private function preparePackageV2(VoteInterface $vote, string $challenge): string
+    protected function preparePackageV2(VoteInterface $vote, string $challenge): string
     {
         $payloadJson = json_encode(
             [

@@ -23,6 +23,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: [ 7.1, 7.2, 7.3, 7.4 ]
         include:
@@ -78,7 +79,9 @@ jobs:
       - name: Check with phpcs
         run: ./vendor/bin/phpcs
 
+      # Don't make this a requirement for now, php-cs-fixer fails to follow PSR-12 standard
       - name: Check whether code follows Symfony Code Syntax rules
+        continue-on-error: true
         run: ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
 
       - name: Run tests

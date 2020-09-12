@@ -9,7 +9,7 @@
     <violation severity="minor" category="codestyle" ignored="false">
       <line>29</line>
       <resource><![CDATA[.gitignore]]></resource>
-      <title>User specific files should not appear in .gitignore</title>
+      <title>Your project gitignore file should not contain user-specific files</title>
       <message><![CDATA[.DS_Store is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
       <context start-line="24" end-line="34"><![CDATA[# .nfs files are created when an open file is removed but is still being accessed
 .nfs*
@@ -27,7 +27,7 @@ Icon]]></context>
     <violation severity="minor" category="codestyle" ignored="false">
       <line>34</line>
       <resource><![CDATA[.gitignore]]></resource>
-      <title>User specific files should not appear in .gitignore</title>
+      <title>Your project gitignore file should not contain user-specific files</title>
       <message><![CDATA[Icon is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
       <context start-line="29" end-line="39"><![CDATA[.DS_Store
 .AppleDouble
@@ -45,7 +45,7 @@ Icon
     <violation severity="minor" category="codestyle" ignored="false">
       <line>180</line>
       <resource><![CDATA[.gitignore]]></resource>
-      <title>User specific files should not appear in .gitignore</title>
+      <title>Your project gitignore file should not contain user-specific files</title>
       <message><![CDATA[Thumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
       <context start-line="175" end-line="185"><![CDATA[# Build data
 /build/
@@ -63,7 +63,7 @@ ehthumbs_vista.db
     <violation severity="minor" category="codestyle" ignored="false">
       <line>182</line>
       <resource><![CDATA[.gitignore]]></resource>
-      <title>User specific files should not appear in .gitignore</title>
+      <title>Your project gitignore file should not contain user-specific files</title>
       <message><![CDATA[ehthumbs.db is user-specific and should not appear in a project .gitignore. Consider adding it to the user global .gitignore instead.]]></message>
       <context start-line="177" end-line="187"><![CDATA[
 ### Windows ###
@@ -197,7 +197,7 @@ ehthumbs_vista.db
     <violation severity="minor" category="deadcode" ignored="false">
       <line>26</line>
       <resource><![CDATA[src/ServerConnection.php]]></resource>
-      <title>Unused method, property, variable or parameter</title>
+      <title>Your project should not contain unused code</title>
       <message><![CDATA[This serverType attribute is declared but never used. You should remove it.]]></message>
       <context start-line="21" end-line="31"><![CDATA[class ServerConnection
 {

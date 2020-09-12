@@ -12,7 +12,6 @@
 
 namespace D3strukt0r\VotifierClient\ServerType;
 
-use D3strukt0r\VotifierClient\ServerConnection;
 use D3strukt0r\VotifierClient\VoteType\VoteInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -35,9 +34,10 @@ final class GenericServerTypeTest extends TestCase
         $this->object = new class () extends GenericServerType {
             public function verifyConnection(?string $header): bool
             {
+                return true;
             }
 
-            public function send(ServerConnection $connection, VoteInterface $vote): void
+            public function sendVote(VoteInterface ...$votes): void
             {
             }
         };

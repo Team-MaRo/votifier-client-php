@@ -12,7 +12,6 @@ Votifier PHP Client
 EOF;
 
 $finder = PhpCsFixer\Finder::create()
-    ->notPath('tests/ServerType/GenericServerTypeTest.php')
     ->in(__DIR__)
 ;
 

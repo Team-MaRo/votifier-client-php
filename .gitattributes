@@ -282,3 +282,5 @@ Procfile text
 *.*ignore text
 
 # End of https://www.richie-bendall.ml/gitattributes-generator/
+
+*.php eol=lf
