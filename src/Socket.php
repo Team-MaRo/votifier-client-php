@@ -10,7 +10,7 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\ServerType;
+namespace D3strukt0r\VotifierClient;
 
 use D3strukt0r\VotifierClient\Exception\Socket\NoConnectionException;
 use D3strukt0r\VotifierClient\Exception\Socket\PackageNotReceivedException;
@@ -18,6 +18,8 @@ use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
 
 /**
  * Creates a class for socket functionality.
+ *
+ * @codeCoverageIgnore
  */
 class Socket
 {

@@ -10,28 +10,20 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\ServerType;
+namespace D3strukt0r\VotifierClient\Server;
 
 use D3strukt0r\VotifierClient\Exception\NotVotifierException;
 use D3strukt0r\VotifierClient\Exception\Socket\NoConnectionException;
 use D3strukt0r\VotifierClient\Exception\Socket\PackageNotReceivedException;
 use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
-use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use D3strukt0r\VotifierClient\Vote\VoteInterface;
 use DateTime;
 
 /**
  * The Class to access a server which uses the classic "Votifier" plugin.
  */
-class ClassicVotifier extends GenericServerType
+class Votifier extends GenericServerType
 {
-    /**
-     * @return Socket returns a Socket object
-     */
-    public function getSocket(): Socket
-    {
-        return new Socket();
-    }
-
     /**
      * {@inheritdoc}
      *

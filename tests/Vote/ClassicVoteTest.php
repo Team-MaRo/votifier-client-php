@@ -10,7 +10,7 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\VoteType;
+namespace D3strukt0r\VotifierClient\Vote;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Class ClassicVoteTest.
  *
- * @covers \D3strukt0r\VotifierClient\VoteType\ClassicVote
+ * @covers \D3strukt0r\VotifierClient\Vote\ClassicVote
  *
  * @internal
  */
@@ -41,7 +41,7 @@ final class ClassicVoteTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\VotifierClient\VoteType\ClassicVote', $this->object);
+        $this->assertInstanceOf('D3strukt0r\VotifierClient\Vote\ClassicVote', $this->object);
     }
 
     public function testUsername(): void

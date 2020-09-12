@@ -1,2 +1,5 @@
 global_exclude_dirs:
   - .idea
+
+exclude_patterns:
+  - .gitignore

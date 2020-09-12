@@ -10,7 +10,7 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\ServerType;
+namespace D3strukt0r\VotifierClient\Server;
 
 use D3strukt0r\VotifierClient\Exception\NotVotifierException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierChallengeInvalidException;
@@ -18,7 +18,7 @@ use D3strukt0r\VotifierClient\Exception\NuVotifierException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierSignatureInvalidException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
-use D3strukt0r\VotifierClient\VoteType\VoteInterface;
+use D3strukt0r\VotifierClient\Vote\VoteInterface;
 use DateTime;
 
 use function count;
@@ -26,7 +26,7 @@ use function count;
 /**
  * The Class to access a server which uses the plugin "NuVotifier".
  */
-class NuVotifier extends ClassicVotifier
+class NuVotifier extends Votifier
 {
     /**
      * @var bool use version 2 of the protocol
@@ -122,9 +122,9 @@ class NuVotifier extends ClassicVotifier
             $vote->setTimestamp(new DateTime());
 
             // Send the vote
-            $socket->write($package = $this->preparePackageV2($vote, $challenge));
+            $socket->write($this->preparePackageV2($vote, $challenge));
 
-            // Check is the vote was successful
+            // Check if the vote was successful
             /*
              * https://github.com/NuVotifier/NuVotifier/blob/master/common/src/main/java/com/vexsoftware/votifier/net/protocol/VotifierProtocol2Decoder.java
              * Examples:

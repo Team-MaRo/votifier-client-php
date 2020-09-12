@@ -59,11 +59,11 @@ For the servers with the classic Votifier plugins:
 ```php
 <?php
 
-use D3strukt0r\VotifierClient\ServerType\ClassicVotifier;
+use D3strukt0r\VotifierClient\Server\Votifier;
 use D3strukt0r\VotifierClient\Vote;
-use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+use D3strukt0r\VotifierClient\Vote\ClassicVote;
 
-$serverType = new ClassicVotifier('127.0.0.1', null, 'MIIBIjANBgkq...');
+$serverType = new Votifier('127.0.0.1', null, 'MIIBIjANBgkq...');
 $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
 $vote = new Vote($voteType, $serverType);
 ```
@@ -73,9 +73,9 @@ For the servers which use the NuVotifier plugin (v1 protocol) (HINT: It's EXACTL
 ```php
 <?php
 
-use D3strukt0r\VotifierClient\ServerType\NuVotifier;
+use D3strukt0r\VotifierClient\Server\NuVotifier;
 use D3strukt0r\VotifierClient\Vote;
-use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+use D3strukt0r\VotifierClient\Vote\ClassicVote;
 
 $serverType = new NuVotifier('127.0.0.1', null, 'MIIBIjANBgkq...');
 $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
@@ -87,9 +87,9 @@ For the servers which use the NuVotifier plugin with v2 protocol:
 ```php
 <?php
 
-use D3strukt0r\VotifierClient\ServerType\NuVotifier;
+use D3strukt0r\VotifierClient\Server\NuVotifier;
 use D3strukt0r\VotifierClient\Vote;
-use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+use D3strukt0r\VotifierClient\Vote\ClassicVote;
 
 $serverType = new NuVotifier('127.0.0.1', null, null, true, '7j302r4n...');
 $voteType = new ClassicVote($_GET['username'], 'Your vote list', $_SERVER['REMOTE_ADDR']);
