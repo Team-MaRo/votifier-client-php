@@ -18,6 +18,7 @@ use D3strukt0r\VotifierClient\Exception\Socket\PackageNotReceivedException;
 use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
 use D3strukt0r\VotifierClient\Vote\VoteInterface;
 use DateTime;
+use InvalidArgumentException;
 
 /**
  * The Class to access a server which uses the classic "Votifier" plugin.
@@ -27,6 +28,7 @@ class Votifier extends GenericServerType
     /**
      * {@inheritdoc}
      *
+     * @throws InvalidArgumentException    If one required parameter wasn't set
      * @throws NoConnectionException       If connection couldn't be established
      * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
      * @throws PackageNotReceivedException If there was an error receiving the package
@@ -34,6 +36,9 @@ class Votifier extends GenericServerType
      */
     public function sendVote(VoteInterface ...$votes): void
     {
+        // Check if all variables have been set, to create a connection
+        $this->checkRequiredVariablesForSocket();
+
         foreach ($votes as $vote) {
             // Connect to the server
             $socket = $this->getSocket();
@@ -47,11 +52,81 @@ class Votifier extends GenericServerType
             // Update the timestamp of the vote being sent
             $vote->setTimestamp(new DateTime());
 
+            // Check if all variables have been set, to create a package
+            $this->checkRequiredVariablesForPackage($vote);
+
             // Send the vote
             $socket->write($this->preparePackage($vote));
 
             // Make sure to close the connection after package was sent
             $socket->__destruct();
+        }
+    }
+
+    /**
+     * @throws InvalidArgumentException If one required parameter wasn't set
+     */
+    protected function checkRequiredVariablesForSocket(): void
+    {
+        if (!isset($this->host, $this->port)) {
+            // $countError = 0;
+            $errorMessage = '';
+
+            if (null === $this->host) {
+                $errorMessage .= 'The host variable wasn\'t set with "->setHost(...)".';
+                // ++$countError;
+            }
+            // Not needed, as port has a default value
+            // if (null === $this->port) {
+            //     $errorMessage .= $countError > 0 ? ' ' : '';
+            //     $errorMessage .= 'The port variable wasn\'t set with "->setPort(...)".';
+            // }
+
+            throw new InvalidArgumentException($errorMessage);
+        }
+    }
+
+    /**
+     * @param VoteInterface $vote The vote to check
+     *
+     * @throws InvalidArgumentException If one required parameter wasn't set
+     */
+    protected function checkRequiredVariablesForPackage(VoteInterface $vote)
+    {
+        if (
+            null === $vote->getServiceName()
+            || null === $vote->getUsername()
+            || null === $vote->getAddress()
+            || null === $vote->getTimestamp()
+            || !isset($this->publicKey)
+        ) {
+            $countError = 0;
+            $errorMessage = '';
+
+            if (null === $vote->getServiceName()) {
+                $errorMessage .= 'The host variable wasn\'t set with "->setServiceName(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getUsername()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setUsername(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getAddress()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setAddress(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getTimestamp()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setTimestamp(...)".';
+            }
+            if (!isset($this->publicKey)) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The public key variable wasn\'t set with "->setPublicKey(...)".';
+            }
+
+            throw new InvalidArgumentException($errorMessage);
         }
     }
 
@@ -65,7 +140,10 @@ class Votifier extends GenericServerType
      */
     protected function verifyConnection(?string $header): bool
     {
-        if (null === $header || false === mb_strpos($header, 'VOTIFIER')) {
+        if (
+            null === $header
+            || false === mb_strpos($header, 'VOTIFIER')
+        ) {
             return false;
         }
 

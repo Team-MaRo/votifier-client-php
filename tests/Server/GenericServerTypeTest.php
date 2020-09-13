@@ -16,6 +16,8 @@ use D3strukt0r\VotifierClient\Socket;
 use D3strukt0r\VotifierClient\Vote\VoteInterface;
 use PHPUnit\Framework\TestCase;
 
+use const DIRECTORY_SEPARATOR;
+
 /**
  * Class GenericServerTypeTest.
  *

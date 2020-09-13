@@ -26,6 +26,7 @@
     },
     "require": {
         "php": ">=7.1",
+        "ext-SPL": "*",
         "ext-date": "*",
         "ext-hash": "*",
         "ext-json": "*",

@@ -85,7 +85,6 @@
       <extension name="PDO" enabled="false" />
       <extension name="Phar" enabled="false" />
       <extension name="Reflection" enabled="false" />
-      <extension name="SPL" enabled="false" />
       <extension name="SQLite" enabled="false" />
       <extension name="SimpleXML" enabled="false" />
       <extension name="SplType" enabled="false" />
@@ -104,6 +103,7 @@
       <extension name="cubrid" enabled="false" />
       <extension name="curl" enabled="false" />
       <extension name="dba" enabled="false" />
+      <extension name="decimal" enabled="false" />
       <extension name="dom" enabled="false" />
       <extension name="enchant" enabled="false" />
       <extension name="exif" enabled="false" />
@@ -144,6 +144,7 @@
       <extension name="ming" enabled="false" />
       <extension name="mongo" enabled="false" />
       <extension name="mongodb" enabled="false" />
+      <extension name="mosquitto-php" enabled="false" />
       <extension name="mqseries" enabled="false" />
       <extension name="mssql" enabled="false" />
       <extension name="mysql" enabled="false" />

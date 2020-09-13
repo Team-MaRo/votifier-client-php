@@ -25,7 +25,7 @@ interface ServerTypeInterface
      *
      * @return string returns the host
      */
-    public function getHost(): string;
+    public function getHost(): ?string;
 
     /**
      * Sets the host.
@@ -57,7 +57,7 @@ interface ServerTypeInterface
      *
      * @return string returns the public key
      */
-    public function getPublicKey(): string;
+    public function getPublicKey(): ?string;
 
     /**
      * Sets the public key.

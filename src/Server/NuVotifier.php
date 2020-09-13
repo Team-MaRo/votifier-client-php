@@ -20,6 +20,7 @@ use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
 use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
 use D3strukt0r\VotifierClient\Vote\VoteInterface;
 use DateTime;
+use InvalidArgumentException;
 
 use function count;
 
@@ -31,12 +32,12 @@ class NuVotifier extends Votifier
     /**
      * @var bool use version 2 of the protocol
      */
-    private $protocolV2 = false;
+    protected $protocolV2 = false;
 
     /**
      * @var string|null The token from the config.yml.
      */
-    private $token;
+    protected $token;
 
     /**
      * Checks whether the connection uses the version 2 protocol.
@@ -104,6 +105,9 @@ class NuVotifier extends Votifier
             return;
         }
 
+        // Check if all variables have been set, to create a connection
+        $this->checkRequiredVariablesForSocket();
+
         foreach ($votes as $vote) {
             // Connect to the server
             $socket = $this->getSocket();
@@ -120,6 +124,9 @@ class NuVotifier extends Votifier
 
             // Update the timestamp of the vote being sent
             $vote->setTimestamp(new DateTime());
+
+            // Check if all variables have been set, to create a package
+            $this->checkRequiredVariablesForPackage($vote);
 
             // Send the vote
             $socket->write($this->preparePackageV2($vote, $challenge));
@@ -154,6 +161,56 @@ class NuVotifier extends Votifier
     }
 
     /**
+     * @param VoteInterface $vote The vote to check
+     *
+     * @throws InvalidArgumentException If one required parameter wasn't set
+     */
+    protected function checkRequiredVariablesForPackage(VoteInterface $vote)
+    {
+        if (!$this->isProtocolV2()) {
+            parent::checkRequiredVariablesForSocket();
+
+            return;
+        }
+
+        if (
+            null === $vote->getServiceName()
+            || null === $vote->getUsername()
+            || null === $vote->getAddress()
+            || null === $vote->getTimestamp()
+            || !isset($this->token)
+        ) {
+            $countError = 0;
+            $errorMessage = '';
+
+            if (null === $vote->getServiceName()) {
+                $errorMessage .= 'The host variable wasn\'t set with "->setServiceName(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getUsername()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setUsername(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getAddress()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setAddress(...)".';
+                ++$countError;
+            }
+            if (null === $vote->getTimestamp()) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The host variable wasn\'t set with "->setTimestamp(...)".';
+            }
+            if (!isset($this->token)) {
+                $errorMessage .= $countError > 0 ? ' ' : '';
+                $errorMessage .= 'The token variable wasn\'t set with "->setToken(...)".';
+            }
+
+            throw new InvalidArgumentException($errorMessage);
+        }
+    }
+
+    /**
      * Verifies that the connection is correct.
      *
      * @param string|null $header The header that the plugin usually sends
@@ -163,7 +220,11 @@ class NuVotifier extends Votifier
     protected function verifyConnection(?string $header): bool
     {
         $header_parts = explode(' ', $header);
-        if (null === $header || false === mb_strpos($header, 'VOTIFIER') || 3 !== count($header_parts)) {
+        if (
+            null === $header
+            || false === mb_strpos($header, 'VOTIFIER')
+            || 3 !== count($header_parts)
+        ) {
             return false;
         }
 
@@ -192,6 +253,7 @@ class NuVotifier extends Votifier
         $signature = base64_encode(hash_hmac('sha256', $payloadJson, $this->token, true));
         $messageJson = json_encode(['signature' => $signature, 'payload' => $payloadJson]);
 
+        // 0x733a = s:
         return pack('nn', 0x733a, mb_strlen($messageJson)) . $messageJson;
     }
 }

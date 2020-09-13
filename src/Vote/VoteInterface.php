@@ -24,7 +24,7 @@ interface VoteInterface
      *
      * @return string returns the name of the list/service
      */
-    public function getServiceName(): string;
+    public function getServiceName(): ?string;
 
     /**
      * Sets the name of the list/service.
@@ -40,7 +40,7 @@ interface VoteInterface
      *
      * @return string returns the username who wants to receive the rewards
      */
-    public function getUsername(): string;
+    public function getUsername(): ?string;
 
     /**
      * Sets the username of the user who wants to receive the rewards.
@@ -56,7 +56,7 @@ interface VoteInterface
      *
      * @return string returns the IP Address of the user
      */
-    public function getAddress(): string;
+    public function getAddress(): ?string;
 
     /**
      * Sets the IP Address of the user.

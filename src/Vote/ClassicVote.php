@@ -22,27 +22,27 @@ class ClassicVote implements VoteInterface
     /**
      * @var string the name of the list/service
      */
-    private $serviceName;
+    protected $serviceName;
 
     /**
      * @var string the username who wants to receive the rewards
      */
-    private $username;
+    protected $username;
 
     /**
      * @var string the IP Address of the user
      */
-    private $address;
+    protected $address;
 
     /**
      * @var DateTime the time when the vote will be sent
      */
-    private $timestamp;
+    protected $timestamp;
 
     /**
      * {@inheritdoc}
      */
-    public function getServiceName(): string
+    public function getServiceName(): ?string
     {
         return $this->serviceName;
     }
@@ -60,7 +60,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -79,7 +79,7 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function getAddress(): string
+    public function getAddress(): ?string
     {
         return $this->address;
     }
