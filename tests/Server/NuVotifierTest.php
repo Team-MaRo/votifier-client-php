@@ -10,19 +10,19 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Server;
+namespace D3strukt0r\Votifier\Client\Server;
 
-use D3strukt0r\VotifierClient\Exception\NotVotifierException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierChallengeInvalidException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierSignatureInvalidException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
-use D3strukt0r\VotifierClient\Exception\Socket\PackageNotReceivedException;
-use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
-use D3strukt0r\VotifierClient\Socket;
-use D3strukt0r\VotifierClient\Vote\ClassicVote;
-use D3strukt0r\VotifierClient\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierChallengeInvalidException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierSignatureInvalidException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierUnknownServiceException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierUsernameTooLongException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
+use D3strukt0r\Votifier\Client\Socket;
+use D3strukt0r\Votifier\Client\Vote\ClassicVote;
+use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @requires PHPUnit >= 8
  *
- * @covers   \D3strukt0r\VotifierClient\Server\NuVotifier
+ * @covers   \D3strukt0r\Votifier\Client\Server\NuVotifier
  *
  * @internal
  */
@@ -95,7 +95,7 @@ final class NuVotifierTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\VotifierClient\Server\NuVotifier', $this->nuvotifier);
+        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\NuVotifier', $this->nuvotifier);
     }
 
     public function testProtocolV2(): void

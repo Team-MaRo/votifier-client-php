@@ -18,11 +18,11 @@
         }
     ],
     "support": {
-    	"email": "manuele.vaccari@gmail.com",
-    	"source": "https://github.com/D3strukt0r/votifier-client-php",
+        "email": "manuele.vaccari@gmail.com",
+        "source": "https://github.com/D3strukt0r/votifier-client-php",
         "issues": "https://github.com/D3strukt0r/votifier-client-php/issues",
         "wiki": "https://github.com/D3strukt0r/votifier-client-php/wiki",
-    	"docs": "https://votifier-client-php-docs.manuele-vaccari.ch"
+        "docs": "https://votifier-client-php.readthedocs.io"
     },
     "require": {
         "php": ">=7.1",
@@ -43,12 +43,12 @@
     },
     "autoload": {
         "psr-4": {
-            "D3strukt0r\\VotifierClient\\": "src/"
+            "D3strukt0r\\Votifier\\Client\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "D3strukt0r\\VotifierClient\\": "tests/"
+            "D3strukt0r\\Votifier\\Client\\": "tests/"
         }
     },
     "config": {
@@ -56,14 +56,10 @@
     },
     "scripts": {
         "test": "phpunit",
-        "check": [
-            "phpcs",
-            "php-cs-fixer fix --diff --dry-run -v"
-        ],
-        "fix": [
-            "phpcbf",
-            "php-cs-fixer fix"
-        ]
+        "check": "phpcs",
+        "check2": "php-cs-fixer fix --diff --dry-run -v",
+        "fix": "phpcbf",
+        "fix2": "php-cs-fixer fix"
     },
     "archive": {
         "exclude": [

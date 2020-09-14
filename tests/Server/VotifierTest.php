@@ -10,14 +10,14 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Server;
+namespace D3strukt0r\Votifier\Client\Server;
 
-use D3strukt0r\VotifierClient\Exception\NotVotifierException;
-use D3strukt0r\VotifierClient\Exception\Socket\NoConnectionException;
-use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
-use D3strukt0r\VotifierClient\Socket;
-use D3strukt0r\VotifierClient\Vote\ClassicVote;
-use D3strukt0r\VotifierClient\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
+use D3strukt0r\Votifier\Client\Socket;
+use D3strukt0r\Votifier\Client\Vote\ClassicVote;
+use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +31,7 @@ use const DIRECTORY_SEPARATOR;
  *
  * @requires PHPUnit >= 8
  *
- * @covers   \D3strukt0r\VotifierClient\Server\Votifier
+ * @covers   \D3strukt0r\Votifier\Client\Server\Votifier
  *
  * @internal
  */
@@ -76,7 +76,7 @@ final class VotifierTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\VotifierClient\Server\Votifier', $this->votifier);
+        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\Votifier', $this->votifier);
     }
 
     public function checkRequiredVariablesForSocketProvider(): array

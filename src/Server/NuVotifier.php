@@ -10,15 +10,15 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Server;
+namespace D3strukt0r\Votifier\Client\Server;
 
-use D3strukt0r\VotifierClient\Exception\NotVotifierException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierChallengeInvalidException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierSignatureInvalidException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierUnknownServiceException;
-use D3strukt0r\VotifierClient\Exception\NuVotifierUsernameTooLongException;
-use D3strukt0r\VotifierClient\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierChallengeInvalidException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierSignatureInvalidException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierUnknownServiceException;
+use D3strukt0r\Votifier\Client\Exception\NuVotifierUsernameTooLongException;
+use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
 
@@ -35,7 +35,7 @@ class NuVotifier extends Votifier
     protected $protocolV2 = false;
 
     /**
-     * @var string|null The token from the config.yml.
+     * @var string|null The token from the config.yml
      */
     protected $token;
 
@@ -66,7 +66,7 @@ class NuVotifier extends Votifier
     /**
      * Gets the token from the config.yml.
      *
-     * @return string|null returns The token from the config.yml.
+     * @return string|null returns The token from the config.yml
      */
     public function getToken(): ?string
     {
@@ -76,7 +76,7 @@ class NuVotifier extends Votifier
     /**
      * Sets the token from the config.yml.
      *
-     * @param string|null $token The token from the config.yml.
+     * @param string|null $token The token from the config.yml
      *
      * @return $this returns the class itself, for doing multiple things at once
      */
@@ -90,8 +90,8 @@ class NuVotifier extends Votifier
     /**
      * {@inheritdoc}
      *
-     * @throws NuVotifierChallengeInvalidException NuVotifier says the challenge was invalid
      * @throws NuVotifierException                 General NuVotifier Exception (an unknown exception)
+     * @throws NuVotifierChallengeInvalidException NuVotifier says the challenge was invalid
      * @throws NuVotifierSignatureInvalidException NuVotifier says the signature was invalid
      * @throws NuVotifierUnknownServiceException   NuVotifier says that the service is unknown (the token doesn't belong
      *                                             to the service name)
@@ -161,6 +161,8 @@ class NuVotifier extends Votifier
     }
 
     /**
+     * Check that service name, username, address, timestamp and token have been set.
+     *
      * @param VoteInterface $vote The vote to check
      *
      * @throws InvalidArgumentException If one required parameter wasn't set

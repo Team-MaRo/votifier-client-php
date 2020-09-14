@@ -10,7 +10,7 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Exception;
+namespace D3strukt0r\Votifier\Client\Exception;
 
 use Exception;
 

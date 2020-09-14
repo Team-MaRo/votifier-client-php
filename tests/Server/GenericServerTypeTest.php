@@ -10,10 +10,10 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Server;
+namespace D3strukt0r\Votifier\Client\Server;
 
-use D3strukt0r\VotifierClient\Socket;
-use D3strukt0r\VotifierClient\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Socket;
+use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use PHPUnit\Framework\TestCase;
 
 use const DIRECTORY_SEPARATOR;
@@ -21,20 +21,20 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Class GenericServerTypeTest.
  *
- * @covers \D3strukt0r\VotifierClient\Server\GenericServerType
+ * @covers \D3strukt0r\Votifier\Client\Server\GenericServer
  *
  * @internal
  */
 final class GenericServerTypeTest extends TestCase
 {
     /**
-     * @var GenericServerType The main object
+     * @var GenericServer The main object
      */
     private $object;
 
     protected function setUp(): void
     {
-        $this->object = new class () extends GenericServerType {
+        $this->object = new class () extends GenericServer {
             public function verifyConnection(?string $header): bool
             {
                 return true;
@@ -53,7 +53,7 @@ final class GenericServerTypeTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\VotifierClient\Server\GenericServerType', $this->object);
+        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\GenericServer', $this->object);
     }
 
     public function testSocket(): void

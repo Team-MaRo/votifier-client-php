@@ -10,29 +10,29 @@
  * @link      https://github.com/D3strukt0r/votifier-client-php
  */
 
-namespace D3strukt0r\VotifierClient\Server;
+namespace D3strukt0r\Votifier\Client\Server;
 
-use D3strukt0r\VotifierClient\Exception\NotVotifierException;
-use D3strukt0r\VotifierClient\Exception\Socket\NoConnectionException;
-use D3strukt0r\VotifierClient\Exception\Socket\PackageNotReceivedException;
-use D3strukt0r\VotifierClient\Exception\Socket\PackageNotSentException;
-use D3strukt0r\VotifierClient\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
+use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
 
 /**
  * The Class to access a server which uses the classic "Votifier" plugin.
  */
-class Votifier extends GenericServerType
+class Votifier extends GenericServer
 {
     /**
      * {@inheritdoc}
      *
      * @throws InvalidArgumentException    If one required parameter wasn't set
      * @throws NoConnectionException       If connection couldn't be established
-     * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
      * @throws PackageNotReceivedException If there was an error receiving the package
      * @throws PackageNotSentException     If there was an error sending the package
+     * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
      */
     public function sendVote(VoteInterface ...$votes): void
     {
@@ -64,6 +64,8 @@ class Votifier extends GenericServerType
     }
 
     /**
+     * Check that both host and port have been set.
+     *
      * @throws InvalidArgumentException If one required parameter wasn't set
      */
     protected function checkRequiredVariablesForSocket(): void
@@ -87,6 +89,8 @@ class Votifier extends GenericServerType
     }
 
     /**
+     * Check that service name, username, address, timestamp and public key have been set.
+     *
      * @param VoteInterface $vote The vote to check
      *
      * @throws InvalidArgumentException If one required parameter wasn't set
@@ -131,10 +135,10 @@ class Votifier extends GenericServerType
     }
 
     /**
-     * Verifies that the connection is correct.. Read more:
+     * Verifies that the connection is correct. Read more:
      * https://github.com/vexsoftware/votifier/wiki/Protocol-Documentation.
      *
-     * @param string|null $header (Required) The header that the plugin usually sends
+     * @param string|null $header The header that the plugin usually sends
      *
      * @return bool returns true if connections is available, otherwise false
      */
@@ -154,7 +158,7 @@ class Votifier extends GenericServerType
      * Create encrypted package for default Votifier. Read more:
      * https://github.com/vexsoftware/votifier/wiki/Protocol-Documentation.
      *
-     * @param voteInterface $vote The vote package with all the information
+     * @param VoteInterface $vote The vote package with all the information
      *
      * @return string returns the string to be sent to the server
      */
