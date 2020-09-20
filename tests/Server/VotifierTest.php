@@ -79,6 +79,27 @@ final class VotifierTest extends TestCase
         $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\Votifier', $this->votifier);
     }
 
+    public function testVerifyConnection(): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('SOMETHING_WEIRD')
+        ;
+
+        $this->expectException(NotVotifierException::class);
+        $this->votifier->verifyConnection();
+    }
+
+    public function testVerifyConnectionSuccess(): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('VOTIFIER')
+        ;
+
+        $this->assertNull($this->votifier->verifyConnection());
+    }
+
     public function checkRequiredVariablesForSocketProvider(): array
     {
         return [

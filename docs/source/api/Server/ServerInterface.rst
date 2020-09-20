@@ -55,6 +55,6 @@ ServerInterface
 
         Sends the vote packages to the server.
 
-        :param \\D3strukt0r\\Votifier\\Client\\Vote\\VoteInterface $votes: The vote packages
+        :param D3strukt0r\\Votifier\\Client\\Vote\\VoteInterface $votes: The vote packages
 
-        :throws: :php:exc:`\\Exception`
+        :throws: :php:exc:`Exception`

@@ -25,6 +25,7 @@ use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 use function file_get_contents;
@@ -43,7 +44,7 @@ use const DIRECTORY_SEPARATOR;
 final class NuVotifierTest extends TestCase
 {
     /**
-     * @var Socket The Socket tool class
+     * @var Socket|Stub The Socket tool class
      */
     private $socketStub;
 
@@ -108,6 +109,32 @@ final class NuVotifierTest extends TestCase
     {
         $this->nuvotifier->setToken('mock_token');
         $this->assertSame('mock_token', $this->nuvotifier->getToken());
+    }
+
+    /**
+     * @param $readString
+     *
+     * @dataProvider notVotifierExceptionProvider
+     */
+    public function testVerifyConnection($readString): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn($readString)
+        ;
+
+        $this->expectException(NotVotifierException::class);
+        $this->nuvotifier->verifyConnection();
+    }
+
+    public function testVerifyConnectionSuccess(): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('VOTIFIER 2 mock_challenge')
+        ;
+
+        $this->assertNull($this->nuvotifier->verifyConnection());
     }
 
     public function testSendV1(): void

@@ -7,6 +7,7 @@
 .. toctree::
     :maxdepth: 1
 
+    Exception/index
     Server/index
     Vote/index
 

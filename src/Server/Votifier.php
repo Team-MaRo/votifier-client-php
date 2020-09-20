@@ -13,9 +13,6 @@
 namespace D3strukt0r\Votifier\Client\Server;
 
 use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
-use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
-use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
-use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
 use DateTime;
 use InvalidArgumentException;
@@ -27,17 +24,29 @@ class Votifier extends GenericServer
 {
     /**
      * {@inheritdoc}
-     *
-     * @throws InvalidArgumentException    If one required parameter wasn't set
-     * @throws NoConnectionException       If connection couldn't be established
-     * @throws PackageNotReceivedException If there was an error receiving the package
-     * @throws PackageNotSentException     If there was an error sending the package
-     * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
+     */
+    public function verifyConnection(): void
+    {
+        // Check if all variables have been set, to create a connection
+        $this->checkVariablesForSocket();
+
+        // Connect to the server
+        $socket = $this->getSocket();
+        $socket->open($this->getHost(), $this->getPort());
+
+        // Check whether the connection really belongs to a Votifier plugin
+        if (!$this->verifyConnectionHeader($socket->read(64))) {
+            throw new NotVotifierException();
+        }
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function sendVote(VoteInterface ...$votes): void
     {
         // Check if all variables have been set, to create a connection
-        $this->checkRequiredVariablesForSocket();
+        $this->checkVariablesForSocket();
 
         foreach ($votes as $vote) {
             // Connect to the server
@@ -45,7 +54,7 @@ class Votifier extends GenericServer
             $socket->open($this->getHost(), $this->getPort());
 
             // Check whether the connection really belongs to a Votifier plugin
-            if (!$this->verifyConnection($socket->read(64))) {
+            if (!$this->verifyConnectionHeader($socket->read(64))) {
                 throw new NotVotifierException();
             }
 
@@ -53,7 +62,7 @@ class Votifier extends GenericServer
             $vote->setTimestamp(new DateTime());
 
             // Check if all variables have been set, to create a package
-            $this->checkRequiredVariablesForPackage($vote);
+            $this->checkVariablesForPackage($vote);
 
             // Send the vote
             $socket->write($this->preparePackage($vote));
@@ -68,7 +77,7 @@ class Votifier extends GenericServer
      *
      * @throws InvalidArgumentException If one required parameter wasn't set
      */
-    protected function checkRequiredVariablesForSocket(): void
+    protected function checkVariablesForSocket(): void
     {
         if (!isset($this->host, $this->port)) {
             // $countError = 0;
@@ -95,7 +104,7 @@ class Votifier extends GenericServer
      *
      * @throws InvalidArgumentException If one required parameter wasn't set
      */
-    protected function checkRequiredVariablesForPackage(VoteInterface $vote)
+    protected function checkVariablesForPackage(VoteInterface $vote)
     {
         if (
             null === $vote->getServiceName()
@@ -142,7 +151,7 @@ class Votifier extends GenericServer
      *
      * @return bool returns true if connections is available, otherwise false
      */
-    protected function verifyConnection(?string $header): bool
+    protected function verifyConnectionHeader(?string $header): bool
     {
         if (
             null === $header

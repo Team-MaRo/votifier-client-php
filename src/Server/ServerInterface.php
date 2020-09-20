@@ -12,8 +12,12 @@
 
 namespace D3strukt0r\Votifier\Client\Server;
 
+use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
+use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use Exception;
+use InvalidArgumentException;
 
 /**
  * The interface ServerInterface is used to define a PluginType on the server.
@@ -69,11 +73,25 @@ interface ServerInterface
     public function setPublicKey(string $publicKey);
 
     /**
+     * Checks if the server actually belongs to Votifier.
+     *
+     * @throws InvalidArgumentException    If one required parameter wasn't set
+     * @throws NoConnectionException       If connection couldn't be established
+     * @throws PackageNotReceivedException If there was an error receiving the package
+     * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
+     */
+    public function verifyConnection(): void;
+
+    /**
      * Sends the vote packages to the server.
      *
      * @param VoteInterface ...$votes The vote packages
      *
-     * @throws Exception
+     * @throws InvalidArgumentException    If one required parameter wasn't set
+     * @throws NoConnectionException       If connection couldn't be established
+     * @throws PackageNotReceivedException If there was an error receiving the package
+     * @throws PackageNotSentException     If there was an error sending the package
+     * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
      */
     public function sendVote(VoteInterface ...$votes): void;
 }

@@ -61,6 +61,6 @@ VoteInterface
 
         Sets the time when the vote will be sent.
 
-        :param \\DateTime|null $timestamp: [optional] Either give a wanted timestamp or it will use the current time
+        :param DateTime|null $timestamp: [optional] Either give a wanted timestamp or it will use the current time
 
         :returns: $this — Returns the class itself, for doing multiple things at once

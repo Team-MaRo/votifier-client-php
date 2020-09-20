@@ -71,8 +71,8 @@
             ".gitignore",
             ".php_cs.dist",
             ".phpcs.xml",
+            ".readthedocs.yml",
             ".scrutinizer.yml",
-            ".travis.yml",
             "CONTRIBUTING.md",
             "phpunit.xml.dist",
             "README.md"

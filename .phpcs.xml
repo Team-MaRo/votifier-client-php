@@ -12,7 +12,6 @@
     <arg name="cache" value=".php_codesniffer_cache.json" />
     <arg name="colors" />
     <arg name="extensions" value="php" />
-    <arg name="parallel" value="75" />
 
     <rule ref="PSR12" />
     <rule ref="PHPCompatibility" />

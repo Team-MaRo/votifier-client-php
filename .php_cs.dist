@@ -17,39 +17,41 @@ $finder = PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
-    ->setRules([
-        '@PSR1' => true,
-        '@PSR2' => true,
-        '@PhpCsFixer' => true,
-        '@PhpCsFixer:risky' => true,
-        '@Symfony' => true,
-        '@Symfony:risky' => true,
-        'header_comment' => [
-            'comment_type' => 'PHPDoc',
-            'header' => $header,
-        ],
-        'concat_space' => [
-            'spacing' => 'one',
-        ],
-        'ordered_imports' => [
-            'imports_order' => [
-                'class',
-                'const',
-                'function',
+    ->setRules(
+        [
+            '@PSR1' => true,
+            '@PSR2' => true,
+            '@PhpCsFixer' => true,
+            '@PhpCsFixer:risky' => true,
+            '@Symfony' => true,
+            '@Symfony:risky' => true,
+            'header_comment' => [
+                'comment_type' => 'PHPDoc',
+                'header' => $header,
             ],
-        ],
-        'no_extra_blank_lines' => [
-            'tokens' => ['default'],
-        ],
-        'php_unit_test_case_static_method_calls' => [
-            'call_type' => 'this',
-        ],
-        'linebreak_after_opening_tag' => true,
-        'mb_str_functions' => true,
-        'no_php4_constructor' => true,
-        'native_function_invocation' => false,
-        'no_superfluous_elseif' => false,
-    ])
+            'concat_space' => [
+                'spacing' => 'one',
+            ],
+            'ordered_imports' => [
+                'imports_order' => [
+                    'class',
+                    'const',
+                    'function',
+                ],
+            ],
+            'no_extra_blank_lines' => [
+                'tokens' => ['default'],
+            ],
+            'php_unit_test_case_static_method_calls' => [
+                'call_type' => 'this',
+            ],
+            'linebreak_after_opening_tag' => true,
+            'mb_str_functions' => true,
+            'no_php4_constructor' => true,
+            'native_function_invocation' => false,
+            'no_superfluous_elseif' => false,
+        ]
+    )
     ->setFinder($finder)
-    ->setCacheFile(__DIR__.'/.php_coding_standard_cache.json')
+    ->setCacheFile(__DIR__ . '/.php_coding_standard_cache.json')
 ;
