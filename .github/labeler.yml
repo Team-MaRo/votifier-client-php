@@ -1,0 +1,17 @@
+# Add 'repo' label to any root file changes
+repo:
+  - ./*
+
+# Add 'documentation' label to any change to files within the docs dir
+documentation:
+  - docs/**/*
+  - .readthedocs.yml
+
+# Add 'source' label to any change to files within the source dir
+source:
+  - src/**/*
+
+# Add 'test' label to any change to files within the test dir
+test:
+  - tests/**/*
+  - phpunit.xml.dist

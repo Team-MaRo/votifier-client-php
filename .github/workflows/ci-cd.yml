@@ -33,19 +33,18 @@ jobs:
     name: Test on PHP v${{ matrix.php }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Setup PHP
-        if: matrix.test_with_coverage != 1
         uses: shivammathur/setup-php@v2
+        if: matrix.test_with_coverage != 1
         with:
           php-version: "${{ matrix.php }}"
           coverage: none
 
       - name: Setup PHP with Xdebug
-        if: matrix.test_with_coverage == 1
         uses: shivammathur/setup-php@v2
+        if: matrix.test_with_coverage == 1
         with:
           php-version: "${{ matrix.php }}"
           coverage: xdebug
@@ -61,8 +60,7 @@ jobs:
         id: composer-cache-dir-path
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
-      - name: Cache Composer libraries
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         id: composer-cache # use this to check for `cache-hit` (`steps.composer-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.composer-cache-dir-path.outputs.dir }}
@@ -88,23 +86,18 @@ jobs:
         run: ./vendor/bin/phpunit
 
       # https://github.com/php-coveralls/php-coveralls
-      - name: Setup Coveralls
-        if: github.event_name == 'push' && matrix.test_with_coverage == 1
-        run: wget https://github.com/php-coveralls/php-coveralls/releases/latest/download/php-coveralls.phar
-
       - name: Upload coverage report to Coveralls
-        if: github.event_name == 'push' && matrix.test_with_coverage == 1
+        if: github.event_name == 'push' && github.repository == 'D3strukt0r/votifier-client-php' && matrix.test_with_coverage == 1
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: php php-coveralls.phar -v
+        run: |
+          curl -fsSL -o php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/latest/download/php-coveralls.phar
+          php php-coveralls.phar -v --coverage_clover=coverage/logs/clover.xml --json_path=coverage/logs/coveralls-upload.json
 
       # https://scrutinizer-ci.com/docs/tools/external-code-coverage/
       # https://github.com/scrutinizer-ci/ocular
-      - name: Setup Ocular (Scrutinizer)
-        if: github.event_name == 'push' && matrix.test_with_coverage == 1
-        run: wget https://scrutinizer-ci.com/ocular.phar
-
       - name: Upload coverage report to Scrutinizer
-        if: github.event_name == 'push' && matrix.test_with_coverage == 1
-        # run: php ocular.phar code-coverage:upload --repository=g/D3strukt0r/votifier-client-php --revision=$(git rev-parse HEAD) --format=php-clover build/logs/clover.xml
-        run: php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+        if: github.event_name == 'push' && github.repository == 'D3strukt0r/votifier-client-php' && matrix.test_with_coverage == 1
+        run: |
+          curl -fsSL -o ocular.phar https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload -v --format=php-clover coverage/logs/clover.xml

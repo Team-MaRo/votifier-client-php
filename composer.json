@@ -19,11 +19,21 @@
     ],
     "support": {
         "email": "manuele.vaccari@gmail.com",
-        "source": "https://github.com/D3strukt0r/votifier-client-php",
         "issues": "https://github.com/D3strukt0r/votifier-client-php/issues",
         "wiki": "https://github.com/D3strukt0r/votifier-client-php/wiki",
+        "source": "https://github.com/D3strukt0r/votifier-client-php",
         "docs": "https://votifier-client-php.readthedocs.io"
     },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/D3strukt0r"
+        },
+        {
+            "type": "patreon",
+            "url": "https://patreon.com/d3strukt0r"
+        }
+    ],
     "require": {
         "php": ">=7.1",
         "ext-SPL": "*",
@@ -63,19 +73,21 @@
     },
     "archive": {
         "exclude": [
+            "/.github",
             "/.idea",
-            "/build",
+            "/.vscode",
             "/docs",
             "/tests",
             ".editorconfig",
+            ".gitattributes",
             ".gitignore",
             ".php_cs.dist",
             ".phpcs.xml",
             ".readthedocs.yml",
             ".scrutinizer.yml",
+            ".symfony.insight.yaml",
             "CONTRIBUTING.md",
-            "phpunit.xml.dist",
-            "README.md"
+            "phpunit.xml.dist"
         ]
     }
 }

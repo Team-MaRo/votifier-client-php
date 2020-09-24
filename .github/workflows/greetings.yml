@@ -1,0 +1,15 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # Comment to post on an individuals first issue
+          issue-message: "Thank you for taking the courage of creating an issue here for the first time. We can't see everything, so this project heavily depends on people like you." # optional
+          # Comment to post on an individuals first pull request
+          pr-message: "Thank you for taking your precious time to create a pull request on this repository for the first time. Your work might actually benefit many others." # optional

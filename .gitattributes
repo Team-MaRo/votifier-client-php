@@ -284,3 +284,16 @@ Procfile text
 # End of https://www.richie-bendall.ml/gitattributes-generator/
 
 *.php eol=lf
+
+.github export-ignore
+.idea export-ignore
+.vscode export-ignore
+docs export-ignore
+tests export-ignore
+.editorconfig export-ignore
+.php_cs.dist export-ignore
+.phpcs.xml export-ignore
+.readthedocs.yml export-ignore
+.scrutinizer.yml export-ignore
+.symfony.insight.yaml export-ignore
+phpunit.xml.dist export-ignore

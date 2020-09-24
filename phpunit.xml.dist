@@ -9,8 +9,8 @@
             <directory suffix=".php">src</directory>
         </include>
         <report>
-            <clover outputFile="build/logs/clover.xml" />
-            <html outputDirectory="build/html" />
+            <clover outputFile="coverage/logs/clover.xml" />
+            <html outputDirectory="coverage/html" />
             <text outputFile="php://stdout" />
         </report>
     </coverage>
