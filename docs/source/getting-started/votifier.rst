@@ -11,16 +11,10 @@ You can place following code wherever you want to set up the vote:
     <?php
 
     use D3strukt0r\Votifier\Client\Server\Votifier;
-    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
     $server = (new Votifier())
         ->setHost('127.0.0.1')
         ->setPublicKey('MIIBIjANBgkq...')
-    ;
-    $vote = (new ClassicVote())
-        ->setUsername($_GET['username'])
-        ->setServiceName('Your vote list')
-        ->setAddress($_SERVER['REMOTE_ADDR'])
     ;
 
 And then to send it to the server:
@@ -34,6 +28,13 @@ And then to send it to the server:
     use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
     use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
     use D3strukt0r\Votifier\Client\Server\Votifier;
+    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
+
+    $vote = (new ClassicVote())
+        ->setUsername($_GET['username'])
+        ->setServiceName('Your vote list')
+        ->setAddress($_SERVER['REMOTE_ADDR'])
+    ;
 
     try {
         /** @var Votifier $server */
@@ -49,8 +50,6 @@ And then to send it to the server:
         // If the package couldn't be received, for whatever reason.
     } catch (PackageNotSentException $e) {
         // If the package couldn't be send, for whatever reason.
-    } catch (Exception $exception) {
-        // This should never be thrown, but just in case.
     }
 
 Send multiple votes
@@ -113,8 +112,6 @@ The following code is another example of a full HTML page with the code from abo
             echo "<p>If the package couldn't be received, for whatever reason.</p>";
         } catch (PackageNotSentException $e) {
             echo "<p>If the package couldn't be send, for whatever reason.</p>";
-        } catch (Exception $e) {
-            echo "<p>This should never be thrown, but just in case.</p>";
         }
     }
 

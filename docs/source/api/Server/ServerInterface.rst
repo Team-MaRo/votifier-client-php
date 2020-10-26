@@ -51,10 +51,48 @@ ServerInterface
 
         :returns: $this — Returns the class itself, for doing multiple things at once
 
+    .. php:method:: public verifyConnection()
+
+        Checks if the server actually belongs to Votifier.
+
+        :throws: :php:exc:`InvalidArgumentException`
+            
+            If one required parameter wasn't set
+        
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\NoConnectionException`
+        
+            If connection couldn't be established
+            
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\PackageNotReceivedException`
+            
+            If there was an error receiving the package
+
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\NotVotifierException`
+        
+            If the server we are connected to is not a valid Votifier server
+
     .. php:method:: public sendVote(...$votes)
 
         Sends the vote packages to the server.
 
         :param D3strukt0r\\Votifier\\Client\\Vote\\VoteInterface $votes: The vote packages
 
-        :throws: :php:exc:`Exception`
+        :throws: :php:exc:`InvalidArgumentException`
+            
+            If one required parameter wasn't set
+        
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\NoConnectionException`
+        
+            If connection couldn't be established
+            
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\PackageNotReceivedException`
+            
+            If there was an error receiving the package
+            
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\PackageNotSentException`
+            
+            If there was an error sending the package
+
+        :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\NotVotifierException`
+        
+            If the server we are connected to is not a valid Votifier server

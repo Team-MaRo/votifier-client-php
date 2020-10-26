@@ -7,13 +7,13 @@ on:
       - develop
     paths:
       - .github/workflows/ci-cd.yml
-      - 'src/**'
-      - 'tests/**'
-      - '.php_cs.dist'
-      - '.phpcs.xml'
-      - '.scrutinizer.yml'
-      - 'composer.json'
-      - 'phpunit.xml.dist'
+      - "src/**"
+      - "tests/**"
+      - .php_cs.dist
+      - .phpcs.xml
+      - .scrutinizer.yml
+      - composer.json
+      - phpunit.xml.dist
 
   pull_request:
 
@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: [ 7.1, 7.2, 7.3, 7.4 ]
+        php: [7.1, 7.2, 7.3, 7.4]
         include:
           - php: 7.4
             test_with_coverage: 1
@@ -33,21 +33,38 @@ jobs:
     name: Test on PHP v${{ matrix.php }}
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         if: matrix.test_with_coverage != 1
         with:
+          # Specify the PHP version you want to setup.
           php-version: "${{ matrix.php }}"
-          coverage: none
+          # Specify the extensions you want to add or remove. (eg. mbstring, :opcache)
+          # extensions: # optional
+          # Specify the values you want to add to php.ini. (post_max_size=256M, short_open_tag=On)
+          # ini-values: # optional
+          # Specify the code coverage driver you want to setup. (xdebug, pcov or none)
+          coverage: none # optional
+          # Specify the tools you want to setup. (eg. phpunit, phpcs)
+          # tools: # optional
 
       - name: Setup PHP with Xdebug
         uses: shivammathur/setup-php@v2
         if: matrix.test_with_coverage == 1
         with:
+          # Specify the PHP version you want to setup.
           php-version: "${{ matrix.php }}"
-          coverage: xdebug
+          # Specify the extensions you want to add or remove. (eg. mbstring, :opcache)
+          # extensions: # optional
+          # Specify the values you want to add to php.ini. (post_max_size=256M, short_open_tag=On)
+          # ini-values: # optional
+          # Specify the code coverage driver you want to setup. (xdebug, pcov or none)
+          coverage: xdebug # optional
+          # Specify the tools you want to setup. (eg. phpunit, phpcs)
+          # tools: # optional
 
       - name: Setup problem matchers for PHP
         run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
@@ -59,12 +76,15 @@ jobs:
       - name: Get Composer Cache Directory
         id: composer-cache-dir-path
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - uses: actions/cache@v2
-        id: composer-cache # use this to check for `cache-hit` (`steps.composer-cache.outputs.cache-hit != 'true'`)
+      - name: Cache local composer repository
+        uses: actions/cache@v2
+        id: composer-cache
         with:
+          # A list of files, directories, and wildcard patterns to cache and restore. See @actions/glob for supported patterns.
           path: ${{ steps.composer-cache-dir-path.outputs.dir }}
+          # An explicit key for restoring and saving the cache
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          # An ordered list of keys to use for restoring the cache if no cache hit occurred for key
           restore-keys: |
             ${{ runner.os }}-composer-
 

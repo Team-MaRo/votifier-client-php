@@ -209,6 +209,11 @@ $RECYCLE.BIN/
 # Sphinx documentation
 /docs/build/
 
+# phpDocumentor
+/.phpdoc
+/api
+phpdoc.xml
+
 # PHP CodeSniffer
 .php_codesniffer_cache.json
 

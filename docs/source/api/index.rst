@@ -11,7 +11,7 @@
     Server/index
     Vote/index
 
-**Classes**
+**Interfaces, Classes and Traits**
 
 .. toctree::
     :maxdepth: 1

@@ -87,6 +87,7 @@
             ".scrutinizer.yml",
             ".symfony.insight.yaml",
             "CONTRIBUTING.md",
+            "phpdoc.dist.xml",
             "phpunit.xml.dist"
         ]
     }

@@ -29,8 +29,7 @@ We can use a Docker container for this
     docker run \
         -it \
         -p 25565:25565 \
-        -p 8192:8192 \
-        -v $(pwd)/data:/data \
+        -v $(pwd)/spigot:/app \
         -e JAVA_MAX_MEMORY=1G \
         -e EULA=true \
         d3strukt0r/spigot
@@ -39,7 +38,7 @@ And place the latest and desired Votifier Jar that you want. Out of simplicity l
 
 https://dev.bukkit.org/projects/votifier/files/latest
 
-And put it in :code:`./data/plugins/`
+And put it in :code:`./spigot/plugins/`
 
 After that you can restart the server with the previous command.
 

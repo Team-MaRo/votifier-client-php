@@ -11,7 +11,7 @@ Exception\\
 
     Socket/index
 
-**Exceptions**
+**Interfaces, Classes and Traits**
 
 .. toctree::
     :maxdepth: 1

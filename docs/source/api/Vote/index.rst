@@ -4,16 +4,10 @@
 Vote\\
 ======
 
-**Interfaces**
+**Interfaces, Classes and Traits**
 
 .. toctree::
     :maxdepth: 1
 
     VoteInterface
-
-**Classes**
-
-.. toctree::
-    :maxdepth: 1
-
     ClassicVote

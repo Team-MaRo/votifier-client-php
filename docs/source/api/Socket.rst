@@ -41,7 +41,7 @@ Socket
 
         :param int $length: [optional] The length of the requested string
 
-        :returns: string — Returns the string received from the server
-
         :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\NoConnectionException` — If connection has not been set up
         :throws: :php:exc:`D3strukt0r\\Votifier\\Client\\Exception\\Socket\\PackageNotReceivedException` — If there was an error receiving the package
+
+        :returns: string — Returns the string received from the server

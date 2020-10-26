@@ -1,5 +1,5 @@
 {
-    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "restructuredtext.confPath": "${workspaceFolder}\\docs",
     "phpcs.standard": "./.phpcs.xml",
     "phpcs.executablePath": "./vendor/bin/phpcs",
     "phpcs.autoConfigSearch": false,

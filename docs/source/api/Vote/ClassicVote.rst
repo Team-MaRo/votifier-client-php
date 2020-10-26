@@ -23,13 +23,15 @@ ClassicVote
 
     .. php:attr:: protected $timestamp
 
+        :php:class:`DateTime` — The time when the vote will be sent
+
     .. php:method:: public getServiceName() -> string|null
 
         The name of the list/service.
 
         :returns: string|null — Returns the name of the list/service
 
-    .. php:method:: public setServiceName($serviceName) -> self
+    .. php:method:: public setServiceName($serviceName) -> $this
 
         Sets the name of the list/service.
 
@@ -43,7 +45,7 @@ ClassicVote
 
         :returns: string|null — Returns the username who wants to receive the rewards
 
-    .. php:method:: public setUsername($username) -> self
+    .. php:method:: public setUsername($username) -> $this
 
         Sets the username of the user who wants to receive the rewards.
 
@@ -57,7 +59,7 @@ ClassicVote
 
         :returns: string — Returns the IP Address of the user
 
-    .. php:method:: public setAddress($address) -> self
+    .. php:method:: public setAddress($address) -> $this
 
         Sets the IP Address of the user.
 
@@ -71,7 +73,7 @@ ClassicVote
 
         :returns: int|null — Returns the time when the vote was sent, null otherwise
 
-    .. php:method:: public setTimestamp([$timestamp = null]) -> self
+    .. php:method:: public setTimestamp([$timestamp = null]) -> $this
 
         Sets the time when the vote will be sent.
 

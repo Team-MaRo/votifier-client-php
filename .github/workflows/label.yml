@@ -11,6 +11,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           # The path to the label configuration file
-          # configuration-path: .github/labeler.yml # optional, default is .github/labeler.yml
+          # configuration-path: .github/labeler.yml # optional, default is ".github/labeler.yml"
           # Whether or not to remove labels when matching files are reverted or no longer changed by the PR
-          sync-labels: true # optional, default is false
+          sync-labels: true # optional, default is "false"

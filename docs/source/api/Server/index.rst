@@ -11,7 +11,7 @@ Server\\
 
     ServerInterface
 
-**Classes**
+**Interfaces, Classes and Traits**
 
 .. toctree::
     :maxdepth: 1

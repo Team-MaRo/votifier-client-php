@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor 
+    configVersion="3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://www.phpdoc.org"
+    xsi:noNamespaceSchemaLocation="https://github.com/phpDocumentor/phpDocumentor/blob/v3.0.0-rc/data/xsd/phpdoc.xsd">
+    <title>Votifier Client</title>
+    <paths>
+        <output>api</output>
+    </paths>
+    <version number="latest">
+        <folder>latest</folder>
+        <api>
+            <source dsn=".">
+                <path>src</path>
+            </source>
+            <output>api</output>
+            <ignore hidden="true" symlinks="true">
+                <path>tests/**/*</path>
+                <path>vendor/**/*</path>
+            </ignore>
+            <extensions>
+                <extension>php</extension>
+            </extensions>
+            <default-package-name>D3strukt0r\Votifier\Client</default-package-name>
+        </api>
+        <guide>
+            <source dsn=".">
+                <path>docs</path>
+            </source>
+            <output>dox</output>
+        </guide>
+    </version>
+    <template name="default"/>
+</phpdocumentor>

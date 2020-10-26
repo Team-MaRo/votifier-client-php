@@ -59,16 +59,10 @@ For the servers with the classic Votifier plugins:
 <?php
 
 use D3strukt0r\Votifier\Client\Server\Votifier;
-use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
 $server = (new Votifier())
     ->setHost('127.0.0.1')
     ->setPublicKey('MIIBIjANBgkq...')
-;
-$vote = (new ClassicVote())
-    ->setUsername($_GET['username'])
-    ->setServiceName('Your vote list')
-    ->setAddress($_SERVER['REMOTE_ADDR'])
 ;
 ```
 
@@ -78,16 +72,10 @@ For the servers which use the NuVotifier plugin (v1 protocol) (HINT: It's NOT th
 <?php
 
 use D3strukt0r\Votifier\Client\Server\NuVotifier;
-use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
 $server = (new NuVotifier())
     ->setHost('127.0.0.1')
     ->setPublicKey('MIIBIjANBgkq...')
-;
-$vote = (new ClassicVote())
-    ->setUsername($_GET['username'])
-    ->setServiceName('Your vote list')
-    ->setAddress($_SERVER['REMOTE_ADDR'])
 ;
 ```
 
@@ -97,17 +85,11 @@ For the servers which use the NuVotifier plugin with v2 protocol:
 <?php
 
 use D3strukt0r\Votifier\Client\Server\NuVotifier;
-use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
 $server = (new NuVotifier())
     ->setHost('127.0.0.1')
     ->setProtocolV2(true)
     ->setToken('7j302r4n...')
-;
-$vote = (new ClassicVote())
-    ->setUsername($_GET['username'])
-    ->setServiceName('Your vote list')
-    ->setAddress($_SERVER['REMOTE_ADDR'])
 ;
 ```
 
@@ -126,11 +108,16 @@ use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
 use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
 use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Server\ServerInterface;
-use D3strukt0r\Votifier\Client\Vote\VoteInterface;
+use D3strukt0r\Votifier\Client\Vote\ClassicVote;
+
+$vote = (new ClassicVote())
+    ->setUsername($_GET['username'])
+    ->setServiceName('Your vote list')
+    ->setAddress($_SERVER['REMOTE_ADDR'])
+;
 
 try {
     /** @var ServerInterface $server */
-    /** @var VoteInterface $vote */
     $server->sendVote($vote);
     // Connection created, and vote sent. Doesn't mean the server handled it correctly, but the client did.
 } catch (InvalidArgumentException $e) {
@@ -153,8 +140,6 @@ try {
     // Specific for NuVotifier: A username cannot be over 16 characters (Why? Don't ask me)
 } catch (NuVotifierException $e) {
     // In case there is a new error message that wasn't added to the library, this will take care of that.
-} catch (Exception $e) {
-    // This should never be thrown, but just in case.
 }
 ```
 
@@ -170,10 +155,6 @@ Run test scripts
 ./vendor/bin/phpunit
 ```
 
-```powershell
-.\vendor\bin\phpunit.bat
-```
-
 ### Coding style tests and fixes
 
 To check if the code follows the PSR-12 standard, the library PHP_CodeSniffer has been add to the development environment, but you can also download it separately from
@@ -186,18 +167,10 @@ To see what mistakes exist in the code run:
 ./vendor/bin/phpcs
 ```
 
-```powershell
-.\vendor\bin\phpcs.bat
-```
-
 To fix the code:
 
 ```shell
 ./vendor/bin/phpcbf
-```
-
-```powershell
-.\vendor\bin\phpcbf.bat
 ```
 
 This library already comes with `php-cs-fixer` but because it's impossible to set it up to follow the PSR-12 standard, it's not a requirement anymore. It's been left in the project only for additional styling information that might be applied. It can also be downloaded separately from
@@ -205,10 +178,6 @@ This library already comes with `php-cs-fixer` but because it's impossible to se
 
 ```shell
 ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
-```
-
-```powershell
-.\vendor\bin\php-cs-fixer.bat fix --diff --dry-run -v
 ```
 
 ### Code documentation
@@ -227,6 +196,15 @@ To build the docs:
 cd docs
 pip install -r requirements.txt
 make html
+```
+
+### Old Code documentation
+
+You can also create a documentation with [phpDocumentor](https://github.com/phpDocumentor/phpDocumentor). For that please downloaded at least v3+ for to work from [here](https://github.com/phpDocumentor/phpDocumentor/releases). And then you can just run it
+
+```shell
+curl -fsSL -o /usr/local/bin/phpdoc https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.0.0-rc/phpDocumentor.phar
+phpdoc
 ```
 
 ## Built With

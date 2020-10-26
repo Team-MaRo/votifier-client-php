@@ -2,6 +2,20 @@
 Changelog
 =========
 
+3.0.0
+=====
+- :code:`Added` :code:`verifyConnection` function to server, to check the server separately. You can figure out if the server is from Votifier before sending a vote
+- :code:`Added` php compatibility check for code style check
+- :code:`Added` Added setter methods to servers and and votes in place of constructor
+- :code:`Added` exceptions for all possible errors (instead of the old Messages class)
+- :code:`Dropped` assigning variables in the constructor
+- :code:`Dropped` :code:`Messages` class
+- :code:`Moved` namespace to :code:`D3strukt0r\Votifier\Client\Server`
+- :code:`Fixed` composer not ignoring unnecessary files
+- :code:`Fixed` coverage reports
+- :code:`Fixed` coding style
+- :code:`Updated` the docs
+
 2.1.2
 =====
 Nothing changed in the code, only improved CI and fixed Coverage report
@@ -17,7 +31,7 @@ Nothing changed in the code, only improved CI and fixed Coverage report
 - :code:`Dropped` compatibility with depreciated PHP versions. Now PHP 7.1+ is required
 - :code:`Fixed` Travis tests
 - :code:`Fixed` coding style
-- :code:`Updated` the Docs
+- :code:`Updated` the docs
 
 TODO
 ----

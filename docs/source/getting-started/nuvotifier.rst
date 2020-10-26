@@ -14,16 +14,10 @@ The following is the classic one, which looks the same as Votifier:
     <?php
 
     use D3strukt0r\Votifier\Client\Server\NuVotifier;
-    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
     $server = (new NuVotifier())
         ->setHost('127.0.0.1')
         ->setPublicKey('MIIBIjANBgkq...')
-    ;
-    $vote = (new ClassicVote())
-        ->setUsername($_GET['username'])
-        ->setServiceName('Your vote list')
-        ->setAddress($_SERVER['REMOTE_ADDR'])
     ;
 
 Or with version 2 protocol:
@@ -33,17 +27,11 @@ Or with version 2 protocol:
     <?php
 
     use D3strukt0r\Votifier\Client\Server\NuVotifier;
-    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
     $server = (new NuVotifier())
         ->setHost('127.0.0.1')
         ->setProtocolV2(true)
         ->setToken('7j302r4n...')
-    ;
-    $vote = (new ClassicVote())
-        ->setUsername($_GET['username'])
-        ->setServiceName('Your vote list')
-        ->setAddress($_SERVER['REMOTE_ADDR'])
     ;
 
 And then you can send it the same way to the server:
@@ -62,11 +50,16 @@ And then you can send it the same way to the server:
     use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
     use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
     use D3strukt0r\Votifier\Client\Server\ServerInterface;
-    use D3strukt0r\Votifier\Client\Vote\VoteInterface;
+    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
+
+    $vote = (new ClassicVote())
+        ->setUsername($_GET['username'])
+        ->setServiceName('Your vote list')
+        ->setAddress($_SERVER['REMOTE_ADDR'])
+    ;
 
     try {
         /** @var ServerInterface $server */
-        /** @var VoteInterface $vote */
         $server->sendVote($vote);
         // Connection created, and vote sent. Doesn't mean the server handled it correctly, but the client did.
     } catch (InvalidArgumentException $e) {
@@ -89,8 +82,6 @@ And then you can send it the same way to the server:
         // Specific for NuVotifier: A username cannot be over 16 characters (Why? Don't ask me)
     } catch (NuVotifierException $e) {
         // In case there is a new error message that wasn't added to the library, this will take care of that.
-    } catch (Exception $exception) {
-        // This should never be thrown, but just in case.
     }
 
 To have an in-depth look at the classes and their objects, refer to the API section.
@@ -106,9 +97,17 @@ The following code is another example of a full HTML page with the code from abo
 
     require __DIR__ . '/vendor/autoload.php';
 
-    use D3strukt0r\VotifierClient\ServerType\NuVotifier;
-    use D3strukt0r\VotifierClient\Vote;
-    use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+    use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierChallengeInvalidException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierSignatureInvalidException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierUnknownServiceException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierUsernameTooLongException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
+    use D3strukt0r\Votifier\Client\Server\NuVotifier;
+    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
     if (isset($_GET['username'])) {
         $server = (new NuVotifier())
@@ -144,8 +143,6 @@ The following code is another example of a full HTML page with the code from abo
             echo "<p>Specific for NuVotifier: A username cannot be over 16 characters (Why? Don't ask me)</p>";
         } catch (NuVotifierException $e) {
             echo "<p>In case there is a new error message that wasn't added to the library, this will take care of that.</p>";
-        } catch (Exception $e) {
-            echo "<p>This should never be thrown, but just in case.</p>";
         }
     }
 
@@ -174,9 +171,17 @@ The following code is another example of a full HTML page with the code from abo
 
     require __DIR__ . '/vendor/autoload.php';
 
-    use D3strukt0r\VotifierClient\ServerType\NuVotifier;
-    use D3strukt0r\VotifierClient\Vote;
-    use D3strukt0r\VotifierClient\VoteType\ClassicVote;
+    use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierChallengeInvalidException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierSignatureInvalidException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierUnknownServiceException;
+    use D3strukt0r\Votifier\Client\Exception\NuVotifierUsernameTooLongException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
+    use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
+    use D3strukt0r\Votifier\Client\Server\NuVotifier;
+    use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 
     if (isset($_GET['username'])) {
         $server = (new NuVotifier())
@@ -213,8 +218,6 @@ The following code is another example of a full HTML page with the code from abo
             echo "<p>Specific for NuVotifier: A username cannot be over 16 characters (Why? Don't ask me)</p>";
         } catch (NuVotifierException $e) {
             echo "<p>In case there is a new error message that wasn't added to the library, this will take care of that.</p>";
-        } catch (Exception $e) {
-            echo "<p>This should never be thrown, but just in case.</p>";
         }
     }
 
