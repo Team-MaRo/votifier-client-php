@@ -63,7 +63,7 @@ class Socket
     {
         $socket = @fsockopen($host, $port, $errorNumber, $errorString, self::CONNECT_TIMEOUT);
         if ($socket === false) {
-            throw new NoConnectionException($errorString, $errorNumber);
+            throw new NoConnectionException(\sprintf('Could not connect to %s:%d (%s). Make sure the Votifier port (default 8192, not the Minecraft port 25565) is open and reachable from this host.', $host, $port, $errorString !== '' ? $errorString : 'unknown error'), $errorNumber);
         }
         // Cap the wait for a response; otherwise reads block for php.ini's
         // default_socket_timeout (60s) before failing.
