@@ -24,6 +24,19 @@ use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 class Socket
 {
     /**
+     * @var int Seconds to wait for the TCP connection to be established
+     */
+    private const CONNECT_TIMEOUT = 3;
+
+    /**
+     * @var int Seconds to wait for a response (the greeting and the NuVotifier v2
+     *          reply). Generous enough that a slow or distant server doesn't trip a
+     *          false timeout, but far below PHP's 60s default_socket_timeout, which
+     *          previously made an unresponsive endpoint hang for a full minute.
+     */
+    private const READ_TIMEOUT = 10;
+
+    /**
      * @var resource the connection to the server
      */
     private $socket;
@@ -48,10 +61,13 @@ class Socket
      */
     public function open(string $host, int $port): void
     {
-        $socket = @fsockopen($host, $port, $errorNumber, $errorString, 3);
+        $socket = @fsockopen($host, $port, $errorNumber, $errorString, self::CONNECT_TIMEOUT);
         if ($socket === false) {
             throw new NoConnectionException($errorString, $errorNumber);
         }
+        // Cap the wait for a response; otherwise reads block for php.ini's
+        // default_socket_timeout (60s) before failing.
+        stream_set_timeout($socket, self::READ_TIMEOUT);
         $this->socket = $socket;
     }
 
@@ -91,6 +107,10 @@ class Socket
         }
 
         if (!$string = fread($this->socket, $length)) {
+            if (stream_get_meta_data($this->socket)['timed_out']) {
+                throw new PackageNotReceivedException('The server accepted the connection but did not respond within '.self::READ_TIMEOUT.' seconds. Check that the host and the Votifier port (default 8192, not the Minecraft port 25565) are correct and reachable.');
+            }
+
             throw new PackageNotReceivedException();
         }
 
