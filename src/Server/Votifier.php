@@ -178,8 +178,18 @@ class Votifier extends GenericServer
             .$vote->getAddress()."\n"
             .$vote->getTimestamp()."\n";
 
-        // Encrypt the string
-        openssl_public_encrypt($votePackage, $encryptedVotePackage, $this->getPublicKey(), OPENSSL_SSLV23_PADDING);
+        // Parse the PEM public key up front so an invalid key fails loudly here
+        // instead of openssl_public_encrypt() silently producing an empty packet.
+        $publicKey = openssl_pkey_get_public($this->getPublicKey());
+        if ($publicKey === false) {
+            throw new \InvalidArgumentException('The public key set with "->setPublicKey(...)" is not a valid RSA public key.');
+        }
+
+        // Encrypt with openssl_public_encrypt's default PKCS#1 v1.5 padding, which is
+        // what Votifier decrypts with (Cipher.getInstance("RSA") resolves to PKCS#1
+        // v1.5 via the JDK's default SunJCE provider). The old explicit
+        // OPENSSL_SSLV23_PADDING was removed in OpenSSL 3.0 and is undefined on PHP 8.x.
+        openssl_public_encrypt($votePackage, $encryptedVotePackage, $publicKey);
 
         return $encryptedVotePackage;
     }
