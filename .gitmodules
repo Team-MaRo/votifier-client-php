@@ -1,0 +1,3 @@
+[submodule "docs/source/_community"]
+	path = docs/source/_community
+	url = https://github.com/Team-MaRo/.github.git

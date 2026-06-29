@@ -4,6 +4,16 @@ Sending a vote to Votifier
 
 When you have a server which runs the classic Votifier plugin, you can use this code here.
 
+.. warning::
+
+   The classic Votifier plugin relies on ``javax.xml.bind.DatatypeConverter``, which
+   was removed from the JDK in Java 11, so it only runs on Java 8. The newest Minecraft
+   server that still runs on Java 8 is **1.16.5** (1.17 raised the requirement to Java
+   16), which makes 1.16.5 the last version the classic plugin works on. On a newer
+   server it fails to enable with ``NoClassDefFoundError: javax/xml/bind/DatatypeConverter``.
+   Prefer :doc:`NuVotifier <nuvotifier>` — the maintained successor that runs on current
+   Java and is backwards compatible with this classic protocol.
+
 You can place following code wherever you want to set up the vote:
 
 .. code-block:: php

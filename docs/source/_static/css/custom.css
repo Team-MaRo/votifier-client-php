@@ -1,8 +1,5 @@
-.bold-italic {
-    font-weight: bold;
-    font-style: italic;
-}
-
+/* The generated license (docs/LICENSE.rst) marks defined terms with the
+   reStructuredText :underline: role, which docutils renders as this class. */
 .underline {
     text-decoration: underline;
 }
