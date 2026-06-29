@@ -1,57 +1,63 @@
-<?php
+<?php declare(strict_types=1);
 
-$year = \date('Y');
+/**
+ * Votifier PHP Client
+ *
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
+ */
+
+require_once __DIR__.'/vendor/autoload.php';
+
+use IWFWeb\CodingStandard\IWFWebStandardRiskySet;
+use IWFWeb\CodingStandard\IWFWebStandardSet;
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+preg_match(
+    '/Copyright \(c\) ([0-9][0-9,\s-]*[0-9])\s+(.+)/',
+    (string) file_get_contents(__DIR__.'/LICENSE.txt'),
+    $copyright,
+);
+[, $years, $name] = $copyright;
+$email = json_decode((string) file_get_contents(__DIR__.'/composer.json'), true)['authors'][0]['email'];
+
 $header = <<<EOF
-Votifier PHP Client
+    Votifier PHP Client
 
-@package   VotifierClient
-@author    Manuele Vaccari <manuele.vaccari@gmail.com>
-@copyright Copyright (c) 2017-$year Manuele Vaccari <manuele.vaccari@gmail.com>
-@license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
-@link      https://github.com/D3strukt0r/votifier-client-php
-EOF;
+    @package   Votifier Client
+    @author    {$name} <{$email}>
+    @copyright Copyright (c) {$years} {$name} <{$email}>
+    @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+    @link      https://github.com/Team-MaRo/votifier-client-php
+    EOF;
 
-$finder = PhpCsFixer\Finder::create()
-    ->in(__DIR__)
-;
-
-return PhpCsFixer\Config::create()
-    ->setRiskyAllowed(true)
-    ->setRules(
-        [
-            '@PSR1' => true,
-            '@PSR2' => true,
-            '@PhpCsFixer' => true,
-            '@PhpCsFixer:risky' => true,
-            '@Symfony' => true,
-            '@Symfony:risky' => true,
-            'header_comment' => [
-                'comment_type' => 'PHPDoc',
-                'header' => $header,
-            ],
-            'concat_space' => [
-                'spacing' => 'one',
-            ],
-            'ordered_imports' => [
-                'imports_order' => [
-                    'class',
-                    'const',
-                    'function',
-                ],
-            ],
-            'no_extra_blank_lines' => [
-                'tokens' => ['default'],
-            ],
-            'php_unit_test_case_static_method_calls' => [
-                'call_type' => 'this',
-            ],
-            'linebreak_after_opening_tag' => true,
-            'mb_str_functions' => true,
-            'no_php4_constructor' => true,
-            'native_function_invocation' => false,
-            'no_superfluous_elseif' => false,
-        ]
+// https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/master/doc/ruleSets/index.rst
+// https://github.com/FriendsOfPHP/PHP-CS-Fixer/blob/master/doc/rules/index.rst
+return (new Config())
+    ->registerCustomRuleSets([
+        new IWFWebStandardSet(),
+        new IWFWebStandardRiskySet(),
+    ])
+    ->setFinder(Finder::create()
+        ->in(__DIR__)
+        ->ignoreDotFiles(false)
+        ->ignoreVCSIgnored(true),
     )
-    ->setFinder($finder)
-    ->setCacheFile(__DIR__ . '/.php_coding_standard_cache.json')
+    ->setRiskyAllowed(true)
+    ->setRules([
+        '@IWFWeb/standard' => true,
+        '@IWFWeb/standard:risky' => true,
+        'header_comment' => [
+            'comment_type' => 'PHPDoc',
+            'header' => $header,
+        ],
+        // The library targets PHP 7.1, so only arrays may carry a trailing comma
+        // in multiline (valid since PHP 5). Trailing commas in function calls
+        // (PHP 7.3+) and declarations (PHP 8.0+) would break parsing on 7.1.
+        'trailing_comma_in_multiline' => ['elements' => ['arrays']],
+    ])
 ;

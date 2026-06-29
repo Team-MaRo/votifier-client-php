@@ -1,0 +1,15 @@
+# https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+# Last matching pattern wins. Only ONE listed owner needs to approve, not all.
+
+# Default owner for everything.
+* @D3strukt0r
+
+# Files Dependabot manages — @Team-MaRo/CI (incl. the bot user) can also review,
+# so the bot's auto-approval satisfies the code-owner requirement on these paths.
+# composer
+/composer.json @D3strukt0r @Team-MaRo/CI
+/composer.lock @D3strukt0r @Team-MaRo/CI
+# github-actions
+/.github/workflows/ @D3strukt0r @Team-MaRo/CI
+# devcontainers
+/.devcontainer/ @D3strukt0r @Team-MaRo/CI
