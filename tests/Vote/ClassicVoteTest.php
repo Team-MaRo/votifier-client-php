@@ -3,23 +3,21 @@
 /**
  * Votifier PHP Client
  *
- * @package   VotifierClient
- * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
- * @link      https://github.com/D3strukt0r/votifier-client-php
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
  */
 
 namespace D3strukt0r\Votifier\Client\Vote;
 
-use DateTime;
 use PHPUnit\Framework\TestCase;
 
 /**
  * Class ClassicVoteTest.
  *
  * @covers \D3strukt0r\Votifier\Client\Vote\ClassicVote
- *
  * @internal
  */
 final class ClassicVoteTest extends TestCase
@@ -41,31 +39,31 @@ final class ClassicVoteTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Vote\ClassicVote', $this->object);
+        self::assertInstanceOf('D3strukt0r\Votifier\Client\Vote\ClassicVote', $this->object);
     }
 
     public function testUsername(): void
     {
         $this->object->setUsername('mock_user');
-        $this->assertSame('mock_user', $this->object->getUsername());
+        self::assertSame('mock_user', $this->object->getUsername());
     }
 
     public function testServiceName(): void
     {
         $this->object->setServiceName('mock_service');
-        $this->assertSame('mock_service', $this->object->getServiceName());
+        self::assertSame('mock_service', $this->object->getServiceName());
     }
 
     public function testAddress(): void
     {
         $this->object->setAddress('mock_address');
-        $this->assertSame('mock_address', $this->object->getAddress());
+        self::assertSame('mock_address', $this->object->getAddress());
     }
 
     public function testTimestamp(): void
     {
-        $time = new DateTime();
+        $time = new \DateTime();
         $this->object->setTimestamp($time);
-        $this->assertSame($time->getTimestamp(), $this->object->getTimestamp());
+        self::assertSame($time->getTimestamp(), $this->object->getTimestamp());
     }
 }
