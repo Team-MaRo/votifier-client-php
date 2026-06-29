@@ -17,7 +17,6 @@ use D3strukt0r\Votifier\Client\Exception\Socket\NoConnectionException;
 use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotReceivedException;
 use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use InvalidArgumentException;
 
 /**
  * The interface ServerInterface is used to define a PluginType on the server.
@@ -27,7 +26,7 @@ interface ServerInterface
     /**
      * Gets the host.
      *
-     * @return string|null returns the host
+     * @return null|string returns the host
      */
     public function getHost(): ?string;
 
@@ -59,7 +58,7 @@ interface ServerInterface
     /**
      * Gets the public key.
      *
-     * @return string|null returns the public key
+     * @return null|string returns the public key
      */
     public function getPublicKey(): ?string;
 
@@ -75,7 +74,7 @@ interface ServerInterface
     /**
      * Checks if the server actually belongs to Votifier.
      *
-     * @throws InvalidArgumentException    If one required parameter wasn't set
+     * @throws \InvalidArgumentException   If one required parameter wasn't set
      * @throws NoConnectionException       If connection couldn't be established
      * @throws PackageNotReceivedException If there was an error receiving the package
      * @throws NotVotifierException        If the server we are connected to is not a valid Votifier server
@@ -87,7 +86,7 @@ interface ServerInterface
      *
      * @param VoteInterface ...$votes The vote packages
      *
-     * @throws InvalidArgumentException    If one required parameter wasn't set
+     * @throws \InvalidArgumentException   If one required parameter wasn't set
      * @throws NoConnectionException       If connection couldn't be established
      * @throws PackageNotReceivedException If there was an error receiving the package
      * @throws PackageNotSentException     If there was an error sending the package

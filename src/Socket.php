@@ -33,7 +33,7 @@ class Socket
      */
     public function __destruct()
     {
-        if (is_resource($this->socket)) {
+        if (\is_resource($this->socket)) {
             fclose($this->socket);
         }
     }
@@ -49,7 +49,7 @@ class Socket
     public function open(string $host, int $port): void
     {
         $socket = @fsockopen($host, $port, $errorNumber, $errorString, 3);
-        if (false === $socket) {
+        if ($socket === false) {
             throw new NoConnectionException($errorString, $errorNumber);
         }
         $this->socket = $socket;
@@ -65,11 +65,11 @@ class Socket
      */
     public function write(string $string): void
     {
-        if (!is_resource($this->socket)) {
+        if (!\is_resource($this->socket)) {
             throw new NoConnectionException();
         }
 
-        if (false === fwrite($this->socket, $string)) {
+        if (fwrite($this->socket, $string) === false) {
             throw new PackageNotSentException();
         }
     }
@@ -79,14 +79,14 @@ class Socket
      *
      * @param int $length [optional] The length of the requested string
      *
+     * @return string returns the string received from the server
+     *
      * @throws NoConnectionException       If connection has not been set up
      * @throws PackageNotReceivedException If there was an error receiving the package
-     *
-     * @return string returns the string received from the server
      */
     public function read(int $length = 64): string
     {
-        if (!is_resource($this->socket)) {
+        if (!\is_resource($this->socket)) {
             throw new NoConnectionException();
         }
 

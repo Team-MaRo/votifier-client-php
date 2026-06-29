@@ -12,12 +12,8 @@
 
 namespace D3strukt0r\Votifier\Client\Exception\Socket;
 
-use Exception;
-
 /**
  * Class PackageNotSentException
  * Couldn't write to remote host.
  */
-class PackageNotSentException extends Exception
-{
-}
+class PackageNotSentException extends \Exception {}

@@ -12,8 +12,4 @@
 
 namespace D3strukt0r\Votifier\Client\Exception\Socket;
 
-use Exception;
-
-class NoConnectionException extends Exception
-{
-}
+class NoConnectionException extends \Exception {}

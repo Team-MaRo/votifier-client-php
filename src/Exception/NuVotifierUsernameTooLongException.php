@@ -16,6 +16,4 @@ namespace D3strukt0r\Votifier\Client\Exception;
  * Class NuVotifierUsernameTooLongException
  * Username too long.
  */
-class NuVotifierUsernameTooLongException extends NuVotifierException
-{
-}
+class NuVotifierUsernameTooLongException extends NuVotifierException {}

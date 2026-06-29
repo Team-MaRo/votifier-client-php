@@ -14,8 +14,6 @@ namespace D3strukt0r\Votifier\Client\Server;
 
 use D3strukt0r\Votifier\Client\Exception\NotVotifierException;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use DateTime;
-use InvalidArgumentException;
 
 /**
  * The Class to access a server which uses the classic "Votifier" plugin.
@@ -59,7 +57,7 @@ class Votifier extends GenericServer
             }
 
             // Update the timestamp of the vote being sent
-            $vote->setTimestamp(new DateTime());
+            $vote->setTimestamp(new \DateTime());
 
             // Check if all variables have been set, to create a package
             $this->checkVariablesForPackage($vote);
@@ -75,7 +73,7 @@ class Votifier extends GenericServer
     /**
      * Check that both host and port have been set.
      *
-     * @throws InvalidArgumentException If one required parameter wasn't set
+     * @throws \InvalidArgumentException If one required parameter wasn't set
      */
     protected function checkVariablesForSocket(): void
     {
@@ -83,7 +81,7 @@ class Votifier extends GenericServer
             // $countError = 0;
             $errorMessage = '';
 
-            if (null === $this->host) {
+            if ($this->host === null) {
                 $errorMessage .= 'The host variable wasn\'t set with "->setHost(...)".';
                 // ++$countError;
             }
@@ -93,7 +91,7 @@ class Votifier extends GenericServer
             //     $errorMessage .= 'The port variable wasn\'t set with "->setPort(...)".';
             // }
 
-            throw new InvalidArgumentException($errorMessage);
+            throw new \InvalidArgumentException($errorMessage);
         }
     }
 
@@ -102,35 +100,35 @@ class Votifier extends GenericServer
      *
      * @param VoteInterface $vote The vote to check
      *
-     * @throws InvalidArgumentException If one required parameter wasn't set
+     * @throws \InvalidArgumentException If one required parameter wasn't set
      */
-    protected function checkVariablesForPackage(VoteInterface $vote)
+    protected function checkVariablesForPackage(VoteInterface $vote): void
     {
         if (
-            null === $vote->getServiceName()
-            || null === $vote->getUsername()
-            || null === $vote->getAddress()
-            || null === $vote->getTimestamp()
+            $vote->getServiceName() === null
+            || $vote->getUsername() === null
+            || $vote->getAddress() === null
+            || $vote->getTimestamp() === null
             || !isset($this->publicKey)
         ) {
             $countError = 0;
             $errorMessage = '';
 
-            if (null === $vote->getServiceName()) {
+            if ($vote->getServiceName() === null) {
                 $errorMessage .= 'The host variable wasn\'t set with "->setServiceName(...)".';
                 ++$countError;
             }
-            if (null === $vote->getUsername()) {
+            if ($vote->getUsername() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setUsername(...)".';
                 ++$countError;
             }
-            if (null === $vote->getAddress()) {
+            if ($vote->getAddress() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setAddress(...)".';
                 ++$countError;
             }
-            if (null === $vote->getTimestamp()) {
+            if ($vote->getTimestamp() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setTimestamp(...)".';
             }
@@ -139,7 +137,7 @@ class Votifier extends GenericServer
                 $errorMessage .= 'The public key variable wasn\'t set with "->setPublicKey(...)".';
             }
 
-            throw new InvalidArgumentException($errorMessage);
+            throw new \InvalidArgumentException($errorMessage);
         }
     }
 
@@ -147,15 +145,15 @@ class Votifier extends GenericServer
      * Verifies that the connection is correct. Read more:
      * https://github.com/vexsoftware/votifier/wiki/Protocol-Documentation.
      *
-     * @param string|null $header The header that the plugin usually sends
+     * @param null|string $header The header that the plugin usually sends
      *
      * @return bool returns true if connections is available, otherwise false
      */
     protected function verifyConnectionHeader(?string $header): bool
     {
         if (
-            null === $header
-            || false === mb_strpos($header, 'VOTIFIER')
+            $header === null
+            || mb_strpos($header, 'VOTIFIER') === false
         ) {
             return false;
         }
@@ -174,11 +172,11 @@ class Votifier extends GenericServer
     protected function preparePackage(VoteInterface $vote): string
     {
         // Details of the vote
-        $votePackage = 'VOTE' . "\n" .
-            $vote->getServiceName() . "\n" .
-            $vote->getUsername() . "\n" .
-            $vote->getAddress() . "\n" .
-            $vote->getTimestamp() . "\n";
+        $votePackage = 'VOTE'."\n"
+            .$vote->getServiceName()."\n"
+            .$vote->getUsername()."\n"
+            .$vote->getAddress()."\n"
+            .$vote->getTimestamp()."\n";
 
         // Encrypt the string
         openssl_public_encrypt($votePackage, $encryptedVotePackage, $this->getPublicKey(), OPENSSL_SSLV23_PADDING);

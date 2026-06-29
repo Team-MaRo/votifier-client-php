@@ -12,12 +12,8 @@
 
 namespace D3strukt0r\Votifier\Client\Exception;
 
-use Exception;
-
 /**
  * Class NotVotifierException
  * The connection does not belong to Votifier.
  */
-class NotVotifierException extends Exception
-{
-}
+class NotVotifierException extends \Exception {}

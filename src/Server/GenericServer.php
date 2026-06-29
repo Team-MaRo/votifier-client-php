@@ -46,7 +46,7 @@ abstract class GenericServer implements ServerInterface
      */
     public function getSocket(): Socket
     {
-        return null === $this->socket ? $this->socket = new Socket() : $this->socket;
+        return $this->socket === null ? $this->socket = new Socket() : $this->socket;
     }
 
     /**

@@ -16,6 +16,4 @@ namespace D3strukt0r\Votifier\Client\Exception;
  * Class NuVotifierUnknownServiceException
  * Unknown service 'xxx'.
  */
-class NuVotifierUnknownServiceException extends NuVotifierException
-{
-}
+class NuVotifierUnknownServiceException extends NuVotifierException {}

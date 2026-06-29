@@ -12,8 +12,6 @@
 
 namespace D3strukt0r\Votifier\Client\Vote;
 
-use DateTime;
-
 /**
  * The classic vote package can be used by most plugins.
  */
@@ -35,7 +33,7 @@ class ClassicVote implements VoteInterface
     protected $address;
 
     /**
-     * @var DateTime the time when the vote will be sent
+     * @var \DateTime the time when the vote will be sent
      */
     protected $timestamp;
 
@@ -105,9 +103,9 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function setTimestamp(DateTime $timestamp = null): self
+    public function setTimestamp(?\DateTime $timestamp = null): self
     {
-        $this->timestamp = $timestamp ?: new DateTime();
+        $this->timestamp = $timestamp ?: new \DateTime();
 
         return $this;
     }

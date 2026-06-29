@@ -16,6 +16,4 @@ namespace D3strukt0r\Votifier\Client\Exception;
  * Class NuVotifierChallengeInvalidException
  * Challenge is not valid.
  */
-class NuVotifierChallengeInvalidException extends NuVotifierException
-{
-}
+class NuVotifierChallengeInvalidException extends NuVotifierException {}

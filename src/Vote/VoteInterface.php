@@ -12,8 +12,6 @@
 
 namespace D3strukt0r\Votifier\Client\Vote;
 
-use DateTime;
-
 /**
  * The interface VoteInterface will be used for different kinds of vote packages.
  */
@@ -22,7 +20,7 @@ interface VoteInterface
     /**
      * Gets the name of the list/service.
      *
-     * @return string|null returns the name of the list/service
+     * @return null|string returns the name of the list/service
      */
     public function getServiceName(): ?string;
 
@@ -38,7 +36,7 @@ interface VoteInterface
     /**
      * Gets the username of the user who wants to receive the rewards.
      *
-     * @return string|null returns the username who wants to receive the rewards
+     * @return null|string returns the username who wants to receive the rewards
      */
     public function getUsername(): ?string;
 
@@ -54,7 +52,7 @@ interface VoteInterface
     /**
      * Gets the IP Address of the user.
      *
-     * @return string|null returns the IP Address of the user
+     * @return null|string returns the IP Address of the user
      */
     public function getAddress(): ?string;
 
@@ -70,16 +68,16 @@ interface VoteInterface
     /**
      * Gets the time when the vote was sent.
      *
-     * @return int|null returns the time when the vote was sent, null otherwise
+     * @return null|int returns the time when the vote was sent, null otherwise
      */
     public function getTimestamp(): ?int;
 
     /**
      * Sets the time when the vote will be sent.
      *
-     * @param DateTime|null $timestamp [optional] Either give a wanted timestamp or it will use the current time
+     * @param null|\DateTime $timestamp [optional] Either give a wanted timestamp or it will use the current time
      *
      * @return $this returns the class itself, for doing multiple things at once
      */
-    public function setTimestamp(DateTime $timestamp = null);
+    public function setTimestamp(?\DateTime $timestamp = null);
 }

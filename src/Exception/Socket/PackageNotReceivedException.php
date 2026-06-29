@@ -12,12 +12,8 @@
 
 namespace D3strukt0r\Votifier\Client\Exception\Socket;
 
-use Exception;
-
 /**
  * Class PackageNotReceivedException
  * Unable to read server response.
  */
-class PackageNotReceivedException extends Exception
-{
-}
+class PackageNotReceivedException extends \Exception {}

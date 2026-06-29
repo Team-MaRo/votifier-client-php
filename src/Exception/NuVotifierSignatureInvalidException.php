@@ -16,6 +16,4 @@ namespace D3strukt0r\Votifier\Client\Exception;
  * Class NuVotifierSignatureInvalidException
  * Signature is not valid (invalid token?).
  */
-class NuVotifierSignatureInvalidException extends NuVotifierException
-{
-}
+class NuVotifierSignatureInvalidException extends NuVotifierException {}

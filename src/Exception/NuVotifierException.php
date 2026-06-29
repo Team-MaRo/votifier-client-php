@@ -12,8 +12,4 @@
 
 namespace D3strukt0r\Votifier\Client\Exception;
 
-use Exception;
-
-class NuVotifierException extends Exception
-{
-}
+class NuVotifierException extends \Exception {}
