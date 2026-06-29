@@ -114,7 +114,7 @@ class NuVotifier extends Votifier
     public function sendVote(VoteInterface ...$votes): void
     {
         if (!$this->isProtocolV2()) {
-            call_user_func_array([$this, 'parent::sendVote'], func_get_args());
+            parent::sendVote(...$votes);
 
             return;
         }
