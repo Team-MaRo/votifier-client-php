@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1](https://github.com/Team-MaRo/votifier-client-php/compare/3.0.0...3.0.1) (2026-06-30)
+
+
+### 🐛 Bug Fixes
+
+* encrypt classic Votifier packets with PKCS[#1](https://github.com/Team-MaRo/votifier-client-php/issues/1) v1.5 padding ([ef4600b](https://github.com/Team-MaRo/votifier-client-php/commit/ef4600b3b84585c6ac5d3605e57122e1ca253ab6))
+* include the underlying reason and host when a connection can't be opened ([4aee88d](https://github.com/Team-MaRo/votifier-client-php/commit/4aee88d73c6e95c7303edd9cffbbc8a13810249e)), closes [#4](https://github.com/Team-MaRo/votifier-client-php/issues/4)
+* support PHP 7.1 through 8.5 ([95bd6dd](https://github.com/Team-MaRo/votifier-client-php/commit/95bd6ddc8179cca1c21d2ebd8b3d13cf2011d744))
+* time out and report when a server sends no response ([27bbfb8](https://github.com/Team-MaRo/votifier-client-php/commit/27bbfb88ec3a63459c6f1a73cdce74d690996f1b)), closes [#5](https://github.com/Team-MaRo/votifier-client-php/issues/5)
+
+
+### 📚 Documentation
+
+* overhaul the Sphinx documentation ([919905f](https://github.com/Team-MaRo/votifier-client-php/commit/919905fc307289b0a20fdef1e39f84d62c90a019))
+
 ## [3.0.0](https://github.com/Team-MaRo/votifier-client-php/compare/2.1.2...3.0.0) (2020-10-26)
 
 
