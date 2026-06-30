@@ -1,0 +1,53 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+# Note: unique combination of 'package-ecosystem', 'directory', and 'target-branch'
+
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: develop
+    labels:
+      - "dependabot :robot:"
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:30'
+      timezone: Europe/Zurich
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+
+  - package-ecosystem: composer
+    directory: /
+    target-branch: develop
+    labels:
+      - "dependabot :robot:"
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:30'
+      timezone: Europe/Zurich
+    groups:
+      composer:
+        patterns:
+          - "*"
+
+  - package-ecosystem: docker
+    directory: /
+    target-branch: develop
+    labels:
+      - "dependabot :robot:"
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:30'
+      timezone: Europe/Zurich
+    groups:
+      docker:
+        patterns:
+          - "*"

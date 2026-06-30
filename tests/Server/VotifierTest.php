@@ -3,11 +3,11 @@
 /**
  * Votifier PHP Client
  *
- * @package   VotifierClient
- * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
- * @link      https://github.com/D3strukt0r/votifier-client-php
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
  */
 
 namespace D3strukt0r\Votifier\Client\Server;
@@ -18,13 +18,11 @@ use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Socket;
 use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use DateTime;
-use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhpunit;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-
-use function file_get_contents;
-
-use const DIRECTORY_SEPARATOR;
 
 /**
  * Class VotifierTest.
@@ -32,13 +30,14 @@ use const DIRECTORY_SEPARATOR;
  * @requires PHPUnit >= 8
  *
  * @covers   \D3strukt0r\Votifier\Client\Server\Votifier
- *
  * @internal
  */
+#[RequiresPhpunit('>= 8.0.0')]
+#[CoversClass(Votifier::class)]
 final class VotifierTest extends TestCase
 {
     /**
-     * @var Socket The Socket tool class
+     * @var Socket&Stub The Socket tool class
      */
     private $socketStub;
 
@@ -54,12 +53,12 @@ final class VotifierTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->socketStub = $this->createStub(Socket::class);
+        $this->socketStub = self::createStub(Socket::class);
         $this->votifier = (new Votifier())
             ->setSocket($this->socketStub)
             ->setHost('mock_host')
             ->setPort(0)
-            ->setPublicKey(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'votifier_public.key'))
+            ->setPublicKey(file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'votifier_public.key'))
         ;
         $this->vote = (new ClassicVote())
             ->setServiceName('mock_service_name')
@@ -76,7 +75,7 @@ final class VotifierTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\Votifier', $this->votifier);
+        self::assertInstanceOf('D3strukt0r\Votifier\Client\Server\Votifier', $this->votifier);
     }
 
     public function testVerifyConnection(): void
@@ -97,36 +96,34 @@ final class VotifierTest extends TestCase
             ->willReturn('VOTIFIER')
         ;
 
-        $this->assertNull($this->votifier->verifyConnection());
+        self::assertNull($this->votifier->verifyConnection());
     }
 
-    public function checkRequiredVariablesForSocketProvider(): array
+    /**
+     * @dataProvider checkRequiredVariablesForSocketProvider
+     */
+    #[DataProvider('checkRequiredVariablesForSocketProvider')]
+    public function testCheckRequiredVariablesForSocket(?string $host, ?int $port): void
+    {
+        $votifier = new Votifier();
+        if ($host !== null) {
+            $votifier->setHost($host);
+        }
+        if ($port !== null) {
+            $votifier->setPort($port);
+        }
+
+        $this->expectException(\InvalidArgumentException::class);
+        $votifier->sendVote($this->vote);
+    }
+
+    public static function checkRequiredVariablesForSocketProvider(): iterable
     {
         return [
             'nothing set' => [null, null],
             // 'only host set' => ['mock_host', null], // Doesn't work, port is set by default
             'only port set' => [null, 0],
         ];
-    }
-
-    /**
-     * @param $host
-     * @param $port
-     *
-     * @dataProvider checkRequiredVariablesForSocketProvider
-     */
-    public function testCheckRequiredVariablesForSocket($host, $port): void
-    {
-        $votifier = new Votifier();
-        if (null !== $host) {
-            $votifier->setHost($host);
-        }
-        if (null !== $port) {
-            $votifier->setPort($port);
-        }
-
-        $this->expectException(InvalidArgumentException::class);
-        $votifier->sendVote($this->vote);
     }
 
     public function testNoConnectionException(): void
@@ -151,7 +148,37 @@ final class VotifierTest extends TestCase
         $this->votifier->sendVote($this->vote);
     }
 
-    public function checkRequiredVariablesForPackageProvider(): array
+    /**
+     * @dataProvider checkRequiredVariablesForPackageProvider
+     */
+    #[DataProvider('checkRequiredVariablesForPackageProvider')]
+    public function testCheckRequiredVariablesForPackage(?string $serviceName, ?string $username, ?string $address, ?int $timestamp, ?string $key): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('VOTIFIER 1.9')
+        ;
+
+        $votifier = (new Votifier())
+            ->setSocket($this->socketStub)
+            ->setHost('mock_host')
+            ->setPort(0)
+        ;
+        if ($key !== null) {
+            $votifier->setPublicKey($key);
+        }
+
+        $voteStub = self::createStub(ClassicVote::class);
+        $voteStub->method('getServiceName')->willReturn($serviceName);
+        $voteStub->method('getUsername')->willReturn($username);
+        $voteStub->method('getAddress')->willReturn($address);
+        $voteStub->method('getTimestamp')->willReturn($timestamp);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $votifier->sendVote($voteStub);
+    }
+
+    public static function checkRequiredVariablesForPackageProvider(): iterable
     {
         return [
             'nothing set' => [
@@ -193,7 +220,7 @@ final class VotifierTest extends TestCase
                 null,
                 null,
                 null,
-                (new DateTime())->getTimestamp(),
+                (new \DateTime())->getTimestamp(),
                 null,
             ],
             'only key' => [
@@ -201,44 +228,9 @@ final class VotifierTest extends TestCase
                 null,
                 null,
                 null,
-                file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'votifier_public.key'),
+                file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'votifier_public.key'),
             ],
         ];
-    }
-
-    /**
-     * @param $serviceName
-     * @param $username
-     * @param $address
-     * @param $timestamp
-     * @param $key
-     *
-     * @dataProvider checkRequiredVariablesForPackageProvider
-     */
-    public function testCheckRequiredVariablesForPackage($serviceName, $username, $address, $timestamp, $key): void
-    {
-        $this->socketStub
-            ->method('read')
-            ->willReturn('VOTIFIER 1.9')
-        ;
-
-        $votifier = (new Votifier())
-            ->setSocket($this->socketStub)
-            ->setHost('mock_host')
-            ->setPort(0)
-        ;
-        if (null !== $key) {
-            $votifier->setPublicKey($key);
-        }
-
-        $voteStub = $this->createStub(ClassicVote::class);
-        $voteStub->method('getServiceName')->willReturn($serviceName);
-        $voteStub->method('getUsername')->willReturn($username);
-        $voteStub->method('getAddress')->willReturn($address);
-        $voteStub->method('getTimestamp')->willReturn($timestamp);
-
-        $this->expectException(InvalidArgumentException::class);
-        $votifier->sendVote($voteStub);
     }
 
     public function testPackageNotSentException(): void
@@ -263,6 +255,24 @@ final class VotifierTest extends TestCase
             ->willReturn('VOTIFIER 1.9')
         ;
 
-        $this->assertNull($this->votifier->sendVote($this->vote));
+        self::assertNull($this->votifier->sendVote($this->vote));
+    }
+
+    public function testInvalidPublicKey(): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('VOTIFIER 1.9')
+        ;
+
+        $votifier = (new Votifier())
+            ->setSocket($this->socketStub)
+            ->setHost('mock_host')
+            ->setPort(0)
+            ->setPublicKey('not a valid public key')
+        ;
+
+        $this->expectException(\InvalidArgumentException::class);
+        $votifier->sendVote($this->vote);
     }
 }

@@ -2,31 +2,19 @@
 
 This php script allows easy using of the Bukkit plugin Votifier
 
-Project
-
-[![License](https://img.shields.io/github/license/D3strukt0r/votifier-client-php)][license]
+[![License](https://img.shields.io/github/license/Team-MaRo/votifier-client-php)](LICENSE.txt)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa)][code-of-conduct]
 [![Version](https://img.shields.io/packagist/v/d3strukt0r/votifier-client?label=latest%20release)][packagist]
 [![Version (including pre-releases)](https://img.shields.io/packagist/v/D3strukt0r/votifier-client?include_prereleases&label=latest%20pre-release)][packagist]
 [![Downloads on Packagist](https://img.shields.io/packagist/dt/d3strukt0r/votifier-client)][packagist]
 [![Required PHP version](https://img.shields.io/packagist/php-v/d3strukt0r/votifier-client)][packagist]
 
-master-branch (alias stable, latest)
-
-[![GH Action CI/CD](https://github.com/D3strukt0r/votifier-client-php/workflows/CI/CD/badge.svg?branch=master)][gh-action]
+[![GH Action CI](https://github.com/Team-MaRo/votifier-client-php/actions/workflows/ci.yml/badge.svg)][gh-action]
 [![Coveralls](https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/master)][coveralls]
 [![Scrutinizer build status](https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/master?label=scrutinizer%20build)][scrutinizer]
 [![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/master?label=scrutinizer%20code%20quality)][scrutinizer]
 [![Codacy grade](https://img.shields.io/codacy/grade/d97c7e16f5d24924b39f9776eeb02259/master?label=codacy%20code%20quality)][codacy]
 [![Docs build status](https://img.shields.io/readthedocs/votifier-client-php/stable)][rtfd]
-
-develop-branch (alias nightly)
-
-[![GH Action CI/CD](https://github.com/D3strukt0r/votifier-client-php/workflows/CI/CD/badge.svg?branch=develop)][gh-action]
-[![Coveralls](https://img.shields.io/coveralls/github/D3strukt0r/votifier-client-php/develop)][coveralls]
-[![Scrutinizer build status](https://img.shields.io/scrutinizer/build/g/D3strukt0r/votifier-client-php/develop?label=scrutinizer%20build)][scrutinizer]
-[![Scrutinizer code quality](https://img.shields.io/scrutinizer/quality/g/D3strukt0r/votifier-client-php/develop?label=scrutinizer%20code%20quality)][scrutinizer]
-[![Codacy grade](https://img.shields.io/codacy/grade/d97c7e16f5d24924b39f9776eeb02259/develop?label=codacy%20code%20quality)][codacy]
-[![Docs build status](https://img.shields.io/readthedocs/votifier-client-php/latest)][rtfd]
 
 ## Getting Started
 
@@ -38,8 +26,14 @@ The full documentation can be found [here](https://votifier-client-php.readthedo
 
 What things you need to install the software and how to install them
 
--   PHP Project (PHP 7.1+)
--   Minecraft server with the Votifier plugin
+- PHP Project (PHP 7.1+)
+- Minecraft server with a Votifier plugin. **NuVotifier** is recommended — the
+  classic Votifier plugin relies on `javax.xml.bind.DatatypeConverter`, which was
+  removed from the JDK in Java 11, so it only runs on Java 8 and therefore only on
+  Minecraft up to 1.16.5 (the last version that runs on Java 8; 1.17+ require Java
+  16+). On newer servers it fails to enable with `NoClassDefFoundError:
+  javax/xml/bind/DatatypeConverter`. NuVotifier runs on current Java and is
+  backwards compatible with the classic protocol.
 
 ### Installing
 
@@ -203,46 +197,63 @@ make html
 You can also create a documentation with [phpDocumentor](https://github.com/phpDocumentor/phpDocumentor). For that please downloaded at least v3+ for to work from [here](https://github.com/phpDocumentor/phpDocumentor/releases). And then you can just run it
 
 ```shell
-curl -fsSL -o /usr/local/bin/phpdoc https://github.com/phpDocumentor/phpDocumentor/releases/download/v3.0.0-rc/phpDocumentor.phar
+curl -fsSL -o /usr/local/bin/phpdoc https://github.com/phpDocumentor/phpDocumentor/releases/latest/download/phpDocumentor.phar
 phpdoc
 ```
 
 ## Built With
 
--   [PHP](https://www.php.net) - Programming Language
--   [Composer](https://getcomposer.org) - Dependency Management
--   [PHPUnit](https://phpunit.de) - Testing the code
--   [Github Actions](https://github.com/features/actions) - Automatic CI (Testing)
--   [Read the docs](https://readthedocs.org) - Documentation
+- [PHP](https://www.php.net) - Programming Language
+- [Composer](https://getcomposer.org) - Dependency Management
+- [PHPUnit](https://phpunit.de) - Testing the code
+- [Github Actions](https://github.com/features/actions) - Automatic CI (Testing)
+- [Read the docs](https://readthedocs.org) - Documentation
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md][contributing] for details on our code of conduct and the process for submitting pull requests.
+
+This project uses [Conventional Commits](https://www.conventionalcommits.org/).
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/D3strukt0r/votifier-client-php/tags).
+We use [SemVer](http://semver.org/) for versioning. For available versions, see the [tags on this repository][gh-tags].
 
 ## Authors
 
--   **Manuele Vaccari** - [D3strukt0r](https://github.com/D3strukt0r) - _Initial work_
+### Special thanks for all the people who had helped this project so far
 
-See also the list of [contributors](https://github.com/D3strukt0r/votifier-client-php/contributors) who participated in this project.
+- **Manuele** - [D3strukt0r](https://github.com/D3strukt0r)
+
+See also the full list of [contributors][gh-contributors] who participated in this project.
+
+### I would like to join this list. How can I help the project?
+
+We're currently looking for contributions for the following:
+
+- [ ] Bug fixes
+- [ ] Translations
+- [ ] etc...
+
+For more information, please refer to our [CONTRIBUTING.md][contributing] guide.
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE.txt](LICENSE.txt) file for details
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## Acknowledgments
 
--   Hat tip to anyone whose code was used
--   Inspiration
--   etc
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
 
-[license]: https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt
 [packagist]: https://packagist.org/packages/d3strukt0r/votifier-client
-[gh-action]: https://github.com/D3strukt0r/votifier-client-php/actions
+[gh-action]: https://github.com/Team-MaRo/votifier-client-php/actions
 [coveralls]: https://coveralls.io/github/D3strukt0r/votifier-client-php
 [scrutinizer]: https://scrutinizer-ci.com/g/D3strukt0r/votifier-client-php/
 [codacy]: https://www.codacy.com/manual/D3strukt0r/votifier-client-php
 [rtfd]: https://readthedocs.org/projects/votifier-client-php/
+[gh-tags]: https://github.com/Team-MaRo/votifier-client-php/tags
+[gh-contributors]: https://github.com/Team-MaRo/votifier-client-php/contributors
+[contributing]: https://github.com/Team-MaRo/.github/blob/master/CONTRIBUTING.md
+[code-of-conduct]: https://github.com/Team-MaRo/.github/blob/master/CODE_OF_CONDUCT.md

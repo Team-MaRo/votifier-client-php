@@ -4,6 +4,17 @@
 # Required
 version: 2
 
+# Set the build environment (build.os and build.tools are now required)
+build:
+  os: ubuntu-24.04
+  tools:
+    python: "latest"
+  jobs:
+    pre_build:
+      # Generate the formatted Markdown license (docs/LICENSE.md) from the
+      # official legalcode; the plain-text original lives at docs/LICENSE.txt.
+      - python docs/update-license.py
+
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: docs/source/conf.py
@@ -11,8 +22,13 @@ sphinx:
 # Optionally build your docs in additional formats such as PDF and ePub
 formats: all
 
-# Optionally set the version of Python and requirements required to build your docs
+# Install the Python requirements needed to build the docs
 python:
-  version: 3.7
   install:
     - requirements: docs/requirements.txt
+
+# Pull in the shared community-health files (Code of Conduct, Contributing)
+# from the central Team-MaRo/.github repo so they are not duplicated here.
+submodules:
+  include:
+    - docs/source/_community

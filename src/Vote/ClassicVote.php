@@ -3,16 +3,14 @@
 /**
  * Votifier PHP Client
  *
- * @package   VotifierClient
- * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
- * @link      https://github.com/D3strukt0r/votifier-client-php
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
  */
 
 namespace D3strukt0r\Votifier\Client\Vote;
-
-use DateTime;
 
 /**
  * The classic vote package can be used by most plugins.
@@ -35,7 +33,7 @@ class ClassicVote implements VoteInterface
     protected $address;
 
     /**
-     * @var DateTime the time when the vote will be sent
+     * @var \DateTime the time when the vote will be sent
      */
     protected $timestamp;
 
@@ -105,9 +103,9 @@ class ClassicVote implements VoteInterface
     /**
      * {@inheritdoc}
      */
-    public function setTimestamp(DateTime $timestamp = null): self
+    public function setTimestamp(?\DateTime $timestamp = null): self
     {
-        $this->timestamp = $timestamp ?: new DateTime();
+        $this->timestamp = $timestamp ?: new \DateTime();
 
         return $this;
     }

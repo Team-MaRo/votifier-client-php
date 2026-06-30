@@ -13,7 +13,12 @@
     <arg name="colors" />
     <arg name="extensions" value="php" />
 
-    <rule ref="PSR12" />
+    <!--
+        PHP-CS-Fixer (.php-cs-fixer.dist.php, the iwf-web/php-coding-standard set) owns
+        code style. PHP_CodeSniffer is used only as the PHP-version-compatibility gate
+        (PHPCompatibility, testVersion 7.1-); also enforcing PSR12 here just fought
+        PHP-CS-Fixer's choices (concat spacing, single-line empty bodies, ...).
+    -->
     <rule ref="PHPCompatibility" />
     <config name="testVersion" value="7.1-" />
 </ruleset>

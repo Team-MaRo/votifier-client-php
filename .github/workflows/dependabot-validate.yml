@@ -1,0 +1,35 @@
+name: Dependabot Validate Config
+
+on:
+  push:
+    branches: [master, develop]
+    paths:
+      - '.github/dependabot.yml'
+      - '.github/workflows/dependabot-validate.yml'
+  pull_request:
+    paths:
+      - '.github/dependabot.yml'
+      - '.github/workflows/dependabot-validate.yml'
+
+permissions:
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Validate dependabot config
+        uses: marocchino/validate-dependabot@v3
+        id: validate
+
+      - name: Comment validation results
+        uses: marocchino/sticky-pull-request-comment@v3
+        # Always run but only if a PR
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        with:
+          header: validate-dependabot
+          message: ${{ steps.validate.outputs.markdown }}

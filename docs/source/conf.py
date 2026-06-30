@@ -16,9 +16,21 @@
 
 # -- Project information -----------------------------------------------------
 
+import re
+from pathlib import Path
+
 project = 'votifier-client-php'
-copyright = '2020, Manuele Vaccari'
-author = 'Manuele Vaccari'
+
+# Derive the copyright years and holder from LICENSE.txt (single source of
+# truth) so they never have to be hand-updated here.
+_license = (Path(__file__).resolve().parents[2] / 'LICENSE.txt').read_text(encoding='utf-8')
+_match = re.search(r'Copyright \(c\)\s+([0-9][0-9,\-\s]*[0-9])\s+([A-Za-z].*)', _license)
+if _match:
+    _years, author = _match.group(1).strip(), _match.group(2).strip()
+else:  # fall back rather than break the build if the license format changes
+    _years, author = '2015-present', 'Manuele Vaccari'
+
+copyright = f'{_years} {author}'
 
 # The full version, including alpha/beta/rc tags
 # release = 'x.x.x'
@@ -29,7 +41,8 @@ author = 'Manuele Vaccari'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinxcontrib.phpdomain'
+    'sphinxcontrib.phpdomain',
+    'myst_parser',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -38,7 +51,9 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['Thumbs.db', '.DS_Store']
+# '_community' is the Team-MaRo/.github submodule — its Markdown files are pulled
+# in via `.. include::`, so exclude them from being built as standalone pages.
+exclude_patterns = ['Thumbs.db', '.DS_Store', '_community']
 
 # The master toctree document.
 master_doc = 'index'
@@ -53,13 +68,7 @@ primary_domain = 'php'
 #
 html_theme = 'sphinx_rtd_theme'
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
+# Styles the `:underline:` role used by the generated license (RST has no native
+# underline); see docs/source/_static/css/custom.css.
 html_static_path = ['_static']
-
-# These paths are either relative to html_static_path
-# or fully qualified paths (eg. https://...)
-html_css_files = [
-    'css/custom.css',
-]
+html_css_files = ['css/custom.css']

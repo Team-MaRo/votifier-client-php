@@ -4,20 +4,14 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
          bootstrap="./vendor/autoload.php"
          colors="true">
-    <coverage>
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-        <report>
-            <clover outputFile="coverage/logs/clover.xml" />
-            <html outputDirectory="coverage/html" />
-            <text outputFile="php://stdout" />
-        </report>
-    </coverage>
+    <!--
+        Coverage is configured on the command line (see the CI workflow), not here:
+        the <coverage> element only exists in the PHPUnit 9.3+ schema, so PHPUnit 7/8
+        (the PHP 7.1/7.2 legs) reject it, and PHPUnit 13 ignores its <include> anyway.
+    -->
     <testsuites>
         <testsuite name="All">
             <directory suffix=".php">tests</directory>
         </testsuite>
     </testsuites>
-    <logging />
 </phpunit>

@@ -1,14 +1,27 @@
-============
-Contributing
-============
+.. Pulled from the central Team-MaRo/.github repo (the docs/source/_community
+   submodule) so it is never duplicated or out of date here.
 
-When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
+.. include:: ../_community/CONTRIBUTING.md
+   :parser: myst_parser.docutils_
 
-Please note we have a code of conduct, please follow it in all your interactions with the project.
+Code style guidelines
+=====================
 
-.. toctree::
-   :maxdepth: 2
+This project enforces two complementary code-style tools, both run by CI — make
+sure both pass before opening a pull request.
 
-   contributing/ways-to-contribute
-   contributing/pull-request-workflow
-   contributing/code-style-guidelines
+**PHP_CodeSniffer** checks PSR-12 and PHP version compatibility (configured in
+``.phpcs.xml``):
+
+.. code-block:: bash
+
+    composer check    # report problems  (alias for: ./vendor/bin/phpcs)
+    composer fix      # auto-fix them     (alias for: ./vendor/bin/phpcbf)
+
+**PHP-CS-Fixer** applies the project's coding standard (configured in
+``.php-cs-fixer.dist.php``):
+
+.. code-block:: bash
+
+    composer cs       # show the diff without changing files
+    composer cs:fix   # apply the fixes

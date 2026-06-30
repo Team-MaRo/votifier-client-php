@@ -1,17 +1,46 @@
-# Add 'repo' label to any root file changes
+# actions/labeler@v6 configuration — every rule uses the `changed-files` /
+# `any-glob-to-any-file` syntax required by v5+.
+
+# Add 'repo' label to any root file change
 repo:
-  - ./*
+  - changed-files:
+      - any-glob-to-any-file: '*'
 
-# Add 'documentation' label to any change to files within the docs dir
+# Add 'documentation' label to docs, the Read the Docs config and any Markdown
 documentation:
-  - docs/**/*
-  - .readthedocs.yml
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**/*'
+          - '.readthedocs.yml'
+          - '**/*.md'
 
-# Add 'source' label to any change to files within the source dir
+# Add 'source' label to the library and e2e server source
 source:
-  - src/**/*
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/**/*'
+          - 'public/**/*'
 
-# Add 'test' label to any change to files within the test dir
+# Add 'test' label to test files and PHPUnit config
 test:
-  - tests/**/*
-  - phpunit.xml.dist
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'tests/**/*'
+          - 'phpunit.xml.dist'
+
+# Add 'docker' label to container files
+docker:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'Dockerfile'
+          - 'compose.yml'
+
+# Add 'feature' label to feature branches
+feature:
+  - head-branch: ['^feature', 'feature']
+
+# Add 'release' label to release PRs targeting master
+release:
+  - all:
+      - base-branch: 'master'
+      - head-branch: ['^release', 'release']

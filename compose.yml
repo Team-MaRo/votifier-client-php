@@ -1,0 +1,48 @@
+services:
+  php:
+    build:
+      context: .
+    volumes:
+      - .:/usr/src/app
+
+  # Minecraft Spigot server to test the client against a real Votifier endpoint.
+  # Pin a version with SPIGOT_IMAGE (e.g. SPIGOT_IMAGE=d3strukt0r/spigot:26.1.2).
+  # Drop a Votifier/NuVotifier plugin jar into ./server/plugins, then send votes
+  # from the client to host "spigot", port 8192.
+  spigot:
+    image: ${SPIGOT_IMAGE:-d3strukt0r/spigot}
+    restart: unless-stopped
+    stdin_open: true   # console usable via `docker compose attach spigot`
+    tty: true
+    stop_grace_period: 60s
+    ports:
+      - 25565:25565  # Minecraft
+      - 8192:8192    # Votifier / NuVotifier
+    environment:
+      EULA: "true"
+      MEMORY: 2G
+    volumes:
+      - ./server:/srv/spigot  # gitignored; worlds, plugins, configs, keys persist here
+
+  # Web UI (public/) that drives the library against the spigot server above.
+  # `docker compose up web` builds it, installs its deps and serves it on
+  # http://localhost:8000. It reaches the plugin over the compose network
+  # (VOTIFIER_HOST=spigot), so no host port juggling is needed.
+  web:
+    build:
+      context: ./public
+      dockerfile: Dockerfile
+    command: bash start.sh
+    environment:
+      LISTEN: 0.0.0.0:8000   # bind all interfaces so the published port is reachable
+      VOTIFIER_HOST: spigot  # connect to the spigot service instead of 127.0.0.1
+    volumes:
+      - .:/app
+      - web-vendor:/app/public/vendor  # container-only deps, isolated from the host
+    ports:
+      - 8000:8000
+    depends_on:
+      - spigot
+
+volumes:
+  web-vendor:

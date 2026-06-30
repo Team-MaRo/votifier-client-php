@@ -34,12 +34,20 @@ We can use a Docker container for this
         -e EULA=true \
         d3strukt0r/spigot
 
-And place the latest and desired Votifier Jar that you want. Out of simplicity let's use the classic one.
+Place a Votifier plugin jar in :code:`./spigot/plugins/` and restart the server.
 
-https://dev.bukkit.org/projects/votifier/files/latest
+We recommend **NuVotifier** -- it is maintained, runs on current Java, and speaks both the
+classic Votifier protocol and its own v2 token protocol:
 
-And put it in :code:`./spigot/plugins/`
+- SpigotMC: https://www.spigotmc.org/resources/nuvotifier.13449/
+- GitHub releases: https://github.com/NuVotifier/NuVotifier/releases
 
-After that you can restart the server with the previous command.
+.. warning::
+
+   Avoid the original "classic" vexsoftware Votifier on modern servers: it relies on
+   ``javax.xml.bind.DatatypeConverter`` (removed from the JDK in Java 11), so it only runs
+   on Java 8 -- i.e. Minecraft up to 1.16.5. See :doc:`votifier` for the details. For
+   reference: https://github.com/vexsoftware/votifier and
+   https://www.curseforge.com/minecraft/bukkit-plugins/votifier
 
 Now you have your project with the plugin and a server which runs the votifier plugin.
