@@ -21,6 +21,9 @@ on:
 
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   # Code style (PHP-CS-Fixer), static analysis (PHPStan) and PHP-version
   # compatibility (PHP_CodeSniffer / PHPCompatibility) run once on a modern PHP.
