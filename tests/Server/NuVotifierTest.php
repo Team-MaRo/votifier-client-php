@@ -3,11 +3,11 @@
 /**
  * Votifier PHP Client
  *
- * @package   VotifierClient
- * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
- * @link      https://github.com/D3strukt0r/votifier-client-php
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
  */
 
 namespace D3strukt0r\Votifier\Client\Server;
@@ -23,14 +23,11 @@ use D3strukt0r\Votifier\Client\Exception\Socket\PackageNotSentException;
 use D3strukt0r\Votifier\Client\Socket;
 use D3strukt0r\Votifier\Client\Vote\ClassicVote;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use DateTime;
-use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\RequiresPhpunit;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
-
-use function file_get_contents;
-
-use const DIRECTORY_SEPARATOR;
 
 /**
  * Class NuVotifierTest.
@@ -38,13 +35,14 @@ use const DIRECTORY_SEPARATOR;
  * @requires PHPUnit >= 8
  *
  * @covers   \D3strukt0r\Votifier\Client\Server\NuVotifier
- *
  * @internal
  */
+#[RequiresPhpunit('>= 8.0.0')]
+#[CoversClass(NuVotifier::class)]
 final class NuVotifierTest extends TestCase
 {
     /**
-     * @var Socket|Stub The Socket tool class
+     * @var Socket&Stub The Socket tool class
      */
     private $socketStub;
 
@@ -65,8 +63,8 @@ final class NuVotifierTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->socketStub = $this->createStub(Socket::class);
-        $key = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'votifier_public.key');
+        $this->socketStub = self::createStub(Socket::class);
+        $key = file_get_contents(__DIR__.\DIRECTORY_SEPARATOR.'votifier_public.key');
         $this->nuvotifier = (new NuVotifier())
             ->setSocket($this->socketStub)
             ->setHost('mock_host')
@@ -96,27 +94,26 @@ final class NuVotifierTest extends TestCase
 
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf('D3strukt0r\Votifier\Client\Server\NuVotifier', $this->nuvotifier);
+        self::assertInstanceOf('D3strukt0r\Votifier\Client\Server\NuVotifier', $this->nuvotifier);
     }
 
     public function testProtocolV2(): void
     {
         $this->nuvotifier->setProtocolV2(true);
-        $this->assertTrue($this->nuvotifier->isProtocolV2());
+        self::assertTrue($this->nuvotifier->isProtocolV2());
     }
 
     public function testToken(): void
     {
         $this->nuvotifier->setToken('mock_token');
-        $this->assertSame('mock_token', $this->nuvotifier->getToken());
+        self::assertSame('mock_token', $this->nuvotifier->getToken());
     }
 
     /**
-     * @param $readString
-     *
      * @dataProvider notVotifierExceptionProvider
      */
-    public function testVerifyConnection($readString): void
+    #[DataProvider('notVotifierExceptionProvider')]
+    public function testVerifyConnection(string $readString): void
     {
         $this->socketStub
             ->method('read')
@@ -134,7 +131,7 @@ final class NuVotifierTest extends TestCase
             ->willReturn('VOTIFIER 2 mock_challenge')
         ;
 
-        $this->assertNull($this->nuvotifier->verifyConnection());
+        self::assertNull($this->nuvotifier->verifyConnection());
     }
 
     public function testSendV1(): void
@@ -144,24 +141,14 @@ final class NuVotifierTest extends TestCase
             ->willReturn('VOTIFIER 2 mock_challenge')
         ;
 
-        $this->assertNull($this->nuvotifier->sendVote($this->vote));
-    }
-
-    public function notVotifierExceptionProvider(): array
-    {
-        return [
-            'absolutely not votifier' => ['SOMETHING_WEIRD'],
-            'only 1/3 of the part' => ['VOTIFIER'],
-            'only 2/3 of the part' => ['VOTIFIER 2'],
-        ];
+        self::assertNull($this->nuvotifier->sendVote($this->vote));
     }
 
     /**
-     * @param $readString
-     *
      * @dataProvider notVotifierExceptionProvider
      */
-    public function testNotVotifierException($readString): void
+    #[DataProvider('notVotifierExceptionProvider')]
+    public function testNotVotifierException(string $readString): void
     {
         $this->socketStub
             ->method('read')
@@ -172,7 +159,47 @@ final class NuVotifierTest extends TestCase
         $this->nuvotifierV2->sendVote($this->vote);
     }
 
-    public function checkRequiredVariablesForPackageProvider(): array
+    public static function notVotifierExceptionProvider(): iterable
+    {
+        return [
+            'absolutely not votifier' => ['SOMETHING_WEIRD'],
+            'only 1/3 of the part' => ['VOTIFIER'],
+            'only 2/3 of the part' => ['VOTIFIER 2'],
+        ];
+    }
+
+    /**
+     * @dataProvider checkRequiredVariablesForPackageProvider
+     */
+    #[DataProvider('checkRequiredVariablesForPackageProvider')]
+    public function testCheckRequiredVariablesForPackage(?string $serviceName, ?string $username, ?string $address, ?int $timestamp, ?string $token): void
+    {
+        $this->socketStub
+            ->method('read')
+            ->willReturn('VOTIFIER 2 mock_challenge')
+        ;
+
+        $nuvotifierV2 = (new NuVotifier())
+            ->setSocket($this->socketStub)
+            ->setHost('mock_host')
+            ->setPort(0)
+            ->setProtocolV2(true)
+        ;
+        if ($token !== null) {
+            $nuvotifierV2->setToken($token);
+        }
+
+        $voteStub = self::createStub(ClassicVote::class);
+        $voteStub->method('getServiceName')->willReturn($serviceName);
+        $voteStub->method('getUsername')->willReturn($username);
+        $voteStub->method('getAddress')->willReturn($address);
+        $voteStub->method('getTimestamp')->willReturn($timestamp);
+
+        $this->expectException(\InvalidArgumentException::class);
+        $nuvotifierV2->sendVote($voteStub);
+    }
+
+    public static function checkRequiredVariablesForPackageProvider(): iterable
     {
         return [
             'nothing set' => [
@@ -221,7 +248,7 @@ final class NuVotifierTest extends TestCase
                 null,
                 null,
                 null,
-                (new DateTime())->getTimestamp(),
+                (new \DateTime())->getTimestamp(),
                 null,
             ],
             'only token' => [
@@ -232,42 +259,6 @@ final class NuVotifierTest extends TestCase
                 'mock_token',
             ],
         ];
-    }
-
-    /**
-     * @param $serviceName
-     * @param $username
-     * @param $address
-     * @param $timestamp
-     * @param $token
-     *
-     * @dataProvider checkRequiredVariablesForPackageProvider
-     */
-    public function testCheckRequiredVariablesForPackage($serviceName, $username, $address, $timestamp, $token): void
-    {
-        $this->socketStub
-            ->method('read')
-            ->willReturn('VOTIFIER 2 mock_challenge')
-        ;
-
-        $nuvotifierV2 = (new NuVotifier())
-            ->setSocket($this->socketStub)
-            ->setHost('mock_host')
-            ->setPort(0)
-            ->setProtocolV2(true)
-        ;
-        if (null !== $token) {
-            $nuvotifierV2->setToken($token);
-        }
-
-        $voteStub = $this->createStub(ClassicVote::class);
-        $voteStub->method('getServiceName')->willReturn($serviceName);
-        $voteStub->method('getUsername')->willReturn($username);
-        $voteStub->method('getAddress')->willReturn($address);
-        $voteStub->method('getTimestamp')->willReturn($timestamp);
-
-        $this->expectException(InvalidArgumentException::class);
-        $nuvotifierV2->sendVote($voteStub);
     }
 
     public function testPackageNotSentException(): void
@@ -287,21 +278,42 @@ final class NuVotifierTest extends TestCase
 
     public function testPackageNotReceivedException(): void
     {
+        $read = 0;
         $this->socketStub
             ->method('read')
-            ->will(
-                $this->onConsecutiveCalls(
-                    'VOTIFIER 2 mock_challenge',
-                    $this->throwException(new PackageNotReceivedException())
-                )
-            )
+            ->willReturnCallback(static function () use (&$read) {
+                if ($read++ === 0) {
+                    return 'VOTIFIER 2 mock_challenge';
+                }
+
+                throw new PackageNotReceivedException();
+            })
         ;
 
         $this->expectException(PackageNotReceivedException::class);
         $this->nuvotifierV2->sendVote($this->vote);
     }
 
-    public function nuVotifierResponseAfterSendVoteProvider(): array
+    /**
+     * @dataProvider nuVotifierResponseAfterSendVoteProvider
+     */
+    #[DataProvider('nuVotifierResponseAfterSendVoteProvider')]
+    public function testNuVotifierResponseAfterSendVote(string $errorMessage, string $exceptionClass): void
+    {
+        $reads = ['VOTIFIER 2 mock_challenge', $errorMessage];
+        $read = 0;
+        $this->socketStub
+            ->method('read')
+            ->willReturnCallback(static function () use (&$read, $reads) {
+                return $reads[$read++];
+            })
+        ;
+
+        $this->expectException($exceptionClass);
+        $this->nuvotifierV2->sendVote($this->vote);
+    }
+
+    public static function nuVotifierResponseAfterSendVoteProvider(): iterable
     {
         return [
             'challenge invalid' => [
@@ -313,8 +325,8 @@ final class NuVotifierTest extends TestCase
                 NuVotifierUnknownServiceException::class,
             ],
             'signature invalid' => [
-                '{"status":"error","cause":"CorruptedFrameException",' .
-                '"error":"Signature is not valid (invalid token?)"}',
+                '{"status":"error","cause":"CorruptedFrameException",'
+                .'"error":"Signature is not valid (invalid token?)"}',
                 NuVotifierSignatureInvalidException::class,
             ],
             'username too long' => [
@@ -328,35 +340,17 @@ final class NuVotifierTest extends TestCase
         ];
     }
 
-    /**
-     * @param $errorMessage
-     * @param $exceptionClass
-     *
-     * @dataProvider nuVotifierResponseAfterSendVoteProvider
-     */
-    public function testNuVotifierResponseAfterSendVote($errorMessage, $exceptionClass): void
-    {
-        $this->socketStub
-            ->method('read')
-            ->will(
-                $this->onConsecutiveCalls(
-                    'VOTIFIER 2 mock_challenge',
-                    $errorMessage
-                )
-            )
-        ;
-
-        $this->expectException($exceptionClass);
-        $this->nuvotifierV2->sendVote($this->vote);
-    }
-
     public function testSend(): void
     {
+        $reads = ['VOTIFIER 2 mock_challenge', '{"status":"ok"}'];
+        $read = 0;
         $this->socketStub
             ->method('read')
-            ->will($this->onConsecutiveCalls('VOTIFIER 2 mock_challenge', '{"status":"ok"}'))
+            ->willReturnCallback(static function () use (&$read, $reads) {
+                return $reads[$read++];
+            })
         ;
 
-        $this->assertNull($this->nuvotifierV2->sendVote($this->vote));
+        self::assertNull($this->nuvotifierV2->sendVote($this->vote));
     }
 }

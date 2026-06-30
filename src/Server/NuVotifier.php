@@ -3,11 +3,11 @@
 /**
  * Votifier PHP Client
  *
- * @package   VotifierClient
- * @author    Manuele Vaccari <manuele.vaccari@gmail.com>
- * @copyright Copyright (c) 2017-2020 Manuele Vaccari <manuele.vaccari@gmail.com>
- * @license   https://github.com/D3strukt0r/votifier-client-php/blob/master/LICENSE.txt GNU General Public License v3.0
- * @link      https://github.com/D3strukt0r/votifier-client-php
+ * @package   Votifier Client
+ * @author    Manuele Vaccari <dev@d3strukt0r.dev>
+ * @copyright Copyright (c) 2015-2020, 2026 Manuele Vaccari <dev@d3strukt0r.dev>
+ * @license   https://github.com/Team-MaRo/votifier-client-php/blob/master/LICENSE.txt MIT License
+ * @link      https://github.com/Team-MaRo/votifier-client-php
  */
 
 namespace D3strukt0r\Votifier\Client\Server;
@@ -19,10 +19,6 @@ use D3strukt0r\Votifier\Client\Exception\NuVotifierSignatureInvalidException;
 use D3strukt0r\Votifier\Client\Exception\NuVotifierUnknownServiceException;
 use D3strukt0r\Votifier\Client\Exception\NuVotifierUsernameTooLongException;
 use D3strukt0r\Votifier\Client\Vote\VoteInterface;
-use DateTime;
-use InvalidArgumentException;
-
-use function count;
 
 /**
  * The Class to access a server which uses the plugin "NuVotifier".
@@ -35,7 +31,7 @@ class NuVotifier extends Votifier
     protected $protocolV2 = false;
 
     /**
-     * @var string|null The token from the config.yml
+     * @var null|string The token from the config.yml
      */
     protected $token;
 
@@ -66,7 +62,7 @@ class NuVotifier extends Votifier
     /**
      * Gets the token from the config.yml.
      *
-     * @return string|null returns The token from the config.yml
+     * @return null|string returns The token from the config.yml
      */
     public function getToken(): ?string
     {
@@ -76,7 +72,7 @@ class NuVotifier extends Votifier
     /**
      * Sets the token from the config.yml.
      *
-     * @param string|null $token The token from the config.yml
+     * @param null|string $token The token from the config.yml
      *
      * @return $this returns the class itself, for doing multiple things at once
      */
@@ -118,7 +114,7 @@ class NuVotifier extends Votifier
     public function sendVote(VoteInterface ...$votes): void
     {
         if (!$this->isProtocolV2()) {
-            call_user_func_array([$this, 'parent::sendVote'], func_get_args());
+            parent::sendVote(...$votes);
 
             return;
         }
@@ -141,7 +137,7 @@ class NuVotifier extends Votifier
             $challenge = mb_substr($headerParts[2], 0, -1);
 
             // Update the timestamp of the vote being sent
-            $vote->setTimestamp(new DateTime());
+            $vote->setTimestamp(new \DateTime());
 
             // Check if all variables have been set, to create a package
             $this->checkVariablesForPackage($vote);
@@ -160,16 +156,20 @@ class NuVotifier extends Votifier
              * {"status":"error","cause":"CorruptedFrameException","error":"Username too long"} (over 16 characters)
              */
             $result = json_decode($socket->read(256));
-            if ('ok' !== $result->status) {
-                if ('Challenge is not valid' === $result->error) {
+            if ($result->status !== 'ok') {
+                if ($result->error === 'Challenge is not valid') {
                     throw new NuVotifierChallengeInvalidException();
-                } elseif (preg_match('/Unknown service \'(.*)\'/', $result->error)) {
+                }
+                if (preg_match('/Unknown service \'(.*)\'/', $result->error)) {
                     throw new NuVotifierUnknownServiceException();
-                } elseif ('Signature is not valid (invalid token?)' === $result->error) {
+                }
+                if ($result->error === 'Signature is not valid (invalid token?)') {
                     throw new NuVotifierSignatureInvalidException();
-                } elseif ('Username too long' === $result->error) {
+                }
+                if ($result->error === 'Username too long') {
                     throw new NuVotifierUsernameTooLongException();
                 }
+
                 throw new NuVotifierException('Unknown NuVotifier Exception');
             }
 
@@ -183,9 +183,9 @@ class NuVotifier extends Votifier
      *
      * @param VoteInterface $vote The vote to check
      *
-     * @throws InvalidArgumentException If one required parameter wasn't set
+     * @throws \InvalidArgumentException If one required parameter wasn't set
      */
-    protected function checkVariablesForPackage(VoteInterface $vote)
+    protected function checkVariablesForPackage(VoteInterface $vote): void
     {
         if (!$this->isProtocolV2()) {
             parent::checkVariablesForSocket();
@@ -194,30 +194,30 @@ class NuVotifier extends Votifier
         }
 
         if (
-            null === $vote->getServiceName()
-            || null === $vote->getUsername()
-            || null === $vote->getAddress()
-            || null === $vote->getTimestamp()
+            $vote->getServiceName() === null
+            || $vote->getUsername() === null
+            || $vote->getAddress() === null
+            || $vote->getTimestamp() === null
             || !isset($this->token)
         ) {
             $countError = 0;
             $errorMessage = '';
 
-            if (null === $vote->getServiceName()) {
+            if ($vote->getServiceName() === null) {
                 $errorMessage .= 'The host variable wasn\'t set with "->setServiceName(...)".';
                 ++$countError;
             }
-            if (null === $vote->getUsername()) {
+            if ($vote->getUsername() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setUsername(...)".';
                 ++$countError;
             }
-            if (null === $vote->getAddress()) {
+            if ($vote->getAddress() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setAddress(...)".';
                 ++$countError;
             }
-            if (null === $vote->getTimestamp()) {
+            if ($vote->getTimestamp() === null) {
                 $errorMessage .= $countError > 0 ? ' ' : '';
                 $errorMessage .= 'The host variable wasn\'t set with "->setTimestamp(...)".';
             }
@@ -226,14 +226,14 @@ class NuVotifier extends Votifier
                 $errorMessage .= 'The token variable wasn\'t set with "->setToken(...)".';
             }
 
-            throw new InvalidArgumentException($errorMessage);
+            throw new \InvalidArgumentException($errorMessage);
         }
     }
 
     /**
      * Verifies that the connection is correct.
      *
-     * @param string|null $header The header that the plugin usually sends
+     * @param null|string $header The header that the plugin usually sends
      *
      * @return bool returns true if connections is available, otherwise false
      */
@@ -241,9 +241,9 @@ class NuVotifier extends Votifier
     {
         $header_parts = explode(' ', $header);
         if (
-            null === $header
-            || false === mb_strpos($header, 'VOTIFIER')
-            || 3 !== count($header_parts)
+            $header === null
+            || mb_strpos($header, 'VOTIFIER') === false
+            || \count($header_parts) !== 3
         ) {
             return false;
         }
@@ -274,6 +274,6 @@ class NuVotifier extends Votifier
         $messageJson = json_encode(['signature' => $signature, 'payload' => $payloadJson]);
 
         // 0x733a = s:
-        return pack('nn', 0x733a, mb_strlen($messageJson)) . $messageJson;
+        return pack('nn', 0x733A, mb_strlen($messageJson)).$messageJson;
     }
 }

@@ -7,33 +7,24 @@
         "vote",
         "votifier"
     ],
-    "homepage": "https://github.com/D3strukt0r/votifier-client-php",
-    "license": "GPL-3.0-or-later",
+    "homepage": "https://github.com/Team-MaRo/votifier-client-php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Manuele Vaccari",
-            "email": "manuele.vaccari@gmail.com",
+            "email": "dev@d3strukt0r.dev",
             "homepage": "https://github.com/D3strukt0r",
-            "role": "Developer"
+            "role": "Maintainer"
         }
     ],
     "support": {
-        "email": "manuele.vaccari@gmail.com",
-        "issues": "https://github.com/D3strukt0r/votifier-client-php/issues",
-        "wiki": "https://github.com/D3strukt0r/votifier-client-php/wiki",
-        "source": "https://github.com/D3strukt0r/votifier-client-php",
+        "email": "dev@d3strukt0r.dev",
+        "issues": "https://github.com/Team-MaRo/votifier-client-php/issues",
+        "forum": "https://github.com/Team-MaRo/votifier-client-php/discussions",
+        "wiki": "https://github.com/Team-MaRo/votifier-client-php/wiki",
+        "source": "https://github.com/Team-MaRo/votifier-client-php",
         "docs": "https://votifier-client-php.readthedocs.io"
     },
-    "funding": [
-        {
-            "type": "github",
-            "url": "https://github.com/sponsors/D3strukt0r"
-        },
-        {
-            "type": "patreon",
-            "url": "https://patreon.com/d3strukt0r"
-        }
-    ],
     "require": {
         "php": ">=7.1",
         "ext-SPL": "*",
@@ -45,10 +36,14 @@
         "ext-pcre": "*"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "0.6.0",
-        "friendsofphp/php-cs-fixer": "^2.16",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+        "friendsofphp/php-cs-fixer": "^3.88",
+        "iwf-web/php-coding-standard": "^1.0",
         "phpcompatibility/php-compatibility": "*",
-        "phpunit/phpunit": "^9 || ^8 || ^7",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.2",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpunit/phpunit": "^13 || ^12 || ^11 || ^10 || ^9 || ^8 || ^7",
         "squizlabs/php_codesniffer": "^3.4"
     },
     "autoload": {
@@ -62,33 +57,18 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     },
     "scripts": {
+        "cs": "php-cs-fixer fix --dry-run --diff -v",
+        "cs:fix": "php-cs-fixer fix",
         "test": "phpunit",
         "check": "phpcs",
-        "check2": "php-cs-fixer fix --diff --dry-run -v",
         "fix": "phpcbf",
-        "fix2": "php-cs-fixer fix"
-    },
-    "archive": {
-        "exclude": [
-            "/.github",
-            "/.idea",
-            "/.vscode",
-            "/docs",
-            "/tests",
-            ".editorconfig",
-            ".gitattributes",
-            ".gitignore",
-            ".php_cs.dist",
-            ".phpcs.xml",
-            ".readthedocs.yml",
-            ".scrutinizer.yml",
-            ".symfony.insight.yaml",
-            "CONTRIBUTING.md",
-            "phpdoc.dist.xml",
-            "phpunit.xml.dist"
-        ]
+        "phpstan": "phpstan analyse"
     }
 }

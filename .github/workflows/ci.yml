@@ -1,0 +1,192 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    paths:
+      - .github/workflows/ci.yml
+      - .github/scripts/**
+      - "src/**"
+      - "tests/**"
+      - .php-cs-fixer.dist.php
+      - .phpcs.xml
+      - phpstan.dist.neon
+      - phpstan-baseline.neon
+      - composer.json
+      - phpunit.xml.dist
+
+  pull_request:
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  # Code style (PHP-CS-Fixer), static analysis (PHPStan) and PHP-version
+  # compatibility (PHP_CodeSniffer / PHPCompatibility) run once on a modern PHP.
+  # PHP-CS-Fixer, PHPStan and the shared iwf-web/php-coding-standard require PHP
+  # 7.4+, so they can't install on the 7.1-7.3 test legs — keeping them here avoids that.
+  style:
+    name: Code style & PHP compatibility
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.5"
+          coverage: none
+
+      - name: Get Composer cache directory
+        id: composer-cache-dir-path
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+      - name: Cache Composer downloads
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.composer-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      # Each check streams its output into the job summary and uses
+      # continue-on-error so one failure never skips the rest; a trailing gate
+      # re-derives the real pass/fail.
+      - name: Validate composer.json
+        id: validate
+        continue-on-error: true
+        run: bash .github/scripts/summarize-step.sh "composer validate" composer validate --strict
+
+      - name: PHP_CodeSniffer (PHP compatibility)
+        id: phpcs
+        continue-on-error: true
+        run: bash .github/scripts/summarize-step.sh "PHP_CodeSniffer" ./vendor/bin/phpcs
+
+      - name: PHP-CS-Fixer (code style)
+        id: cs-fixer
+        continue-on-error: true
+        run: bash .github/scripts/summarize-step.sh "PHP-CS-Fixer" ./vendor/bin/php-cs-fixer fix --diff --dry-run -v
+
+      - name: PHPStan (static analysis)
+        id: phpstan
+        continue-on-error: true
+        run: bash .github/scripts/summarize-step.sh "PHPStan" ./vendor/bin/phpstan analyse --no-progress
+
+      - name: Fail if any check failed
+        if: always()
+        run: |
+          if [ "${{ steps.validate.outcome }}" = "failure" ] \
+             || [ "${{ steps.phpcs.outcome }}" = "failure" ] \
+             || [ "${{ steps.cs-fixer.outcome }}" = "failure" ] \
+             || [ "${{ steps.phpstan.outcome }}" = "failure" ]; then
+            exit 1
+          fi
+
+  test:
+    name: Test on PHP v${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [7.1, 7.2, 7.3, 7.4, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5]
+        include:
+          - php: 8.5
+            test_with_coverage: 1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # ocular (Scrutinizer coverage upload) reports HEAD's parent revision, so it
+          # needs the parent commit. The default depth-1 shallow checkout grafts HEAD to
+          # look parent-less; depth 2 (HEAD + parent) is the minimum that exposes it.
+          fetch-depth: 2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        if: matrix.test_with_coverage != 1
+        with:
+          php-version: "${{ matrix.php }}"
+          coverage: none
+
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        if: matrix.test_with_coverage == 1
+        with:
+          php-version: "${{ matrix.php }}"
+          coverage: xdebug
+
+      - name: Setup problem matchers for PHP
+        run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+      - name: Setup problem matchers for PHPUnit
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+      - name: Get Composer cache directory
+        id: composer-cache-dir-path
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+      - name: Cache Composer downloads
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.composer-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      # The style/compat tools require PHP 7.4+ and are exercised in the `style`
+      # job, so drop them here — otherwise dependency resolution fails on the
+      # 7.1-7.3 legs. Only PHPUnit is needed to run the tests.
+      - name: Drop dev-only style tools
+        run: composer remove --dev --no-update friendsofphp/php-cs-fixer iwf-web/php-coding-standard squizlabs/php_codesniffer phpcompatibility/php-compatibility dealerdirect/phpcodesniffer-composer-installer phpstan/phpstan phpstan/phpstan-phpunit phpstan/extension-installer
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress
+
+      - name: Run tests
+        id: phpunit
+        continue-on-error: true
+        # Coverage is driven here (not phpunit.xml.dist) so the config stays valid
+        # across PHPUnit 7-13. Only the coverage leg has a driver (Xdebug); the others
+        # pass --no-coverage so PHPUnit 12/13 don't complain about a missing driver.
+        run: |
+          if [ "${{ matrix.test_with_coverage }}" = "1" ]; then
+            flags="--coverage-clover coverage/logs/clover.xml --coverage-filter src"
+          else
+            flags="--no-coverage"
+          fi
+          bash .github/scripts/summarize-step.sh "PHPUnit" ./vendor/bin/phpunit $flags
+
+      # Coverage uploads are best-effort side effects (not pass/fail criteria),
+      # so they stay out of the gate and never break a build on a flaky upload.
+      # https://github.com/php-coveralls/php-coveralls
+      - name: Upload coverage report to Coveralls
+        if: github.event_name == 'push' && github.repository == 'Team-MaRo/votifier-client-php' && matrix.test_with_coverage == 1
+        continue-on-error: true
+        env:
+          COVERALLS_REPO_TOKEN: ${{ github.token }}
+        run: |
+          curl -fsSL -o php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/latest/download/php-coveralls.phar
+          php php-coveralls.phar -v --coverage_clover=coverage/logs/clover.xml --json_path=coverage/logs/coveralls-upload.json
+
+      # Scrutinizer now serves ocular.phar behind a Cloudflare bot challenge that 403s
+      # non-browser clients (curl can't solve the JS challenge), so install ocular via
+      # Composer (sourced from GitHub/Packagist) instead of downloading the phar.
+      # https://github.com/scrutinizer-ci/ocular
+      - name: Upload coverage report to Scrutinizer
+        if: github.event_name == 'push' && github.repository == 'Team-MaRo/votifier-client-php' && matrix.test_with_coverage == 1
+        continue-on-error: true
+        run: |
+          composer global require scrutinizer/ocular
+          "$(composer global config home)/vendor/bin/ocular" code-coverage:upload --format=php-clover coverage/logs/clover.xml
+
+      - name: Fail if tests failed
+        if: always()
+        run: |
+          if [ "${{ steps.phpunit.outcome }}" = "failure" ]; then
+            exit 1
+          fi

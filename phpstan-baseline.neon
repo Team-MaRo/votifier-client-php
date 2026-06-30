@@ -1,0 +1,121 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\GenericServer\:\:\$host \(string\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/Server/Votifier.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\GenericServer\:\:\$port \(int\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 1
+			path: src/Server/Votifier.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\GenericServer\:\:\$publicKey \(string\) in isset\(\) is not nullable\.$#'
+			identifier: isset.property
+			count: 2
+			path: src/Server/Votifier.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\GenericServerTypeTest\:\:\$object \(D3strukt0r\\Votifier\\Client\\Server\\GenericServer\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/GenericServerTypeTest.php
+
+		-
+			message: '#^Strict comparison using \!\=\= between array\<int\<0, max\>\|string, D3strukt0r\\Votifier\\Client\\Vote\\VoteInterface\> and null will always evaluate to true\.$#'
+			identifier: notIdentical.alwaysTrue
+			count: 1
+			path: tests/Server/GenericServerTypeTest.php
+
+		-
+			message: '#^Method D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:checkRequiredVariablesForPackageProvider\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Method D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:notVotifierExceptionProvider\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Method D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:nuVotifierResponseAfterSendVoteProvider\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:\$nuvotifier \(D3strukt0r\\Votifier\\Client\\Server\\NuVotifier\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:\$nuvotifierV2 \(D3strukt0r\\Votifier\\Client\\Server\\NuVotifier\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\NuVotifierTest\:\:\$socketStub \(D3strukt0r\\Votifier\\Client\\Socket&PHPUnit\\Framework\\MockObject\\Stub\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Result of method D3strukt0r\\Votifier\\Client\\Server\\NuVotifier\:\:sendVote\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 2
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Result of method D3strukt0r\\Votifier\\Client\\Server\\NuVotifier\:\:verifyConnection\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: tests/Server/NuVotifierTest.php
+
+		-
+			message: '#^Method D3strukt0r\\Votifier\\Client\\Server\\VotifierTest\:\:checkRequiredVariablesForPackageProvider\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Method D3strukt0r\\Votifier\\Client\\Server\\VotifierTest\:\:checkRequiredVariablesForSocketProvider\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\VotifierTest\:\:\$socketStub \(D3strukt0r\\Votifier\\Client\\Socket&PHPUnit\\Framework\\MockObject\\Stub\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Server\\VotifierTest\:\:\$votifier \(D3strukt0r\\Votifier\\Client\\Server\\Votifier\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Result of method D3strukt0r\\Votifier\\Client\\Server\\Votifier\:\:sendVote\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Result of method D3strukt0r\\Votifier\\Client\\Server\\Votifier\:\:verifyConnection\(\) \(void\) is used\.$#'
+			identifier: method.void
+			count: 1
+			path: tests/Server/VotifierTest.php
+
+		-
+			message: '#^Property D3strukt0r\\Votifier\\Client\\Vote\\ClassicVoteTest\:\:\$object \(D3strukt0r\\Votifier\\Client\\Vote\\ClassicVote\) does not accept null\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: tests/Vote/ClassicVoteTest.php

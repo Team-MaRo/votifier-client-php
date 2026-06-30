@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<phpdocumentor 
+<phpdocumentor
     configVersion="3"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://www.phpdoc.org"
-    xsi:noNamespaceSchemaLocation="https://github.com/phpDocumentor/phpDocumentor/blob/v3.0.0-rc/data/xsd/phpdoc.xsd">
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/refs/tags/v3.10.0/data/xsd/phpdoc.xsd">
     <title>Votifier Client</title>
     <paths>
         <output>api</output>

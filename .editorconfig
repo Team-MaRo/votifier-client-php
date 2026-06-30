@@ -1,43 +1,31 @@
-# EditorConfig is awesome
-# http://EditorConfig.org
-# This file is based on The Common EditorConfig Template project
-# https://github.com/Lin-Buo-Ren/the-common-editorconfig-template
-# Public Domain
-## Indicate that is the top-most EditorConfig file to search for ##
+# https://editorconfig.org/
 root = true
 
-## Common setting for all files not specified ##
 [*]
-# The character set of the file
-charset = utf-8
-
-# The end of line(EOL) sequence of the file
 end_of_line = lf
-
-# Whether to ensure there's always a single end of line sequence at the end of the file for compatibility of some utilities
-insert_final_newline = true
-
-# Determine the actual(Space)/visual(Tab) width of one indentation level
-indent_size = 4
-
-# Determine the default indentation character sequence
-# tab: 1 tab per indentation level
-# space: {indent_size} per indentation level
 indent_style = space
-
-# Whether to trim out the (unnecessary) trailing whitespace(s) of the line
+indent_size = 2
+charset = utf-8
+insert_final_newline = true
 trim_trailing_whitespace = true
 
-## Markdown specific settings ##
-[*.{md,mkd,mkdn,markdown}]
-# Trailing whitespace means manual linebreaks in Markdown thus is not trimmable
+ij_continuation_indent_size = 2
+ij_visual_guides = 80, 120, 150
+
+# Avoid git patch fail to apply due to stripped unmodified lines that contains only spaces
+[/.git/**]
 trim_trailing_whitespace = false
 
-## YAML specific settings ##
-[*.{yml,yaml}]
-indent_size = 2
-
-## Git specific settings ##
-# Avoid git patch fail to apply due to the stripped unmodified lines that contains only spaces, which also matches as "trailing spaces"
-[.git/**]
+[*.md]
+# Trailing whitespace means manual linebreaks
 trim_trailing_whitespace = false
+
+# Don't check indentation size as it can't handle intentional indentation
+# in list item after hardbreaks to align with the node markers, use
+# Markdownlint to check instead
+indent_size = unset
+
+[{*.php,*.json,*.dist.xml,*.xml.dist}]
+indent_size = 4
+tab_width = 4
+ij_continuation_indent_size = 4
